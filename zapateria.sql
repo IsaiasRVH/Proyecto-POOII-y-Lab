@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 28-05-2020 a las 02:57:21
+-- Tiempo de generación: 30-05-2020 a las 05:06:54
 -- Versión del servidor: 5.7.17
 -- Versión de PHP: 5.6.30
 
@@ -40,8 +40,15 @@ CREATE TABLE `cliente` (
   `pais` varchar(20) COLLATE utf8_bin NOT NULL,
   `telefono` varchar(13) COLLATE utf8_bin NOT NULL,
   `email` varchar(30) COLLATE utf8_bin NOT NULL,
-  `monto` double NOT NULL
+  `adeudo` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Volcado de datos para la tabla `cliente`
+--
+
+INSERT INTO `cliente` (`idCliente`, `nombre`, `apellidos`, `calleYNumero`, `colonia`, `ciudad`, `codigoPostal`, `estado`, `pais`, `telefono`, `email`, `adeudo`) VALUES
+(1, 'Cliente', 'General', '*****', '*****', '*****', '*****', '*****', '*****', '*****', '*****', 0);
 
 -- --------------------------------------------------------
 
@@ -112,8 +119,15 @@ CREATE TABLE `usuario` (
   `estado` varchar(15) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
   `pais` varchar(25) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
   `salario` double NOT NULL,
-  `contraseña` varchar(25) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL
+  `contrasenia` varchar(25) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+--
+-- Volcado de datos para la tabla `usuario`
+--
+
+INSERT INTO `usuario` (`idUsuario`, `nombre`, `apellidos`, `telefono`, `email`, `calleYNumero`, `colonia`, `codigoPostal`, `ciudad`, `estado`, `pais`, `salario`, `contrasenia`) VALUES
+(1, 'Administrador', '', '*****', '*****', '*****', '*****', '*****', '*****', '*****', '*****', 0, 'admin');
 
 -- --------------------------------------------------------
 
@@ -182,22 +196,22 @@ ALTER TABLE `venta`
 -- AUTO_INCREMENT de la tabla `cliente`
 --
 ALTER TABLE `cliente`
-  MODIFY `idCliente` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idCliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT de la tabla `proveedor`
 --
 ALTER TABLE `proveedor`
-  MODIFY `idProveedor` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idProveedor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `idUsuario` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idUsuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT de la tabla `venta`
 --
 ALTER TABLE `venta`
-  MODIFY `idVenta` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idVenta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- Restricciones para tablas volcadas
 --
