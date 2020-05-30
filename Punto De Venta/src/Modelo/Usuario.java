@@ -24,7 +24,7 @@ public class Usuario {
     private String estado;
     private String pais;
     private Double salario;
-    private String contraseña;
+    private String contrasenia;
 
     
     /**
@@ -42,7 +42,7 @@ public class Usuario {
      * @param salario Salario del usuario
      * @param contrasenia Contraseña del usuario
      */
-    public Usuario(String nombre, String apellidos, String telefono, String email, String calleYNumero, String colonia, String codigoPostal, String ciudad, String estado, String pais, Double salario, String contraseña) {
+    public Usuario(String nombre, String apellidos, String telefono, String email, String calleYNumero, String colonia, String codigoPostal, String ciudad, String estado, String pais, Double salario, String contrasenia) {
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.telefono = telefono;
@@ -54,7 +54,7 @@ public class Usuario {
         this.estado = estado;
         this.pais = pais;
         this.salario = salario;
-        this.contraseña = contraseña;
+        this.contraseña = contrasenia;
     }
 
     public int getIdUsuario() {
@@ -157,8 +157,8 @@ public class Usuario {
         return contraseña;
     }
 
-    public void setContraseña(String contraseña) {
-        this.contraseña = contraseña;
+    public void setContraseña(String contrasenia) {
+        this.contraseña = contrasenia;
     }
     
     
