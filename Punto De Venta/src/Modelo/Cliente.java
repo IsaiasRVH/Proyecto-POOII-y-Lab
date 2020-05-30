@@ -23,9 +23,9 @@ public class Cliente {
     private String pais;
     private String telefono;
     private String email;
-    private String adeudo;
+    private double adeudo;
 
-    public Cliente(String nombre, String apellidos, String calleYNumero, String colonia, String ciudad, String codigoPostal, String estado, String pais, String telefono, String email, String adeudo) {
+    public Cliente(String nombre, String apellidos, String calleYNumero, String colonia, String ciudad, String codigoPostal, String estado, String pais, String telefono, String email, double adeudo) {
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.calleYNumero = calleYNumero;
@@ -127,11 +127,11 @@ public class Cliente {
         this.email = email;
     }
 
-    public String getAdeudo() {
+    public double getAdeudo() {
         return adeudo;
     }
 
-    public void setAdeudo(String adeudo) {
+    public void setAdeudo(double adeudo) {
         this.adeudo = adeudo;
     }
     
