@@ -11,24 +11,24 @@ package Modelo;
  * @author Isaías Ricardo Valdivia Hernández
  */
 public class DetalleVenta {
-    private int idVenta;
+    private Integer idVenta;
     private String codigo;
     private int cantidad;
     private double precio;
     private double importe;
 
-    public DetalleVenta(String codigo, int cantidad, double precio, double importe) {
+    public DetalleVenta(String codigo, Integer cantidad, double precio, double importe) {
         this.codigo = codigo;
         this.cantidad = cantidad;
         this.precio = precio;
         this.importe = importe;
     }
 
-    public int getIdVenta() {
+    public Integer getIdVenta() {
         return idVenta;
     }
 
-    public void setIdVenta(int idVenta) {
+    public void setIdVenta(Integer idVenta) {
         this.idVenta = idVenta;
     }
 
