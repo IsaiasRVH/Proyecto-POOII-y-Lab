@@ -9,7 +9,7 @@ package DAOMySQL;
 import DAO.DAOException;
 import DAO.IClienteDAO;
 import Modelo.Cliente;
-import MySQLConexion.Conectar;
+import MySQLConection.Conectar;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
