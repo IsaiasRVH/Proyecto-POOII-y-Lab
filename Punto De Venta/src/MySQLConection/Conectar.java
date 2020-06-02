@@ -5,13 +5,12 @@
  */
 package MySQLConexion;
 
+import DAO.DAOException;
 import com.mysql.jdbc.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -33,7 +32,7 @@ public class Conectar {
      * @return
      * @throws SQLException 
      */
-    public static Connection realizarConexion() throws SQLException {
+    public static Connection realizarConexion() throws DAOException {
         
         try {
             //Carga la clase controlador
@@ -44,12 +43,14 @@ public class Conectar {
             
             System.out.println("EstoyDentro");
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Conectar.class.getName()).log(Level.SEVERE, null, ex);
+            throw new DAOException("Error en la conexion: ", ex);
+        } catch (SQLException ex) {
+            throw new DAOException("Error en SQL: ", ex);
         }
         return conn;
     }
     
-    public static void realizarDesconexion(PreparedStatement ps, ResultSet rs, Connection conn) throws SQLException {
+    public static void realizarDesconexion(PreparedStatement ps, ResultSet rs, Connection conn) throws DAOException {
         if( rs != null ) {
                 try {
                     rs.close(); //cierra la conexion a la base de datos
@@ -70,12 +71,12 @@ public class Conectar {
                 try {
                     conn.close(); //cierra la conexion a la base de datos
                 } catch (SQLException ex) {
-                    System.out.print( "Error en SQL: " + ex.getMessage());
+                    throw new DAOException("Error en SQL: ", ex);
                 }
             }
     }
     
-    public static void realizarDesconexion(PreparedStatement ps, Connection conn) throws SQLException {
+    public static void realizarDesconexion(PreparedStatement ps, Connection conn) throws DAOException {
 
             if( ps != null ) {
                 try {
@@ -89,19 +90,19 @@ public class Conectar {
                 try {
                     conn.close(); //cierra la conexion a la base de datos
                 } catch (SQLException ex) {
-                    System.out.print( "Error en SQL: " + ex.getMessage());
+                    throw new DAOException("Error en SQL: ", ex);
                 }
             }
     }
     
-    public static void realizarDesconexion( Connection conn) throws SQLException {
+    public static void realizarDesconexion( Connection conn) throws DAOException {
 
 
             if( conn != null ) {
                 try {
                     conn.close(); //cierra la conexion a la base de datos
                 } catch (SQLException ex) {
-                    System.out.print( "Error en SQL: " + ex.getMessage());
+                    throw new DAOException("Error en SQL: ", ex);
                 }
             }
     }
