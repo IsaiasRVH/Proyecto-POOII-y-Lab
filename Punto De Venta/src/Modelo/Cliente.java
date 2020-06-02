@@ -39,6 +39,10 @@ public class Cliente {
         this.adeudo = adeudo;
     }
 
+    public Cliente() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     public int getIdCliente() {
         return idCliente;
     }
