@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package DAOMySQL;
 
 import DAO.DAOException;
@@ -19,10 +18,9 @@ import java.util.List;
 
 /**
  *
- * @author Isaías Ricardo Valdivia Hernández
+ * @author luisf
  */
-public class MySQLProveedorDAO implements IProveedorDAO{
-
+public class MySQLProveedorDAO implements IProveedorDAO {
     //Creamos las variables para trabajar con SQL
     private Connection conn;
     private PreparedStatement ps = null;
@@ -82,7 +80,7 @@ public class MySQLProveedorDAO implements IProveedorDAO{
         finally {
             Conectar.realizarDesconexion(ps, rs, (com.mysql.jdbc.Connection) conn);
         }
-    }
+    }//fin del metodo insertar
 
     @Override
     public void modificar(Proveedor proveedor) throws DAOException {
@@ -115,7 +113,7 @@ public class MySQLProveedorDAO implements IProveedorDAO{
         finally {
                 Conectar.realizarDesconexion(ps, (com.mysql.jdbc.Connection) conn);
         }
-    }
+    }//fin del metodo modificar
 
     @Override
     public void eliminar(Integer id) throws DAOException {
@@ -138,7 +136,7 @@ public class MySQLProveedorDAO implements IProveedorDAO{
         finally {
             Conectar.realizarDesconexion(ps, (com.mysql.jdbc.Connection) conn);
         }
-    }
+    }//fin del metodo eliminar
 
     @Override
     public List<Proveedor> obtenerTodos() throws DAOException {
@@ -179,7 +177,7 @@ public class MySQLProveedorDAO implements IProveedorDAO{
         }
         
         return misProveedors;
-    }
+    }//fin del metodo obtenerTodos
 
     @Override
     public Proveedor obtener(Integer id) throws DAOException {
@@ -223,5 +221,5 @@ public class MySQLProveedorDAO implements IProveedorDAO{
         }
         
         return miProveedor;
-    }
+    }//fin del metodo obtener
 }
