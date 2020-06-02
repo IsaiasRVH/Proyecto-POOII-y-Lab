@@ -13,6 +13,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -111,8 +112,8 @@ public class MySQLProductoDAO implements IProductoDAO{
     }//fin del metodo eliminar
 
     /**
-     * Este metodo obtiene todos los registros de la base de datos de la tabla autores
-     * @return retorna una lista de tipo autores
+     * Este metodo obtiene todos los registros de la base de datos de la tabla productos
+     * @return retorna una lista de tipo productos
      * @throws DAOException 
      */
     @Override
@@ -133,13 +134,62 @@ public class MySQLProductoDAO implements IProductoDAO{
             //Recorremos el ResultSet y agreamos cada item al arrayList
             while(rs.next()) {
                 Producto miProducto = new Producto();
+                miProducto.setCodigo(rs.getString("codigo"));
+                miProducto.setModelo(rs.getString("modelo"));
+                miProducto.setMarca(rs.getString("marca"));
+                miProducto.setColor(rs.getString("color"));
+                miProducto.setEstilo(rs.getString("estilo"));
+                miProducto.setExistencias(rs.getDouble("existencias"));
+                miProducto.setPrecio(rs.getDouble("precio"));
+                miProducto.setIdProveedor(rs.getInt("idProveedor"));
+                misProductos.add(miProducto);
             }
-        }
+        } catch(SQLException ex) {
+            throw new DAOException("Error en SQL: ", ex);
+        } finally {
+            Conectar.realizarDesconexion(ps, rs, conn);
+        };
+        return misProductos;
     }//fin del metodo obtenerTodos
 
     @Override
-    public Producto obtener(String id) throws DAOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Producto obtener(String codigo) throws DAOException {
+        //Producto a retornar
+        Producto miProducto = null;
+        
+        try {
+            //creamos la conexion a la base de datos
+            conn = Conectar.realizarConexion();
+            
+            //preparamos la consulta y definimos sus parametros que recibe la consulta
+            ps = conn.prepareStatement(GETONE);
+            ps.setString(1, codigo);
+            
+            //ejecutamos la consulta y almacenamos el resultado en un objeto ResultSet
+            rs = ps.executeQuery();
+            
+            /*
+            verificamos si el resultSet obtuvo un resultado y lo asignamos al objeto
+            correspondiente
+            */
+            if(rs.next()) {
+                miProducto = new Producto();
+                miProducto.setCodigo(rs.getString("codigo"));
+                miProducto.setModelo(rs.getString("modelo"));
+                miProducto.setMarca(rs.getString("marca"));
+                miProducto.setColor(rs.getString("color"));
+                miProducto.setEstilo(rs.getString("estilo"));
+                miProducto.setExistencias(rs.getDouble("existencias"));
+                miProducto.setPrecio(rs.getDouble("precio"));
+                miProducto.setIdProveedor(rs.getInt("idProveedor"));
+            } else {
+                throw new DAOException("No se encontro el elemento");
+            }
+        } catch(SQLException ex) {
+            throw new DAOException ("Error de SQL: ", ex);
+        } finally {
+            Conectar.realizarDesconexion(ps, rs, conn);
+        }
+        return miProducto;
     }//fin del metodo obtener
-    
 }
