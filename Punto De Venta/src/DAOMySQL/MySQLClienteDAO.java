@@ -174,6 +174,7 @@ public class MySQLClienteDAO implements IClienteDAO{
                 miCliente.setCalleYNumero(rs.getString("calleYNumero"));
                 miCliente.setColonia(rs.getString("colonia"));
                 miCliente.setCiudad(rs.getString("ciudad"));
+                miCliente.setCodigoPostal(rs.getString("codigoPostal"));
                 miCliente.setEstado(rs.getString("estado"));
                 miCliente.setPais(rs.getString("pais"));
                 miCliente.setTelefono(rs.getString("telefono"));
@@ -217,6 +218,7 @@ public class MySQLClienteDAO implements IClienteDAO{
                 miCliente.setCalleYNumero(rs.getString("calleYNumero"));
                 miCliente.setColonia(rs.getString("colonia"));
                 miCliente.setCiudad(rs.getString("ciudad"));
+                miCliente.setCodigoPostal(rs.getString("codigoPostal"));
                 miCliente.setEstado(rs.getString("estado"));
                 miCliente.setPais(rs.getString("pais"));
                 miCliente.setTelefono(rs.getString("telefono"));
