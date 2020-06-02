@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Modelo;
 
 /**
  *
- * @author Isaías Ricardo Valdivia Hernández
+ * @author luisf
  */
 public class Producto {
+    //Campos de la tabla Producto
     private String codigo;
     private String modelo;
     private String marca;
@@ -19,7 +19,13 @@ public class Producto {
     private double existencias;
     private double precio;
     private int idProveedor;
+    
+    //declaracion de constructor vacio
+    public Producto() {
+        super();
+    }
 
+    //declaracion de constructor con 8 parametros
     public Producto(String codigo, String modelo, String marca, String color, String estilo, double existencias, double precio, int idProveedor) {
         this.codigo = codigo;
         this.modelo = modelo;
@@ -30,6 +36,8 @@ public class Producto {
         this.precio = precio;
         this.idProveedor = idProveedor;
     }
+    
+    //getters y setters
 
     public String getCodigo() {
         return codigo;
@@ -94,6 +102,4 @@ public class Producto {
     public void setIdProveedor(int idProveedor) {
         this.idProveedor = idProveedor;
     }
-    
-    
 }
