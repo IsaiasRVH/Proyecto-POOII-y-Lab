@@ -54,7 +54,11 @@ public class Usuario {
         this.estado = estado;
         this.pais = pais;
         this.salario = salario;
-        this.contraseña = contrasenia;
+        this.contrasenia = contrasenia;
+    }
+
+    public Usuario() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     public int getIdUsuario() {
@@ -153,12 +157,12 @@ public class Usuario {
         this.salario = salario;
     }
 
-    public String getContraseña() {
-        return contraseña;
+    public String getContrasenia() {
+        return contrasenia;
     }
 
-    public void setContraseña(String contrasenia) {
-        this.contraseña = contrasenia;
+    public void setContrasenia(String contrasenia) {
+        this.contrasenia = contrasenia;
     }
     
     

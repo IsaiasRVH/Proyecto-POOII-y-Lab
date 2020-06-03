@@ -6,11 +6,12 @@
 package DAO;
 
 import Modelo.DetalleVenta;
+import java.util.List;
 
 /**
  *
  * @author isaia
  */
 public interface IDetalleVentaDAO extends IDAO<DetalleVenta, Integer> {
-    
+    public List<DetalleVenta> getVentasPorIdVenta(int idVenta) throws DAOException;
 }

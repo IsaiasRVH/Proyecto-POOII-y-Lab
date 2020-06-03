@@ -85,7 +85,7 @@ public class MySQLVentaDAO implements IVentaDAO{
         } catch(SQLException ex) {
             throw new DAOException("Error de SQL: ", ex);
         } finally {
-            Conectar.realizarDesconexion(ps, rs, conn);
+            Conectar.realizarDesconexion(ps, rs,  conn);
         }
     }//fin del metodo modificar
 

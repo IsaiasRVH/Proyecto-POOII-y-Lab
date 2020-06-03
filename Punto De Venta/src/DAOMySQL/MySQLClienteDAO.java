@@ -87,7 +87,7 @@ public class MySQLClienteDAO implements IClienteDAO{
             throw new DAOException ( "Error en SQL: ", ex );
         }
         finally {
-            Conectar.realizarDesconexion(ps, rs, (com.mysql.jdbc.Connection) conn);
+            Conectar.realizarDesconexion(ps, rs, conn);
         }
     }
 
@@ -122,7 +122,7 @@ public class MySQLClienteDAO implements IClienteDAO{
             throw new DAOException ("Error de SQL:", ex);
         }
         finally {
-                Conectar.realizarDesconexion(ps, (com.mysql.jdbc.Connection) conn);
+                Conectar.realizarDesconexion(ps, conn);
         }
     }
 
@@ -145,7 +145,7 @@ public class MySQLClienteDAO implements IClienteDAO{
             throw new DAOException( "Error en SQL: ", ex);
         }
         finally {
-            Conectar.realizarDesconexion(ps, (com.mysql.jdbc.Connection) conn);
+            Conectar.realizarDesconexion(ps, conn);
         }
     }
 
@@ -186,7 +186,7 @@ public class MySQLClienteDAO implements IClienteDAO{
             throw new DAOException( "Error en SQL: ", ex);
         }
         finally {
-            Conectar.realizarDesconexion(ps, rs, (com.mysql.jdbc.Connection) conn);
+            Conectar.realizarDesconexion(ps, rs, conn);
         }
         
         return misClientes;
@@ -233,7 +233,7 @@ public class MySQLClienteDAO implements IClienteDAO{
             throw new DAOException ( "Error en SQL: ", ex );
         }
         finally {
-            Conectar.realizarDesconexion(ps, rs, (com.mysql.jdbc.Connection) conn);
+            Conectar.realizarDesconexion(ps, rs, conn);
         }
         
         return miCliente;

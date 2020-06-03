@@ -69,7 +69,7 @@ public class MySQLDetalleVentaDAO implements IDetalleVentaDAO{
             throw new DAOException ( "Error en SQL: ", ex );
         }
         finally {
-            Conectar.realizarDesconexion(ps, rs, (com.mysql.jdbc.Connection) conn);
+            Conectar.realizarDesconexion(ps, rs, conn);
         }
     }
 
@@ -97,7 +97,7 @@ public class MySQLDetalleVentaDAO implements IDetalleVentaDAO{
             throw new DAOException ("Error de SQL:", ex);
         }
         finally {
-                Conectar.realizarDesconexion(ps, (com.mysql.jdbc.Connection) conn);
+                Conectar.realizarDesconexion(ps, conn);
         }
     }
 
@@ -136,7 +136,7 @@ public class MySQLDetalleVentaDAO implements IDetalleVentaDAO{
             throw new DAOException( "Error en SQL: ", ex);
         }
         finally {
-            Conectar.realizarDesconexion(ps, rs, (com.mysql.jdbc.Connection) conn);
+            Conectar.realizarDesconexion(ps, rs, conn);
         }
         
         return misDetalleVentas;
@@ -175,7 +175,7 @@ public class MySQLDetalleVentaDAO implements IDetalleVentaDAO{
             throw new DAOException ( "Error en SQL: ", ex );
         }
         finally {
-            Conectar.realizarDesconexion(ps, rs, (com.mysql.jdbc.Connection) conn);
+            Conectar.realizarDesconexion(ps, rs, conn);
         }
         
         return miDetalleVenta;
@@ -212,7 +212,7 @@ public class MySQLDetalleVentaDAO implements IDetalleVentaDAO{
             throw new DAOException( "Error en SQL: ", ex);
         }
         finally {
-            Conectar.realizarDesconexion(ps, rs, (com.mysql.jdbc.Connection) conn);
+            Conectar.realizarDesconexion(ps, rs, conn);
         }
         
         return misDetalleVentas;

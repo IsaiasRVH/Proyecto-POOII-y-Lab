@@ -28,6 +28,10 @@ public class Venta {
         this.tipoVenta = tipoVenta;
     }
 
+    public Venta() {
+        
+    }
+
     public int getIdVenta() {
         return idVenta;
     }
