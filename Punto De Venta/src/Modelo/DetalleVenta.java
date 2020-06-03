@@ -11,24 +11,28 @@ package Modelo;
  * @author Isaías Ricardo Valdivia Hernández
  */
 public class DetalleVenta {
-    private Integer idVenta;
+    private int idVenta;
     private String codigo;
     private int cantidad;
     private double precio;
     private double importe;
 
-    public DetalleVenta(String codigo, Integer cantidad, double precio, double importe) {
+    public DetalleVenta(String codigo, int cantidad, double precio, double importe) {
         this.codigo = codigo;
         this.cantidad = cantidad;
         this.precio = precio;
         this.importe = importe;
     }
 
-    public Integer getIdVenta() {
+    public DetalleVenta() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public int getIdVenta() {
         return idVenta;
     }
 
-    public void setIdVenta(Integer idVenta) {
+    public void setIdVenta(int idVenta) {
         this.idVenta = idVenta;
     }
 
