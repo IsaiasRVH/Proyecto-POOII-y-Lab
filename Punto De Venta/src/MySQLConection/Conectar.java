@@ -6,7 +6,8 @@
 package MySQLConection;
 
 import DAO.DAOException;
-import com.mysql.jdbc.Connection;
+import java.sql.Connection;
+
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -50,52 +51,45 @@ public class Conectar {
         return conn;
     }
     
-    public static void realizarDesconexion(PreparedStatement ps, ResultSet rs, Connection conn) throws DAOException {
+    /**
+     *
+     * @param rs
+     * @param conn
+     * @param ps
+     * @throws DAO.DAOException
+     */
+    public static void desconectarPS( PreparedStatement... ps) throws DAOException {
+        if( ps != null ) {
+            try {
+                for(int i = 0; i < ps.length; i++ ) {
+                    ps[i].close(); //cierra la conexion a la base de datos
+                }  
+            } catch (SQLException ex) {
+                System.out.print( "Error en SQL: " + ex.getMessage());
+            }
+        }
+    }
+    
+    /**
+     *
+     * @param ps
+     * @param conn
+     * @throws DAOException
+     */
+    public static void desconectarRS( ResultSet... rs) throws DAOException {
         if( rs != null ) {
-                try {
-                    rs.close(); //cierra la conexion a la base de datos
-                } catch (SQLException ex) {
-                    System.out.print( "Error en SQL: " + ex.getMessage());
-                }
+            try {
+                for(int i = 0; i < rs.length; i++ ) {
+                    rs[i].close(); //cierra la conexion a la base de datos
+                }  
+            } catch (SQLException ex) {
+                System.out.print( "Error en SQL: " + ex.getMessage());
             }
-
-            if( ps != null ) {
-                try {
-                    ps.close(); //cierra la conexion a la base de datos
-                } catch (SQLException ex) {
-                    System.out.print( "Error en SQL: " + ex.getMessage());
-                }
-            }
-
-            if( conn != null ) {
-                try {
-                    conn.close(); //cierra la conexion a la base de datos
-                } catch (SQLException ex) {
-                    throw new DAOException("Error en SQL: ", ex);
-                }
-            }
+        }
+            
     }
     
-    public static void realizarDesconexion(PreparedStatement ps, Connection conn) throws DAOException {
-
-            if( ps != null ) {
-                try {
-                    ps.close(); //cierra la conexion a la base de datos
-                } catch (SQLException ex) {
-                    System.out.print( "Error en SQL: " + ex.getMessage());
-                }
-            }
-
-            if( conn != null ) {
-                try {
-                    conn.close(); //cierra la conexion a la base de datos
-                } catch (SQLException ex) {
-                    throw new DAOException("Error en SQL: ", ex);
-                }
-            }
-    }
-    
-    public static void realizarDesconexion( Connection conn) throws DAOException {
+    public static void desconectarConnection( Connection conn) throws DAOException {
 
 
             if( conn != null ) {
