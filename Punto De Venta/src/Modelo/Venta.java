@@ -7,6 +7,7 @@
 package Modelo;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -19,13 +20,15 @@ public class Venta {
     private Date fecha;
     private double total;
     private String tipoVenta;
+    private List<DetalleVenta> detallesVenta;
 
-    public Venta(int idUsuario, int idCliente, Date fecha, double total, String tipoVenta) {
+    public Venta(int idUsuario, int idCliente, Date fecha, double total, String tipoVenta, List<DetalleVenta> DetallesVenta) {
         this.idUsuario = idUsuario;
         this.idCliente = idCliente;
         this.fecha = fecha;
         this.total = total;
         this.tipoVenta = tipoVenta;
+        this.detallesVenta = detallesVenta;
     }
 
     public Venta() {
@@ -78,6 +81,14 @@ public class Venta {
 
     public void setTipoVenta(String tipoVenta) {
         this.tipoVenta = tipoVenta;
+    }
+    
+    public List<DetalleVenta> getDetallesVenta() {
+        return detallesVenta;
+    }
+
+    public void setMisVentas(List<DetalleVenta> misVentas) {
+        this.detallesVenta = misVentas;
     }
     
 }

@@ -1,5 +1,5 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
+ * To change this license header, choose License HeadersVenta in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
@@ -7,6 +7,7 @@ package DAOMySQL;
 
 import DAO.DAOException;
 import DAO.IVentaDAO;
+import Modelo.DetalleVenta;
 import Modelo.Venta;
 import MySQLConection.Conectar;
 import java.sql.Connection;
@@ -16,6 +17,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -24,14 +27,25 @@ import java.util.List;
 public class MySQLVentaDAO implements IVentaDAO{
     //Creamos las variables para trabajar con SQL
     private Connection conn;
-    private PreparedStatement ps = null;
-    private ResultSet rs = null;
+    private PreparedStatement psVenta = null;
+    private PreparedStatement psDetalleVenta = null;
+    private ResultSet rsVenta = null;
+    private ResultSet rsDetalleVenta  = null;
     
     //Consultas SQL a utilizar
     private final String INSERT = "INSERT INTO venta (idUsuario, idCliente, fecha, total, tipoVenta) VALUES (?, ?, ?, ?, ?)";
     private final String UPDATE = "UPDATE venta SET total = ?, tipoVenta = ? WHERE idVenta = ?";
     private final String GETALL = "SELECT FROM  idVenta, idUsuario, idCliente, fecha, total, tipoVenta FROM venta";
     private final String GETONE = GETALL + " WHERE idVenta = ?";
+    private final String GETDETALLEVENTAPORIDVENTA = "SELECT venta.idVenta, "
+            + "producto.codigo, detalleVenta.cantidad, detalleVenta.precio, "
+            + "detalleVenta.importe FROM venta INNER JOIN detalleVenta ON "
+            + "venta.idVenta = detalleVenta.idVenta INNER JOIN producto ON "
+            + "producto.codigo = detalleVenta.codigo WHERE venta.idVenta = ?";
+    private final String UPDATEDETALLEVENTA = "UPDATE detalleVenta SET  cantidad = ?, "
+            + "precio = ?, importe = ? WHERE idVenta = ? AND codigo = ?";
+    private final String INSERTDETALLEVENTA = "INSERT INTO detalleVenta (idVenta, codigo, "
+            + "cantidad, precio, importe) VALUES (?, ?, ?, ?, ?)";
 
     @Override
     public void insertar(Venta venta) throws DAOException {
@@ -41,29 +55,53 @@ public class MySQLVentaDAO implements IVentaDAO{
             conn.setAutoCommit(false);
             
             //preparamos la consulta y especificamos los parametros de entrada
-            ps = conn.prepareStatement(INSERT, PreparedStatement.RETURN_GENERATED_KEYS);
-            ps.setInt(1, venta.getIdUsuario());
-            ps.setInt(2, venta.getIdCliente());
-            ps.setDate(3, new Date(venta.getFecha().getTime()));
-            ps.setDouble(4, venta.getTotal());
-            ps.setString(5, venta.getTipoVenta());
+            psVenta = conn.prepareStatement(INSERT, PreparedStatement.RETURN_GENERATED_KEYS);
+            psVenta.setInt(1, venta.getIdUsuario());
+            psVenta.setInt(2, venta.getIdCliente());
+            psVenta.setDate(3, new Date(venta.getFecha().getTime()));
+            psVenta.setDouble(4, venta.getTotal());
+            psVenta.setString(5, venta.getTipoVenta());
             
             //ejecutamos la consulta y verificamos el resultado
-            if(ps.executeUpdate() == 0) {
+            if(psVenta.executeUpdate() == 0) {
                 throw new DAOException( "No se pudo guardar la venta.");
             } else {
-                rs = ps.getGeneratedKeys();
-                if(rs.next()) {
-                    venta.setIdVenta(rs.getInt(1));
+                rsVenta = psVenta.getGeneratedKeys();
+                if(rsVenta.next()) {
+                    venta.setIdVenta(rsVenta.getInt(1));
                 } else {
                     throw new DAOException("No se pudo asignar el ID a la venta.");
                 }
             }
+            
+            for (DetalleVenta detalleVenta : venta.getDetallesVenta()) {
+                psDetalleVenta = conn.prepareStatement(INSERTDETALLEVENTA);
+                psDetalleVenta.setInt(1, detalleVenta.getIdVenta());
+                psDetalleVenta.setString(2, detalleVenta.getCodigo());
+                psDetalleVenta.setInt(3, detalleVenta.getCantidad());
+                psDetalleVenta.setDouble(4, detalleVenta.getPrecio());
+                psDetalleVenta.setDouble(5, detalleVenta.getImporte());
+                
+                
+                //ejecutamos la consulta y verificamos el resultado
+                if(psDetalleVenta.executeUpdate() == 0) {
+                    throw new DAOException( "No se pudo guardar la venta.");
+                }
+            }
+            
+            
+            
+            conn.commit();
         } catch(SQLException ex) {
+            try {
+                conn.rollback();
+            } catch (SQLException ex1) {
+                throw new DAOException("Error de SQL: ", ex);
+            }
             throw new DAOException("Error de SQL: ", ex);
         } finally {
-            Conectar.desconectarRS(rs);
-            Conectar.desconectarPS(ps);
+            Conectar.desconectarRS(rsVenta);
+            Conectar.desconectarPS(psVenta);
             Conectar.desconectarConnection(conn);
         }
     }//fin del metodo insertar
@@ -75,21 +113,21 @@ public class MySQLVentaDAO implements IVentaDAO{
             conn = Conectar.realizarConexion();
             
             //preparamos la consulta y especificamos los parametros de entrada
-            ps = conn.prepareStatement(UPDATE);
-            ps.setDouble(1, venta.getTotal());
-            ps.setString(2, venta.getTipoVenta());
-            ps.setInt(3, venta.getIdVenta());
+            psVenta = conn.prepareStatement(UPDATE);
+            psVenta.setDouble(1, venta.getTotal());
+            psVenta.setString(2, venta.getTipoVenta());
+            psVenta.setInt(3, venta.getIdVenta());
             
             //ejecutamos la consulta y verificamos el resultado
-            if(ps.executeUpdate() == 0) {
+            if(psVenta.executeUpdate() == 0) {
                 throw new DAOException ("Hubo un problema "
                             + "y no se realizaron los cambios.");
             }
         } catch(SQLException ex) {
             throw new DAOException("Error de SQL: ", ex);
         } finally {
-            Conectar.desconectarRS(rs);
-            Conectar.desconectarPS(ps);
+            Conectar.desconectarRS(rsVenta);
+            Conectar.desconectarPS(psVenta);
             Conectar.desconectarConnection(conn);
         }
     }//fin del metodo modificar
@@ -109,28 +147,28 @@ public class MySQLVentaDAO implements IVentaDAO{
             conn = Conectar.realizarConexion();
             
             //preparamos la consulta
-            ps = conn.prepareStatement(GETALL);
+            psVenta = conn.prepareStatement(GETALL);
             
             //ejecutamos la consulta y almacenamos el resultado en un objeto
             //ResultSet
-            rs = ps.executeQuery();
+            rsVenta = psVenta.executeQuery();
             
             //recorremos el ResultSet y agregamos cada item al ArrayList
-            while( rs.next()) {
+            while( rsVenta.next()) {
                 Venta miVenta = new Venta();
-                miVenta.setIdVenta(rs.getInt("idVenta"));
-                miVenta.setIdUsuario(rs.getInt("idUsuario"));
-                miVenta.setIdCliente(rs.getInt("idCliente"));
-                miVenta.setFecha(rs.getDate("fecha"));
-                miVenta.setTotal(rs.getDouble("total"));
-                miVenta.setTipoVenta(rs.getString("tipoVenta"));
+                miVenta.setIdVenta(rsVenta.getInt("idVenta"));
+                miVenta.setIdUsuario(rsVenta.getInt("idUsuario"));
+                miVenta.setIdCliente(rsVenta.getInt("idCliente"));
+                miVenta.setFecha(rsVenta.getDate("fecha"));
+                miVenta.setTotal(rsVenta.getDouble("total"));
+                miVenta.setTipoVenta(rsVenta.getString("tipoVenta"));
                 misVentas.add(miVenta);
             }
         } catch(SQLException ex) {
             throw new DAOException("Error de SQL: ", ex);
         } finally {
-            Conectar.desconectarRS(rs);
-            Conectar.desconectarPS(ps);
+            Conectar.desconectarRS(rsVenta);
+            Conectar.desconectarPS(psVenta);
             Conectar.desconectarConnection(conn);
         }
         return misVentas;
@@ -145,30 +183,30 @@ public class MySQLVentaDAO implements IVentaDAO{
             conn = Conectar.realizarConexion();
             
             //preparamos la consulta y definimos los parametros
-            ps = conn.prepareStatement(GETONE);
-            ps.setInt(1, id);
+            psVenta = conn.prepareStatement(GETONE);
+            psVenta.setInt(1, id);
             
             //ejecutamos la consulta y el resultado lo almacenamos en un ResultSet
-            rs = ps.executeQuery();
+            rsVenta = psVenta.executeQuery();
             
             //verificamos si el ResultSet obtuvo un resultado y lo asignamos
             //al objeto correspondiente
-            if(rs.next()) {
+            if(rsVenta.next()) {
                 miVenta = new Venta();
-                miVenta.setIdVenta(rs.getInt("idVenta"));
-                miVenta.setIdUsuario(rs.getInt("idUsuario"));
-                miVenta.setIdCliente(rs.getInt("idCliente"));
-                miVenta.setFecha(rs.getDate("fecha"));
-                miVenta.setTotal(rs.getDouble("total"));
-                miVenta.setTipoVenta(rs.getString("tipoVenta"));
+                miVenta.setIdVenta(rsVenta.getInt("idVenta"));
+                miVenta.setIdUsuario(rsVenta.getInt("idUsuario"));
+                miVenta.setIdCliente(rsVenta.getInt("idCliente"));
+                miVenta.setFecha(rsVenta.getDate("fecha"));
+                miVenta.setTotal(rsVenta.getDouble("total"));
+                miVenta.setTipoVenta(rsVenta.getString("tipoVenta"));
             } else {
                 throw new DAOException("No se encontro la venta.");
             }
         } catch (SQLException ex) {
             throw new DAOException("Error de SQL: ", ex);
         } finally {
-            Conectar.desconectarRS(rs);
-            Conectar.desconectarPS(ps);
+            Conectar.desconectarRS(rsVenta);
+            Conectar.desconectarPS(psVenta);
             Conectar.desconectarConnection(conn);
         }
         return miVenta;
