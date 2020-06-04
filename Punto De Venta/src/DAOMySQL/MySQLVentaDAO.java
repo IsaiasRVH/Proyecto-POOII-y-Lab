@@ -38,6 +38,7 @@ public class MySQLVentaDAO implements IVentaDAO{
         try {
             //creamos la conexion a la base de datos
             conn = Conectar.realizarConexion();
+            conn.setAutoCommit(false);
             
             //preparamos la consulta y especificamos los parametros de entrada
             ps = conn.prepareStatement(INSERT, PreparedStatement.RETURN_GENERATED_KEYS);
@@ -61,7 +62,9 @@ public class MySQLVentaDAO implements IVentaDAO{
         } catch(SQLException ex) {
             throw new DAOException("Error de SQL: ", ex);
         } finally {
-            Conectar.realizarDesconexion(ps, rs, conn);
+            Conectar.desconectarRS(rs);
+            Conectar.desconectarPS(ps);
+            Conectar.desconectarConnection(conn);
         }
     }//fin del metodo insertar
 
@@ -85,7 +88,9 @@ public class MySQLVentaDAO implements IVentaDAO{
         } catch(SQLException ex) {
             throw new DAOException("Error de SQL: ", ex);
         } finally {
-            Conectar.realizarDesconexion(ps, rs,  conn);
+            Conectar.desconectarRS(rs);
+            Conectar.desconectarPS(ps);
+            Conectar.desconectarConnection(conn);
         }
     }//fin del metodo modificar
 
@@ -124,7 +129,9 @@ public class MySQLVentaDAO implements IVentaDAO{
         } catch(SQLException ex) {
             throw new DAOException("Error de SQL: ", ex);
         } finally {
-            Conectar.realizarDesconexion(ps, rs, conn);
+            Conectar.desconectarRS(rs);
+            Conectar.desconectarPS(ps);
+            Conectar.desconectarConnection(conn);
         }
         return misVentas;
     }//fin del metodo obtenerTodos
@@ -160,7 +167,9 @@ public class MySQLVentaDAO implements IVentaDAO{
         } catch (SQLException ex) {
             throw new DAOException("Error de SQL: ", ex);
         } finally {
-            Conectar.realizarDesconexion(ps, rs, conn);
+            Conectar.desconectarRS(rs);
+            Conectar.desconectarPS(ps);
+            Conectar.desconectarConnection(conn);
         }
         return miVenta;
     }//fin del metodo obtener

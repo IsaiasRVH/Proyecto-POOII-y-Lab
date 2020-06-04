@@ -78,7 +78,9 @@ public class MySQLProveedorDAO implements IProveedorDAO {
             throw new DAOException ( "Error en SQL: ", ex );
         }
         finally {
-            Conectar.realizarDesconexion(ps, rs, conn);
+            Conectar.desconectarRS(rs);
+            Conectar.desconectarPS(ps);
+            Conectar.desconectarConnection(conn);
         }
     }//fin del metodo insertar
 
@@ -111,7 +113,9 @@ public class MySQLProveedorDAO implements IProveedorDAO {
             throw new DAOException ("Error de SQL:", ex);
         }
         finally {
-                Conectar.realizarDesconexion(ps, conn);
+            Conectar.desconectarRS(rs);
+            Conectar.desconectarPS(ps);
+            Conectar.desconectarConnection(conn);
         }
     }//fin del metodo modificar
 
@@ -134,7 +138,9 @@ public class MySQLProveedorDAO implements IProveedorDAO {
             throw new DAOException( "Error en SQL: ", ex);
         }
         finally {
-            Conectar.realizarDesconexion(ps, conn);
+            Conectar.desconectarRS(rs);
+            Conectar.desconectarPS(ps);
+            Conectar.desconectarConnection(conn);
         }
     }//fin del metodo eliminar
 
@@ -173,7 +179,9 @@ public class MySQLProveedorDAO implements IProveedorDAO {
             throw new DAOException( "Error en SQL: ", ex);
         }
         finally {
-            Conectar.realizarDesconexion(ps, rs, conn);
+            Conectar.desconectarRS(rs);
+            Conectar.desconectarPS(ps);
+            Conectar.desconectarConnection(conn);
         }
         
         return misProveedors;
@@ -217,7 +225,9 @@ public class MySQLProveedorDAO implements IProveedorDAO {
             throw new DAOException ( "Error en SQL: ", ex );
         }
         finally {
-            Conectar.realizarDesconexion(ps, rs, conn);
+            Conectar.desconectarRS(rs);
+            Conectar.desconectarPS(ps);
+            Conectar.desconectarConnection(conn);
         }
         
         return miProveedor;

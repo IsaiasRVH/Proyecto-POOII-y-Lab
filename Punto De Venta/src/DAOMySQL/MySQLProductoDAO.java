@@ -58,7 +58,9 @@ public class MySQLProductoDAO implements IProductoDAO{
         } catch(SQLException ex) {
             throw new DAOException("Error de SQL: ", ex);
         } finally {
-            Conectar.realizarDesconexion(ps, rs, conn);
+            Conectar.desconectarRS(rs);
+            Conectar.desconectarPS(ps);
+            Conectar.desconectarConnection(conn);
         }
     }//fin del metodo insertar
 
@@ -86,7 +88,9 @@ public class MySQLProductoDAO implements IProductoDAO{
         } catch(SQLException ex) {
             throw new DAOException("Error de SQL: ", ex);
         } finally {
-            Conectar.realizarDesconexion(ps, rs, conn);
+            Conectar.desconectarRS(rs);
+            Conectar.desconectarPS(ps);
+            Conectar.desconectarConnection(conn);
         }
     }//fin del metodo modificar
 
@@ -107,7 +111,9 @@ public class MySQLProductoDAO implements IProductoDAO{
         } catch(SQLException ex) {
             throw new DAOException("Error en SQL: ", ex);
         } finally {
-            Conectar.realizarDesconexion(ps, rs, conn);
+            Conectar.desconectarRS(rs);
+            Conectar.desconectarPS(ps);
+            Conectar.desconectarConnection(conn);
         }
     }//fin del metodo eliminar
 
@@ -147,7 +153,9 @@ public class MySQLProductoDAO implements IProductoDAO{
         } catch(SQLException ex) {
             throw new DAOException("Error en SQL: ", ex);
         } finally {
-            Conectar.realizarDesconexion(ps, rs, conn);
+            Conectar.desconectarRS(rs);
+            Conectar.desconectarPS(ps);
+            Conectar.desconectarConnection(conn);
         };
         return misProductos;
     }//fin del metodo obtenerTodos
@@ -188,7 +196,9 @@ public class MySQLProductoDAO implements IProductoDAO{
         } catch(SQLException ex) {
             throw new DAOException ("Error de SQL: ", ex);
         } finally {
-            Conectar.realizarDesconexion(ps, rs, conn);
+            Conectar.desconectarRS(rs);
+            Conectar.desconectarPS(ps);
+            Conectar.desconectarConnection(conn);
         }
         return miProducto;
     }//fin del metodo obtener

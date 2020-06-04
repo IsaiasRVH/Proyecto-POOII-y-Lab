@@ -76,7 +76,9 @@ public class MySQLUsuarioDAO implements IUsuarioDAO{
         } catch(SQLException ex) {
             throw new DAOException("Error de SQL: ", ex);
         } finally {
-            Conectar.realizarDesconexion(ps, rs, conn);
+            Conectar.desconectarRS(rs);
+            Conectar.desconectarPS(ps);
+            Conectar.desconectarConnection(conn);
         }
     }//fin del metodo insertar
 
@@ -110,7 +112,9 @@ public class MySQLUsuarioDAO implements IUsuarioDAO{
         } catch(SQLException ex) {
             throw new DAOException("Error de SQL: ", ex);
         } finally {
-            Conectar.realizarDesconexion(ps, rs, conn);
+            Conectar.desconectarRS(rs);
+            Conectar.desconectarPS(ps);
+            Conectar.desconectarConnection(conn);
         }
     }//fin del metodo modificar
 
@@ -132,7 +136,9 @@ public class MySQLUsuarioDAO implements IUsuarioDAO{
         } catch(SQLException ex) {
             throw new DAOException("Error de SQL: ", ex);
         } finally {
-            Conectar.realizarDesconexion(ps, rs, conn);
+            Conectar.desconectarRS(rs);
+            Conectar.desconectarPS(ps);
+            Conectar.desconectarConnection(conn);
         }
     }//fin del metodo eliminar
 
@@ -177,7 +183,9 @@ public class MySQLUsuarioDAO implements IUsuarioDAO{
         }catch(SQLException ex) {
             throw new DAOException("Error en SQL: ", ex);
         } finally {
-            Conectar.realizarDesconexion(ps, rs, conn);
+            Conectar.desconectarRS(rs);
+            Conectar.desconectarPS(ps);
+            Conectar.desconectarConnection(conn);
         }
         return misUsuarios;
     }//fin del metodo obtenerTodos
@@ -222,7 +230,9 @@ public class MySQLUsuarioDAO implements IUsuarioDAO{
         } catch(SQLException ex) {
             throw new DAOException("Error de SQL: ", ex);
         } finally {
-            Conectar.realizarDesconexion(ps, rs, conn);
+            Conectar.desconectarRS(rs);
+            Conectar.desconectarPS(ps);
+            Conectar.desconectarConnection(conn);
         }
         return miUsuario;
     }//fin del metodo obtener
