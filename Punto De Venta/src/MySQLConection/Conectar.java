@@ -6,8 +6,7 @@
 package MySQLConection;
 
 import DAO.DAOException;
-import java.sql.Connection;
-
+import com.mysql.jdbc.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
