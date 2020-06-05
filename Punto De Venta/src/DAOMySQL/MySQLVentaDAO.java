@@ -115,7 +115,6 @@ public class MySQLVentaDAO implements IVentaDAO{
             //preparamos la consulta y especificamos los parametros de entrada
             psVenta = conn.prepareStatement(UPDATE);
             psVenta.setDouble(1, venta.getTotal());
-            psVenta.setString(2, venta.getTipoVenta());
             psVenta.setInt(3, venta.getIdVenta());
             
             //ejecutamos la consulta y verificamos el resultado
@@ -134,7 +133,7 @@ public class MySQLVentaDAO implements IVentaDAO{
 
     @Override
     public void eliminar(Integer id) throws DAOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
 
     @Override
@@ -186,8 +185,14 @@ public class MySQLVentaDAO implements IVentaDAO{
             psVenta = conn.prepareStatement(GETONE);
             psVenta.setInt(1, id);
             
+            
             //ejecutamos la consulta y el resultado lo almacenamos en un ResultSet
             rsVenta = psVenta.executeQuery();
+            
+            psDetalleVenta = conn.prepareStatement(GETDETALLEVENTAPORIDVENTA);
+            psDetalleVenta.setInt(1, id);
+            
+            rsDetalleVenta = psDetalleVenta.executeQuery();
             
             //verificamos si el ResultSet obtuvo un resultado y lo asignamos
             //al objeto correspondiente
@@ -199,6 +204,17 @@ public class MySQLVentaDAO implements IVentaDAO{
                 miVenta.setFecha(rsVenta.getDate("fecha"));
                 miVenta.setTotal(rsVenta.getDouble("total"));
                 miVenta.setTipoVenta(rsVenta.getString("tipoVenta"));
+                
+                while(rsDetalleVenta.next()) {
+                    DetalleVenta miDetalle = new DetalleVenta();
+                    miDetalle.setIdVenta(rsDetalleVenta.getInt("idVenta"));
+                    miDetalle.setCodigo(rsDetalleVenta.getString("codigo"));
+                    miDetalle.setCantidad(rsDetalleVenta.getInt("cantidad"));
+                    miDetalle.setPrecio(rsDetalleVenta.getDouble("precio"));
+                    miDetalle.setImporte(rsDetalleVenta.getDouble("importe"));
+                }
+                
+                
             } else {
                 throw new DAOException("No se encontro la venta.");
             }
