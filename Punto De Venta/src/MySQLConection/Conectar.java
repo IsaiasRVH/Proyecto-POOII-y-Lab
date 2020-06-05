@@ -24,7 +24,7 @@ public class Conectar {
     private static final String CONTROLADOR = "com.mysql.jdbc.Driver";
     private static final String USUARIO = "root";
     private static final String PASSWORD = "";
-    private static final String URL_BASEDATOS = "jdbc:mysql://192.168.56.1:888/libros?useSSL=true";
+    private static final String URL_BASEDATOS = "jdbc:mysql://localhost/zapateria?useSSL=true";
     
     private static Connection conn = null;
     
@@ -42,7 +42,6 @@ public class Conectar {
             //Establece la conexion a la base de datos
             conn = (Connection) DriverManager.getConnection(URL_BASEDATOS, USUARIO, PASSWORD);
             
-            System.out.println("EstoyDentro");
         } catch (ClassNotFoundException ex) {
             throw new DAOException("Error en la conexion: ", ex);
         } catch (SQLException ex) {
