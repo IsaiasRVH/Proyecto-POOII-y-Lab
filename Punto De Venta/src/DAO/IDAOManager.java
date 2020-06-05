@@ -12,8 +12,6 @@ package DAO;
 public interface IDAOManager {
     IClienteDAO getClienteDAO();
     
-    IDetalleVentaDAO getDetalleVentaDAO();
-    
     IProductoDAO getProductoDAO();
     
     IProveedorDAO getProveedorDAO();
