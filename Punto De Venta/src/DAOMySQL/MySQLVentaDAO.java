@@ -47,6 +47,11 @@ public class MySQLVentaDAO implements IVentaDAO{
     private final String INSERTDETALLEVENTA = "INSERT INTO detalleVenta (idVenta, codigo, "
             + "cantidad, precio, importe) VALUES (?, ?, ?, ?, ?)";
 
+    /**
+    * Inserta un registro en la tabla Venta, ademas de los registros que sean necesarios en
+    * la tabla DetalleVenta
+    * @param venta La venta a insertar en la base de datos
+    **/
     @Override
     public void insertar(Venta venta) throws DAOException {
         try {
@@ -106,6 +111,10 @@ public class MySQLVentaDAO implements IVentaDAO{
         }
     }//fin del metodo insertar
 
+    /**
+    * Modifica un registro de venta en la base de datos
+    * @param La venta ya modificada para reflejar los cambios en la base de datos
+    **/
     @Override
     public void modificar(Venta venta) throws DAOException {
         try {
@@ -173,6 +182,12 @@ public class MySQLVentaDAO implements IVentaDAO{
         return misVentas;
     }//fin del metodo obtenerTodos
 
+    /**
+    * Obtiene un registro de la tabla venta y sus respectivos registros en 
+    * la tabla detalleVenta
+    * @param id El id de la venta a obtener
+    * @return Un onjeto Venta con la informacion obtenida de la base de datos
+    **/
     @Override
     public Venta obtener(Integer id) throws DAOException {
         //venta a retornar
