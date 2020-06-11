@@ -49,7 +49,10 @@ public class MySQLClienteDAO implements IClienteDAO{
             + "calleYNumero, colonia, ciudad, codigoPostal, estado, pais, "
             + "telefono, email, adeudo FROM cliente WHERE idCliente = ?";
 
-    
+    /**
+    * Inserta un cliente a la base de datos
+    * @param cliente El cliente del cual extraeremos los datos para insertar
+    **/
     @Override
     public void insertar(Cliente cliente) throws DAOException {
         try {
@@ -93,6 +96,11 @@ public class MySQLClienteDAO implements IClienteDAO{
         }
     }
 
+    /**
+    * Modifica un registro de la tabla cliente en la base de datos
+    * @param cliente El cliente ya con los datos modificados para poder aplicarlos
+    * a la base de datos
+    **/
     @Override
     public void modificar(Cliente cliente) throws DAOException {
        try {
@@ -129,6 +137,10 @@ public class MySQLClienteDAO implements IClienteDAO{
         }
     }
 
+    /**
+    * Elimina un registro de la base de datos
+    * @param id El id del registro a eliminar
+    **/
     @Override
     public void eliminar(Integer id) throws DAOException {
         try {
@@ -153,6 +165,10 @@ public class MySQLClienteDAO implements IClienteDAO{
         }
     }
 
+    /**
+    * Obtiene todos los registros de la tabla cliente de la base
+    * de datos
+    **/
     @Override
     public List<Cliente> obtenerTodos() throws DAOException {
         //Lista de clientees a retornar
@@ -198,6 +214,10 @@ public class MySQLClienteDAO implements IClienteDAO{
         return misClientes;
     }
 
+    /**
+    * Obtiene un registro de la base de datos
+    * id El id del registro que se quiere obtener
+    **/
     @Override
     public Cliente obtener(Integer id) throws DAOException {
         //Cliente a retornar
