@@ -41,6 +41,9 @@ public class MySQLUsuarioDAO implements IUsuarioDAO{
             + "estado, pais, salario, contrasenia FROM usuario";
     private final String GETONE = GETALL + " WHERE idUsuario = ?";
 
+    private final String GETUSUARIOSBUSCADOS = GETALL + " WHERE idUsuario = ? "
+            + "OR nombre LIKE ? OR apellidos LIKE ?";
+    
     @Override
     public void insertar(Usuario usuario) throws DAOException {
         try {
@@ -49,18 +52,31 @@ public class MySQLUsuarioDAO implements IUsuarioDAO{
             
             //preparamos la consulta y especificamos los parametros de entrada
             ps = conn.prepareStatement(INSERT, PreparedStatement.RETURN_GENERATED_KEYS);
+
             ps.setString(1, usuario.getNombre());
+                        System.out.println();
             ps.setString(2, usuario.getApellidos());
+                        System.out.println();
             ps.setString(3, usuario.getTelefono());
+                        System.out.println();
             ps.setString(4, usuario.getEmail());
+                        System.out.println();
             ps.setString(5, usuario.getCalleYNumero());
+                        System.out.println();
             ps.setString(6, usuario.getColonia());
+                        System.out.println();
             ps.setString(7, usuario.getCodigoPostal());
+                        System.out.println();
             ps.setString(8, usuario.getCiudad());
+                        System.out.println();
             ps.setString(9, usuario.getEstado());
+                        System.out.println();
             ps.setString(10, usuario.getPais());
+                        System.out.println();
             ps.setDouble(11, usuario.getSalario());
+                        System.out.println();
             ps.setString(12, usuario.getContrasenia());
+                        System.out.println();
             
             //ejecutamos la consulta y verificamos el resultado
             if(ps.executeUpdate() == 0) { //if 1.0
@@ -76,7 +92,6 @@ public class MySQLUsuarioDAO implements IUsuarioDAO{
         } catch(SQLException ex) {
             throw new DAOException("Error de SQL: ", ex);
         } finally {
-            Conectar.desconectarRS(rs);
             Conectar.desconectarPS(ps);
             Conectar.desconectarConnection(conn);
         }
@@ -112,7 +127,6 @@ public class MySQLUsuarioDAO implements IUsuarioDAO{
         } catch(SQLException ex) {
             throw new DAOException("Error de SQL: ", ex);
         } finally {
-            Conectar.desconectarRS(rs);
             Conectar.desconectarPS(ps);
             Conectar.desconectarConnection(conn);
         }
@@ -136,7 +150,6 @@ public class MySQLUsuarioDAO implements IUsuarioDAO{
         } catch(SQLException ex) {
             throw new DAOException("Error de SQL: ", ex);
         } finally {
-            Conectar.desconectarRS(rs);
             Conectar.desconectarPS(ps);
             Conectar.desconectarConnection(conn);
         }
@@ -236,4 +249,50 @@ public class MySQLUsuarioDAO implements IUsuarioDAO{
         }
         return miUsuario;
     }//fin del metodo obtener
+    
+    public List<Usuario> obtenerBuscados(String parametro) throws DAOException {
+        //Lista de productos a retornar
+        List<Usuario> misUsuarios = new ArrayList<Usuario>();
+        
+         try {
+            //creamos la conexion a la base de datos
+             conn = Conectar.realizarConexion();
+            
+            ////preparamos la consulta
+            ps = conn.prepareStatement(GETUSUARIOSBUSCADOS);
+            ps.setString(1, parametro);
+            ps.setString(2, "%" + parametro + "%");
+            ps.setString(3, "%" + parametro + "%");
+            
+            
+            //ejecutamos la consulta y almacenamos el resultado en un objeto ResultSet
+            rs = ps.executeQuery();
+            
+            //Recorremos el ResultSet y agreamos cada item al arrayList
+            while(rs.next()) {
+                Usuario miUsuario = new Usuario();
+                miUsuario.setIdUsuario(rs.getInt("idUsuario"));
+                miUsuario.setNombre(rs.getString("nombre"));
+                miUsuario.setApellidos(rs.getString("apellidos"));
+                miUsuario.setTelefono(rs.getString("telefono"));
+                miUsuario.setEmail(rs.getString("email"));
+                miUsuario.setCalleYNumero(rs.getString("calleYNumero"));
+                miUsuario.setColonia(rs.getString("colonia"));
+                miUsuario.setCodigoPostal(rs.getString("codigoPostal"));
+                miUsuario.setCiudad(rs.getString("ciudad"));
+                miUsuario.setEstado(rs.getString("estado"));
+                miUsuario.setPais(rs.getString("pais"));
+                miUsuario.setSalario(rs.getDouble("salario"));
+                miUsuario.setContrasenia(rs.getString("contrasenia"));
+                misUsuarios.add(miUsuario);
+            } 
+        }catch(SQLException ex) {
+            throw new DAOException("Error en SQL: ", ex);
+        } finally {
+            Conectar.desconectarRS(rs);
+            Conectar.desconectarPS(ps);
+            Conectar.desconectarConnection(conn);
+        }
+        return misUsuarios;
+    }
 }
