@@ -24,6 +24,8 @@ public class FrmLogin extends javax.swing.JFrame {
     //Los ids de los usuarios en el combobox
     int [] idsUsuarios;
     
+    private String URLLogo = "/Imagenes/Logo.png";
+    
     //Manager de la base de datos
     private IDAOManager manager = null;
     
@@ -34,6 +36,9 @@ public class FrmLogin extends javax.swing.JFrame {
         initComponents();
         manager = new MySQLDAOManager();
         cargarUsuarios();
+        
+        pnlLogo.add(new Imagen(244,150, URLLogo));
+        pnlLogo.repaint();
     }
 
     /**
@@ -46,6 +51,7 @@ public class FrmLogin extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        pnlLogo = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         cmbUsuarios = new javax.swing.JComboBox<>();
@@ -60,18 +66,40 @@ public class FrmLogin extends javax.swing.JFrame {
 
         jPanel1.setToolTipText("");
 
+        javax.swing.GroupLayout pnlLogoLayout = new javax.swing.GroupLayout(pnlLogo);
+        pnlLogo.setLayout(pnlLogoLayout);
+        pnlLogoLayout.setHorizontalGroup(
+            pnlLogoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 244, Short.MAX_VALUE)
+        );
+        pnlLogoLayout.setVerticalGroup(
+            pnlLogoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 150, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(77, 77, 77)
+                .addComponent(pnlLogo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(67, 67, 67))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 49, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(pnlLogo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 12, Short.MAX_VALUE))
         );
 
         jLabel1.setText("Usuario:");
+
+        cmbUsuarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbUsuariosActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Constraseña:");
 
@@ -105,10 +133,10 @@ public class FrmLogin extends javax.swing.JFrame {
                                 .addGap(12, 12, 12)
                                 .addComponent(lblErrorLogin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(141, 141, 141)
                 .addComponent(bntIniciarSesion)
-                .addGap(129, 129, 129))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -156,6 +184,10 @@ public class FrmLogin extends javax.swing.JFrame {
         comprobarLogin();
     }//GEN-LAST:event_bntIniciarSesionActionPerformed
 
+    private void cmbUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbUsuariosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbUsuariosActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -202,7 +234,13 @@ public class FrmLogin extends javax.swing.JFrame {
             }
         } catch (DAOException ex) {
             imprimirMensajeDeErrorDAO(ex);
-        }        
+        } catch (NullPointerException ex) {
+            JOptionPane.showMessageDialog(null, 
+                "No se ha podido cargar los usuarios." + "\n" + 
+                    "Vuelve a intentarlo.",
+                "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(0);
+        }
     }
     
     public void comprobarLogin() {
@@ -254,6 +292,7 @@ public class FrmLogin extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel lblErrorLogin;
+    private javax.swing.JPanel pnlLogo;
     private javax.swing.JPasswordField pswContrasenia;
     // End of variables declaration//GEN-END:variables
 }
