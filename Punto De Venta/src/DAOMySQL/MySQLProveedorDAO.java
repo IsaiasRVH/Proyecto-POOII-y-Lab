@@ -43,6 +43,10 @@ public class MySQLProveedorDAO implements IProveedorDAO {
 
     private final String GETONE = GETALL + " WHERE idProveedor = ?";
 
+    /**
+    * Inserta un registro en la tabla proveedor
+    * @param proveedor El proveedor que se va a agregar a la base de datos
+    **/
     @Override
     public void insertar(Proveedor proveedor) throws DAOException {
         try {
@@ -84,6 +88,10 @@ public class MySQLProveedorDAO implements IProveedorDAO {
         }
     }//fin del metodo insertar
 
+    /**
+    * Modifica un registro en la tabla proveedor
+    * @param proveedor El proveedor ya modificado para aplicar los cambios en la base de datos
+    **/
     @Override
     public void modificar(Proveedor proveedor) throws DAOException {
        try {
@@ -113,12 +121,15 @@ public class MySQLProveedorDAO implements IProveedorDAO {
             throw new DAOException ("Error de SQL:", ex);
         }
         finally {
-            Conectar.desconectarRS(rs);
             Conectar.desconectarPS(ps);
             Conectar.desconectarConnection(conn);
         }
     }//fin del metodo modificar
 
+    /**
+    * Elimina un registro de la tabla proveedor
+    * @param id El id del proveedor a eliminar
+    **/
     @Override
     public void eliminar(Integer id) throws DAOException {
         try {
@@ -144,6 +155,10 @@ public class MySQLProveedorDAO implements IProveedorDAO {
         }
     }//fin del metodo eliminar
 
+    /**
+    * Obtiene todos los registros de la tabla proveedor
+    * @return Una lista con todos los proveedores
+    **/
     @Override
     public List<Proveedor> obtenerTodos() throws DAOException {
         //Lista de proveedores a retornar
@@ -187,6 +202,11 @@ public class MySQLProveedorDAO implements IProveedorDAO {
         return misProveedors;
     }//fin del metodo obtenerTodos
 
+    /**
+    * Devuelve un registro de la tabla proveedor
+    *@param id El id del proveedor buscado
+    *@return El proveedor que coincide con el id buscado
+    **/
     @Override
     public Proveedor obtener(Integer id) throws DAOException {
         //Proveedor a retornar
