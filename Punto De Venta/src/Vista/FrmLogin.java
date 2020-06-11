@@ -9,6 +9,7 @@ import DAO.DAOException;
 import DAO.IDAOManager;
 import DAOMySQL.MySQLDAOManager;
 import Modelo.Usuario;
+import java.awt.Toolkit;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
@@ -37,6 +38,8 @@ public class FrmLogin extends javax.swing.JFrame {
         manager = new MySQLDAOManager();
         cargarUsuarios();
         
+        //Se establece 
+        setIconImage(Toolkit.getDefaultToolkit().getImage(this.getClass().getResource(URLLogo)));
         pnlLogo.add(new Imagen(244,150, URLLogo));
         pnlLogo.repaint();
     }
@@ -248,7 +251,8 @@ public class FrmLogin extends javax.swing.JFrame {
             int idUsuario = idsUsuarios[cmbUsuarios.getSelectedIndex()];
             usuarioActivo = manager.getUsuarioDAO().obtener(idUsuario);
             if(pswContrasenia.getText().equals(usuarioActivo.getContrasenia())) {
-                
+                FrmPrincipal paginaPrincipal = new FrmPrincipal(usuarioActivo);
+                paginaPrincipal.setVisible(true);
                 this.dispose();
             }
             else {
