@@ -34,6 +34,10 @@ public class MySQLProductoDAO implements IProductoDAO{
     private final String GETALL = "SELECT codigo, modelo, marca, color, estilo, existencias, precio, idProveedor FROM producto";
     private final String GETONE = "SELECT codigo, modelo, marca, color, estilo, existencias, precio, idProveedor FROM producto WHERE codigo = ?";
 
+    /**
+    * Inserta un registro en la tabla producto
+    * @param producto El producto a insertar
+    *//
     @Override
     public void insertar(Producto producto) throws DAOException {
         try {
@@ -64,6 +68,11 @@ public class MySQLProductoDAO implements IProductoDAO{
         }
     }//fin del metodo insertar
 
+    /**
+    * Modifica un registro de la tabla producto
+    * @param producto El producto ya modificado para ejecutar los 
+    * cambios en la base de datos.
+    **/
     @Override
     public void modificar(Producto producto) throws DAOException {
         try{
@@ -94,6 +103,10 @@ public class MySQLProductoDAO implements IProductoDAO{
         }
     }//fin del metodo modificar
 
+    /**
+    * Elimina un registro de la tabla producto
+    * @param codigo El codigo del producto a eliminar
+    **/
     @Override
     public void eliminar(String codigo) throws DAOException {
         try {
@@ -160,6 +173,10 @@ public class MySQLProductoDAO implements IProductoDAO{
         return misProductos;
     }//fin del metodo obtenerTodos
 
+    /**
+    * Este metodo obtiene un registro de la tabla producto
+    * @param codigo El codigo del producto que se desea obtener
+    **/
     @Override
     public Producto obtener(String codigo) throws DAOException {
         //Producto a retornar
