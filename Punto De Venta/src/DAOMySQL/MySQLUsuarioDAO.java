@@ -44,6 +44,10 @@ public class MySQLUsuarioDAO implements IUsuarioDAO{
     private final String GETUSUARIOSBUSCADOS = GETALL + " WHERE idUsuario = ? "
             + "OR nombre LIKE ? OR apellidos LIKE ?";
     
+    /**
+    * Inserta un registro a la base de datos
+    * @param usuario El usuario que se va a insertar en la base de datos
+    **/
     @Override
     public void insertar(Usuario usuario) throws DAOException {
         try {
@@ -97,6 +101,10 @@ public class MySQLUsuarioDAO implements IUsuarioDAO{
         }
     }//fin del metodo insertar
 
+    /**
+    * Modifica un registro de la base de datos
+    * @param usuario El usuario ya con los datos modificados para insertarlo en la base de datos
+    **/
     @Override
     public void modificar(Usuario usuario) throws DAOException {
         try {
@@ -132,6 +140,10 @@ public class MySQLUsuarioDAO implements IUsuarioDAO{
         }
     }//fin del metodo modificar
 
+    /**
+    * Elimina un registro de la tabla usuario
+    * @param id El id del usuario a eliminar
+    **/
     @Override
     public void eliminar(Integer id) throws DAOException {
         try {
@@ -203,6 +215,11 @@ public class MySQLUsuarioDAO implements IUsuarioDAO{
         return misUsuarios;
     }//fin del metodo obtenerTodos
 
+    /**
+    * Este metodo obtiene un registro de la tabla usuario
+    * @param id El id del registro que se desea obtener
+    * @return Regresa un usuario con los datos de ese registro
+    **/
     @Override
     public Usuario obtener(Integer id) throws DAOException {
         //Usuario a retornar
@@ -250,6 +267,12 @@ public class MySQLUsuarioDAO implements IUsuarioDAO{
         return miUsuario;
     }//fin del metodo obtener
     
+    /**
+    * Busca los usuarios que coincidan en Id o contengan en Nombre o Apellido el 
+    * parametro mandado.
+    * @param parametro El parametro con el cual se realizara la busqueda
+    * @return Una lista con los elementos que se obtuvieron de la busqueda
+    **/
     public List<Usuario> obtenerBuscados(String parametro) throws DAOException {
         //Lista de productos a retornar
         List<Usuario> misUsuarios = new ArrayList<Usuario>();
