@@ -20,7 +20,8 @@ public class ProductosVentaTableModel extends AbstractTableModel{
     //propiedades
     private IProductoDAO producto;
     //lista de elementos de tipo Producto
-    private List<Producto> datos = new ArrayList<>();
+    private List<Producto> datos = null;
+    private List<Double> cantidad = null;
     
     //constructor con un parametro
     public ProductosVentaTableModel (IProductoDAO producto) {
@@ -62,7 +63,7 @@ public class ProductosVentaTableModel extends AbstractTableModel{
      */
     @Override
     public int getColumnCount() {
-        return 5;
+        return 8;
     }
 
     /**
@@ -76,12 +77,14 @@ public class ProductosVentaTableModel extends AbstractTableModel{
     public Object getValueAt(int rowIndex, int columnIndex) {
         Producto preguntado = datos.get(rowIndex);
         switch(columnIndex) {
-            case 0: preguntado.getCodigo();
-            case 1: preguntado.getModelo();
-            case 2: preguntado.getMarca();
-            case 3: preguntado.getColor();
-            case 4: preguntado.getEstilo();
-            case 5: preguntado.getPrecio();
+            case 0: return preguntado.getCodigo();
+            case 1: return preguntado.getModelo();
+            case 2: return preguntado.getMarca();
+            case 3: return preguntado.getColor();
+            case 4: return preguntado.getEstilo();
+            case 5: return preguntado.getPrecio();
+            case 6: return cantidad.get(rowIndex);
+            case 7: return cantidad.get(rowIndex) * preguntado.getPrecio();
             default: return "";
         }
     }
@@ -90,10 +93,39 @@ public class ProductosVentaTableModel extends AbstractTableModel{
      * Muestra una lista de la tabla Productos se que esten agregando
      * @param codigo
      */
-    
-    //queda pendiente este metodo
     public void updateModel(String codigo) throws DAOException {
-        datos = (List<Producto>) producto.obtener(codigo);
-    }
+        boolean existente = false;
+        for(int i = 0; i < datos.size(); i++) {
+          if(datos.get(i).getCodigo().equals(codigo)) {
+            existente = true;
+            if(cantidad.get(i) + 1 > datos.get(i).getExistencias()) {
+                throw new DAOException("Producto agotado.");
+            }
+            else {
+                cantidad.set(i, cantidad.get(i)+1);
+            }
+            i = datos.size();
+          }
+        }
+        if(!existente) {
+            Usuario temp = manager.getProductoDAO().obtener(codigo);
+            if(temp.getExistencias() > 0) {
+                datos.add(temp);
+                cantidad.add(1);
+            }
+            else {
+                throw new DAOException("Producto agotado.");
+            }
+        }
+    } 
+
+    /**
+    * Limpia la tabla
+    **/
+    public void cleanModel() {
+      datos = new ArrayList<>();
+      
+      cantidad = new ArrayList<>();
     
+    }
 }
