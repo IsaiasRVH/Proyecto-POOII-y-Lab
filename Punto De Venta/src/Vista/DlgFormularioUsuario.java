@@ -32,17 +32,30 @@ public class DlgFormularioUsuario extends javax.swing.JDialog {
         initComponents();
     }
     
+    /**
+    * Constructor con 3 parametros
+    **/
     public DlgFormularioUsuario(java.awt.Frame parent, boolean modal, Usuario usuario) {
         super(parent, modal);
         initComponents();
+        //Se iniciliza el manager que nos ayudara con las consultas a la base de datos
         manager = new MySQLDAOManager();
+        //Se inicializa el usuario
         this.usuario = usuario;
+        //Se compruebas si el usuario mandado esta vacio
         if(this.usuario == null) {
+            //Si esta vacio
+            //Se asigna a txtIdUsuario la cadena "-1" para indicar que es un usuario nuevo
             txtIdUsuario.setText("-1");
+            
+            //Se cambian los text label agregandoles un asterisco para inicarle al
+            //usuario que son campos obligatorios
             lblNuevaContrasenia.setText("Nueva Contraseña*:");
             lblConfirmarContrasenia.setText("Confirmar Contraseña*:");
         }
         else {
+            //Si el usuario no esta vacio
+            //Se llenan los campos del dialog con los datos del usuario a modificar
             llenarCampos();
         }
     }
@@ -368,63 +381,92 @@ public class DlgFormularioUsuario extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+    * Este metodo se ejecuta al presionar el boton guardar, tiene la funcio de comprobar que todos los datos esten correctos
+    * y en caso de asi serlo ejecutar la respectiva operacion en la base de datos.
+    **/
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        if(comprobarDatos()) {
+        //Se comprueba que los datos esten completos
+        if(comprobarDatos()) { //if 1.0
+            //Si estan completos
+            //Se obtienen de las cajas de texto y se guardan en sus respctivos campos del
+            //objeto usuario.
             obtenerDatos();
-            if(txtIdUsuario.getText().equals("-1")) {
-                if(comprobarContraseniaNueva()) {
-                    if(pwdContraseniaNueva.getText().length() >= 8) {
+            if(txtIdUsuario.getText().equals("-1")) { //if 1.1
+                //Si el usuario es nuevo(txtIdUsuario contiene -1)
+                //Se comprueba que la nueeva contraseña sea valida
+                if(comprobarContraseniaNueva()) { //if 1.1.1
+                    if(pwdContraseniaNueva.getText().length() >= 8) {//if 1.1.1.1
+                        //Le asigna la contraseña al usuario
                         usuario.setContrasenia(pwdContraseniaNueva.getText());
+                        //Se inserta el usuario en la base de datos
                         insertarUsuario();
                         dispose();
-                    }
-                    else {
+                    } //fin del if 1.1.1.1
+                    else { //else 1.1.1.1
+                        //Muestra un mensaje de error si la contraseña es muy corta
                         lblMensaje.setText("La contraseña debe de ser de 8 "
                                 + "caracteres o mas.");
                         pwdContraseniaNueva.selectAll();
                         pwdContraseniaNueva.requestFocus();
-                    }
-                }
-                else {
+                    } //fin del else 1.1.1.1
+                } //fin del if 1.1.1
+                else { //else 1.1.1
+                    //Muestra un mensaje de error
                     lblMensaje.setText("Las contraseñas no coinciden.");
                         pwdContraseniaNueva.selectAll();
                         pwdContraseniaNueva.requestFocus();
-                }
-            }
-            else {
-                if(!pwdContraseniaNueva.getText().equals("")) {
-                    if(comprobarContraseniaNueva()) {
-                        if(pwdContraseniaNueva.getText().length() >= 8) {
+                } //fin del else 1.1.1
+            } //fin del if 1.1
+            else { // else 1.1
+                //Si se esta modificando un usuario existente
+                //Se comprueba si ingreso una nueva contraseña
+                if(!pwdContraseniaNueva.getText().equals("")) { //if 1.1.2
+                    //Si el campo de nueva contraseña no esta vacio
+                    //Se comprueba que la contraseña sea valida
+                    if(comprobarContraseniaNueva()) { //if 1.1.2.1
+                        if(pwdContraseniaNueva.getText().length() >= 8) { //if 1.1.2.1.1
+                            //En caso de ser valida se asigna la conraseña al usuario
                             usuario.setContrasenia(pwdContraseniaNueva.getText());
                             actualizarUsuario();
                             dispose();
-                        }
-                        else {
+                        } //fin del if 1.1.2.1.1
+                        else { //else 1.1.2.1.1
+                            //Se manda un mensaje si la contraseña es muy corta
                             lblMensaje.setText("La contraseña debe de ser de 8 "
                                     + "caracteres o mas.");
                             pwdContraseniaNueva.selectAll();
                             pwdContraseniaNueva.requestFocus();
-                        }
-                    }
-                    else {
+                        } //fin del else 1.1.2.1.1
+                    } //fin del if 1.1.2.1
+                    else { //else 1.1.2.1
+                        //Se manda un mensaje si la contraseña no coincide con lo ingresado en
+                        //la caja para repetir la nueva contraseña
                         lblMensaje.setText("Las contraseñas no coinciden.");
                             pwdContraseniaNueva.selectAll();
                             pwdContraseniaNueva.requestFocus();
-                    }
-                }
-                else {
+                    } //fin del else 1.1.2.1
+                } //fin del if 1.1.2
+                else { //else 1.1.2
+                    //Si la caja de nueva contraseña esta vacia
+                    //Se actualizan los datos del usuario
                     actualizarUsuario();
                     dispose();
-                }
-            }
-        }
-        else {
+                } //fin del else 1.1.2
+            } //fin del else 1.1
+        } //fin del if 1.0
+        else { //else 1.0
+            //Si no estan completos los datos se manda un mensaje
             lblMensaje.setText("Faltan datos por ingresar.");
             txtNombre.requestFocus();
-        }
+        }//fin del else 1.0
     }//GEN-LAST:event_btnGuardarActionPerformed
 
+    /**
+    * Este metodo cierra el dialog en caso de que el usuario presione el boton Cancelar
+    **/
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        //Si se presiona este boton se cierra este dialog
         this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
@@ -574,6 +616,9 @@ public class DlgFormularioUsuario extends javax.swing.JDialog {
         return datosCompletos;
     }
 
+    /**
+    * Comprueba que la contraseña nueva coincida en ambas cajas donde se debe ingresar
+    **/
     public boolean comprobarContraseniaNueva() {
         if(pwdContraseniaNueva.getText().equals(pwdConfirmarContrasenia.getText())) {
             return true;
@@ -583,6 +628,10 @@ public class DlgFormularioUsuario extends javax.swing.JDialog {
         }
     }
     
+    /**
+    * Obtiene los datos de las cajas de datos para asignarlas al usuario.
+    * Nota: La contraseña se asigna en un metodo aparte
+    **/
     private void obtenerDatos() {
         if(usuario == null) {
             usuario = new Usuario();
@@ -600,6 +649,9 @@ public class DlgFormularioUsuario extends javax.swing.JDialog {
         usuario.setSalario(Double.parseDouble(txtSalario.getText()));
     }
 
+    /**
+    * Llena las cajas de texto con los datos del usuario
+    **/
     private void llenarCampos() {
         txtIdUsuario.setText(Integer.toString(usuario.getIdUsuario()));
         txtNombre.setText(usuario.getNombre());
@@ -615,6 +667,9 @@ public class DlgFormularioUsuario extends javax.swing.JDialog {
         txtSalario.setText(Double.toString(usuario.getSalario()));
     }
 
+    /**
+    * Solicita la inserccion del usuario en la base de datos
+    **/
     public void insertarUsuario() {
         try {
             manager.getUsuarioDAO().insertar(usuario);
@@ -623,6 +678,9 @@ public class DlgFormularioUsuario extends javax.swing.JDialog {
         }
     }
     
+    /**
+    * Solicita la actualizacion del usuario en la base de datos
+    **/
     public void actualizarUsuario() {
         try {
             manager.getUsuarioDAO().modificar(usuario);
