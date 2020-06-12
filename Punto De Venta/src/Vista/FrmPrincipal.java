@@ -307,4 +307,50 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JTextField txtNoVenta;
     private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
+
+    /**
+    * inicializa la tabla tblProductos
+    **/
+    private void inicializarListaUsuarios() {
+        model = new ProductosVentaTableModel ();
+        
+        //asignamos el modelo pero sin llamar al metodo actualizar
+        //ya que al iniciar el id. Autor es -1
+        tblProductos.setModel(model);
+        
+        //redimensionamos las celdas
+        setJTableColumnsWidth(tblUsuarios, 1000, 80, );
+    }
+
+    /**
+     * actualiza el contenido de la tabla tblProductos
+     * @param idAutor parametro para realizar la busqueda de titulos por autor
+     **/
+    private void actualizarListaUsuarios() throws DAOException {
+        /*
+        * Si no hay ningun error actualizamos la tabla
+        * para mostrar los libros de este autor
+        */
+        model.updateModel(txtCodigo.getText());
+        
+        //hacemos que se reflejen los cambios
+        model.fireTableDataChanged();
+        
+        //redimencionamos la celda
+        setJTableColumnsWidth(tblProductos, 1000, 50, 100, 120, 140,70,50,70,70,90,150,50,4);
+    }
+
+    public static void setJTableColumnsWidth(JTable table, int tablePreferredWidth,
+            double... percentages) {
+        double total = 0;
+        for (int i = 0; i < table.getColumnModel().getColumnCount(); i++) {
+            total += percentages[i];
+        }
+        
+        for(int i = 0; i < table.getColumnModel().getColumnCount(); i++) {
+            TableColumn column = table.getColumnModel().getColumn(i);
+            column.setPreferredWidth((int)
+                    (tablePreferredWidth * (percentages[i] / total)));
+        }
+    }//fin del metodo setJTable
 }
