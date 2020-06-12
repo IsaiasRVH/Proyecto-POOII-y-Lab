@@ -6,11 +6,13 @@
 package DAO;
 
 import Modelo.Producto;
+import java.util.List;
 
 /**
  *
- * @author isaia
+ * @author luisf
  */
 public interface IProductoDAO extends IDAO<Producto, String> {
     
+    List<Producto> obtenerBuscados(String buscar) throws DAOException;
 }
