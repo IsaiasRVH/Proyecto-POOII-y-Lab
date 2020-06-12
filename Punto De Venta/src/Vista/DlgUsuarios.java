@@ -235,6 +235,9 @@ public class DlgUsuarios extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
+    /**
+    * Este boton se encarga de abrir un dialog para agregar un nuevo usuario a la base de datos
+    **/
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         try {
             DlgFormularioUsuario dialog = new DlgFormularioUsuario(null, true, null);
@@ -245,12 +248,20 @@ public class DlgUsuarios extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnAgregarActionPerformed
 
+    /**
+    * Este boton le manda un usuario a un dialog para poder modificar sus datos y
+    * reflejar los cambios en la base de datos
+    **/
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         try {
+            //Se comprueba que este un registro seleccionado
             if(tblUsuarios.getSelectedRow() == -1) {
+                //Si no esta seleccionado se lanza una excepcion
                 throw new DAOException("Debe seleccionar un usuario");
             }
             else {
+                //Si esta un registro seleccionado
+                //Se crea el dialog con el usuario que se obtenga con la busqueda del id obtenido
                 DlgFormularioUsuario dialog = new DlgFormularioUsuario(null, true, manager.getUsuarioDAO().obtener((int) tblUsuarios.getValueAt(tblUsuarios.getSelectedRow(), 0)));
                 dialog.setVisible(true);
                 actualizarListaUsuarios();
@@ -260,15 +271,27 @@ public class DlgUsuarios extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnEditarActionPerformed
 
+    /**
+    * Este boton elimina un registro pidiendo primero una confirmacion al usuario
+    **/
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         try {
-            if(tblUsuarios.getSelectedRow() == -1) {
+            //Se comprueba si esta seleccionado un registro de la tabla
+            if(tblUsuarios.getSelectedRow() == -1 ) {
                 throw new DAOException("Debe seleccionar un usuario");
             }
             else {
-                if(JOptionPane.showConfirmDialog(null, "¿Seguro que desea eliminar este usuario?", "Eliminar", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE) == JOptionPane.YES_OPTION){
-                    manager.getUsuarioDAO().eliminar((int) tblUsuarios.getValueAt(tblUsuarios.getSelectedRow(), 0));
-                    actualizarListaUsuarios();
+                //Si esta seleccinado un registro comprobamos que no sea el administrador
+                if(tblUsuarios.getSelectedRow() != 0) {
+                    //Se pide la confirmacion del usuario para eliminar al usuario
+                    if(JOptionPane.showConfirmDialog(null, "¿Seguro que desea eliminar este usuario?", "Eliminar", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE) == JOptionPane.YES_OPTION){
+                        manager.getUsuarioDAO().eliminar((int) tblUsuarios.getValueAt(tblUsuarios.getSelectedRow(), 0));
+                        actualizarListaUsuarios();
+                    }
+                }
+                else {
+                    //En caso de que se haya seleccionado el administrador se tira una excepcion
+                    throw new DAOException("No se puede eliminar al administrador");
                 }
             }
         } catch (DAOException ex) {
@@ -340,6 +363,9 @@ public class DlgUsuarios extends javax.swing.JDialog {
                 "Error", JOptionPane.ERROR_MESSAGE);
     }
     
+    /**
+    * Inicializa el modelo de la tabla y se lo asigna
+    **/
     private void inicializarListaUsuarios() {
         model = new UsuariosTableModel ();
         
@@ -369,6 +395,9 @@ public class DlgUsuarios extends javax.swing.JDialog {
         setJTableColumnsWidth(tblUsuarios, 1000, 50, 100, 120, 140,70,50,70,70,90,150,50,40);
     }
     
+    /**
+    * Establece el ancho de las columnas
+    **/
     private void setJTableColumnsWidth(JTable table, int tablePreferredWidth, double... percentages) {
         double total = 0;
         for(int i = 0; i<table.getColumnModel().getColumnCount(); i++) {
