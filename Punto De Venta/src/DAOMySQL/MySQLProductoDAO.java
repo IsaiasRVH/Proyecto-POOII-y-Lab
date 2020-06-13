@@ -15,6 +15,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -33,11 +35,7 @@ public class MySQLProductoDAO implements IProductoDAO{
     private final String DELETE = "DELETE FROM producto WHERE codigo = ?";
     private final String GETALL = "SELECT codigo, modelo, marca, color, estilo, existencias, precio, idProveedor FROM producto";
     private final String GETONE = "SELECT codigo, modelo, marca, color, estilo, existencias, precio, idProveedor FROM producto WHERE codigo = ?";
-
-    /**
-    * Inserta un registro en la tabla producto
-    * @param producto El producto a insertar
-    *//
+    private final String GETPRODUCTOSBUSCADOS = GETALL + " WHERE codigo = ? OR modelo LIKE ? OR marca LIKE ? OR estilo LIKE ?";
     @Override
     public void insertar(Producto producto) throws DAOException {
         try {
@@ -62,17 +60,12 @@ public class MySQLProductoDAO implements IProductoDAO{
         } catch(SQLException ex) {
             throw new DAOException("Error de SQL: ", ex);
         } finally {
-            Conectar.desconectarRS(rs);
+            //Conectar.desconectarRS(rs);
             Conectar.desconectarPS(ps);
             Conectar.desconectarConnection(conn);
         }
     }//fin del metodo insertar
 
-    /**
-    * Modifica un registro de la tabla producto
-    * @param producto El producto ya modificado para ejecutar los 
-    * cambios en la base de datos.
-    **/
     @Override
     public void modificar(Producto producto) throws DAOException {
         try{
@@ -97,16 +90,12 @@ public class MySQLProductoDAO implements IProductoDAO{
         } catch(SQLException ex) {
             throw new DAOException("Error de SQL: ", ex);
         } finally {
-            Conectar.desconectarRS(rs);
+            //Conectar.desconectarRS(rs); Un error en este metodo
             Conectar.desconectarPS(ps);
             Conectar.desconectarConnection(conn);
         }
     }//fin del metodo modificar
 
-    /**
-    * Elimina un registro de la tabla producto
-    * @param codigo El codigo del producto a eliminar
-    **/
     @Override
     public void eliminar(String codigo) throws DAOException {
         try {
@@ -142,7 +131,7 @@ public class MySQLProductoDAO implements IProductoDAO{
         
         try {
             //creamos la conexion a la base de datos
-             conn = Conectar.realizarConexion();
+            conn = Conectar.realizarConexion();
             
             ////preparamos la consulta
             ps = conn.prepareStatement(GETALL);
@@ -173,10 +162,6 @@ public class MySQLProductoDAO implements IProductoDAO{
         return misProductos;
     }//fin del metodo obtenerTodos
 
-    /**
-    * Este metodo obtiene un registro de la tabla producto
-    * @param codigo El codigo del producto que se desea obtener
-    **/
     @Override
     public Producto obtener(String codigo) throws DAOException {
         //Producto a retornar
@@ -219,4 +204,45 @@ public class MySQLProductoDAO implements IProductoDAO{
         }
         return miProducto;
     }//fin del metodo obtener
+
+    @Override
+    public List<Producto> obtenerBuscados(String buscar) throws DAOException {
+        //Lista de productos a retornar
+        List<Producto> misProductos = new ArrayList<Producto>();
+        
+        try {
+            conn = Conectar.realizarConexion();
+            
+            //preparamos la consulta
+            ps = conn.prepareStatement(GETPRODUCTOSBUSCADOS);
+            ps.setString(1, buscar);
+            ps.setString(2, "%"+buscar+"%");
+            ps.setString(3, "%"+buscar+"%");
+            ps.setString(4, "%"+buscar+"%");
+            
+            //ejecutamos la consulta y almacenamos el resultado en un objeto ResultSet
+            rs = ps.executeQuery();
+            
+            //Recorremos el ResultSet y agreamos cada item al arrayList
+            while(rs.next()) {
+                Producto miProducto = new Producto();
+                miProducto.setCodigo(rs.getString("codigo"));
+                miProducto.setModelo(rs.getString("modelo"));
+                miProducto.setMarca(rs.getString("marca"));
+                miProducto.setColor(rs.getString("color"));
+                miProducto.setEstilo(rs.getString("estilo"));
+                miProducto.setExistencias(rs.getDouble("existencias"));
+                miProducto.setPrecio(rs.getDouble("precio"));
+                miProducto.setIdProveedor(rs.getInt("idProveedor"));
+                misProductos.add(miProducto);
+            }
+        } catch (SQLException ex) {
+            throw new DAOException("Error de SQL: ", ex);
+        } finally {
+            Conectar.desconectarRS(rs);
+            Conectar.desconectarPS(ps);
+            Conectar.desconectarConnection(conn);
+        }
+        return misProductos;
+    } //fin del metodo obtenerBuscados
 }
