@@ -9,8 +9,6 @@ import DAO.DAOException;
 import DAO.IDAOManager;
 import DAOMySQL.MySQLDAOManager;
 import Modelo.Usuario;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -32,32 +30,20 @@ public class DlgFormularioUsuario extends javax.swing.JDialog {
         initComponents();
     }
     
-    /**
-    * Constructor con 3 parametros
-    **/
     public DlgFormularioUsuario(java.awt.Frame parent, boolean modal, Usuario usuario) {
         super(parent, modal);
         initComponents();
-        //Se iniciliza el manager que nos ayudara con las consultas a la base de datos
         manager = new MySQLDAOManager();
-        //Se inicializa el usuario
         this.usuario = usuario;
-        //Se compruebas si el usuario mandado esta vacio
         if(this.usuario == null) {
-            //Si esta vacio
-            //Se asigna a txtIdUsuario la cadena "-1" para indicar que es un usuario nuevo
             txtIdUsuario.setText("-1");
-            
-            //Se cambian los text label agregandoles un asterisco para inicarle al
-            //usuario que son campos obligatorios
             lblNuevaContrasenia.setText("Nueva Contraseña*:");
             lblConfirmarContrasenia.setText("Confirmar Contraseña*:");
         }
         else {
-            //Si el usuario no esta vacio
-            //Se llenan los campos del dialog con los datos del usuario a modificar
             llenarCampos();
         }
+        
     }
 
     /**
@@ -69,6 +55,7 @@ public class DlgFormularioUsuario extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        pnlPrincipal = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -106,6 +93,9 @@ public class DlgFormularioUsuario extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
+        pnlPrincipal.setBackground(new java.awt.Color(236, 214, 67));
+
+        jPanel1.setBackground(new java.awt.Color(236, 214, 67));
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
@@ -131,6 +121,7 @@ public class DlgFormularioUsuario extends javax.swing.JDialog {
 
         lblConfirmarContrasenia.setText("Confirmar Contraseña:");
 
+        txtIdUsuario.setBackground(new java.awt.Color(195, 153, 62));
         txtIdUsuario.setText("-1");
         txtIdUsuario.setEnabled(false);
         txtIdUsuario.addActionListener(new java.awt.event.ActionListener() {
@@ -139,32 +130,47 @@ public class DlgFormularioUsuario extends javax.swing.JDialog {
             }
         });
 
+        txtNombre.setBackground(new java.awt.Color(195, 153, 62));
+
+        txtApellidos.setBackground(new java.awt.Color(195, 153, 62));
+
         jLabel4.setText("Apellidos*:");
 
+        txtDireccion.setBackground(new java.awt.Color(195, 153, 62));
+
+        txtColonia.setBackground(new java.awt.Color(195, 153, 62));
         txtColonia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtColoniaActionPerformed(evt);
             }
         });
 
+        txtCodigoPostal.setBackground(new java.awt.Color(195, 153, 62));
         txtCodigoPostal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtCodigoPostalActionPerformed(evt);
             }
         });
 
+        txtCiudad.setBackground(new java.awt.Color(195, 153, 62));
+
+        txtEstado.setBackground(new java.awt.Color(195, 153, 62));
         txtEstado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtEstadoActionPerformed(evt);
             }
         });
 
+        txtPais.setBackground(new java.awt.Color(195, 153, 62));
         txtPais.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtPaisActionPerformed(evt);
             }
         });
 
+        pwdConfirmarContrasenia.setBackground(new java.awt.Color(195, 153, 62));
+
+        pwdContraseniaNueva.setBackground(new java.awt.Color(195, 153, 62));
         pwdContraseniaNueva.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 pwdContraseniaNuevaActionPerformed(evt);
@@ -173,6 +179,7 @@ public class DlgFormularioUsuario extends javax.swing.JDialog {
 
         jLabel14.setText("Teléfono*:");
 
+        txtTelefono.setBackground(new java.awt.Color(195, 153, 62));
         txtTelefono.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtTelefonoActionPerformed(evt);
@@ -181,7 +188,11 @@ public class DlgFormularioUsuario extends javax.swing.JDialog {
 
         jLabel15.setText("E-Mail*:");
 
+        txtEmail.setBackground(new java.awt.Color(195, 153, 62));
+
         jLabel16.setText("Salario*:");
+
+        txtSalario.setBackground(new java.awt.Color(195, 153, 62));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -311,16 +322,20 @@ public class DlgFormularioUsuario extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jPanel2.setBackground(new java.awt.Color(236, 214, 67));
+
+        btnGuardar.setBackground(new java.awt.Color(195, 153, 62));
         btnGuardar.setFont(new java.awt.Font("Dialog", 1, 8)); // NOI18N
-        btnGuardar.setText("Guardar");
+        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/save.png"))); // NOI18N
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGuardarActionPerformed(evt);
             }
         });
 
+        btnCancelar.setBackground(new java.awt.Color(195, 153, 62));
         btnCancelar.setFont(new java.awt.Font("Dialog", 1, 8)); // NOI18N
-        btnCancelar.setText("Cancelar");
+        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cancel.png"))); // NOI18N
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarActionPerformed(evt);
@@ -344,129 +359,107 @@ public class DlgFormularioUsuario extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
-                    .addComponent(btnCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE))
+                    .addComponent(btnCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
         lblMensaje.setBackground(new java.awt.Color(255, 0, 0));
 
+        javax.swing.GroupLayout pnlPrincipalLayout = new javax.swing.GroupLayout(pnlPrincipal);
+        pnlPrincipal.setLayout(pnlPrincipalLayout);
+        pnlPrincipalLayout.setHorizontalGroup(
+            pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlPrincipalLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblMensaje, javax.swing.GroupLayout.PREFERRED_SIZE, 393, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        pnlPrincipalLayout.setVerticalGroup(
+            pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlPrincipalLayout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblMensaje, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(lblMensaje, javax.swing.GroupLayout.PREFERRED_SIZE, 393, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap())
+            .addComponent(pnlPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblMensaje, javax.swing.GroupLayout.DEFAULT_SIZE, 19, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(pnlPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-    * Este metodo se ejecuta al presionar el boton guardar, tiene la funcio de comprobar que todos los datos esten correctos
-    * y en caso de asi serlo ejecutar la respectiva operacion en la base de datos.
-    **/
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        //Se comprueba que los datos esten completos
-        if(comprobarDatos()) { //if 1.0
-            //Si estan completos
-            //Se obtienen de las cajas de texto y se guardan en sus respctivos campos del
-            //objeto usuario.
+        if(comprobarDatos()) {
             obtenerDatos();
-            if(txtIdUsuario.getText().equals("-1")) { //if 1.1
-                //Si el usuario es nuevo(txtIdUsuario contiene -1)
-                //Se comprueba que la nueeva contraseña sea valida
-                if(comprobarContraseniaNueva()) { //if 1.1.1
-                    if(pwdContraseniaNueva.getText().length() >= 8) {//if 1.1.1.1
-                        //Le asigna la contraseña al usuario
+            if(txtIdUsuario.getText().equals("-1")) {
+                if(comprobarContraseniaNueva()) {
+                    if(pwdContraseniaNueva.getText().length() >= 8) {
                         usuario.setContrasenia(pwdContraseniaNueva.getText());
-                        //Se inserta el usuario en la base de datos
                         insertarUsuario();
                         dispose();
-                    } //fin del if 1.1.1.1
-                    else { //else 1.1.1.1
-                        //Muestra un mensaje de error si la contraseña es muy corta
+                    }
+                    else {
                         lblMensaje.setText("La contraseña debe de ser de 8 "
                                 + "caracteres o mas.");
                         pwdContraseniaNueva.selectAll();
                         pwdContraseniaNueva.requestFocus();
-                    } //fin del else 1.1.1.1
-                } //fin del if 1.1.1
-                else { //else 1.1.1
-                    //Muestra un mensaje de error
+                    }
+                }
+                else {
                     lblMensaje.setText("Las contraseñas no coinciden.");
                         pwdContraseniaNueva.selectAll();
                         pwdContraseniaNueva.requestFocus();
-                } //fin del else 1.1.1
-            } //fin del if 1.1
-            else { // else 1.1
-                //Si se esta modificando un usuario existente
-                //Se comprueba si ingreso una nueva contraseña
-                if(!pwdContraseniaNueva.getText().equals("")) { //if 1.1.2
-                    //Si el campo de nueva contraseña no esta vacio
-                    //Se comprueba que la contraseña sea valida
-                    if(comprobarContraseniaNueva()) { //if 1.1.2.1
-                        if(pwdContraseniaNueva.getText().length() >= 8) { //if 1.1.2.1.1
-                            //En caso de ser valida se asigna la conraseña al usuario
+                }
+            }
+            else {
+                if(!pwdContraseniaNueva.getText().equals("")) {
+                    if(comprobarContraseniaNueva()) {
+                        if(pwdContraseniaNueva.getText().length() >= 8) {
                             usuario.setContrasenia(pwdContraseniaNueva.getText());
                             actualizarUsuario();
                             dispose();
-                        } //fin del if 1.1.2.1.1
-                        else { //else 1.1.2.1.1
-                            //Se manda un mensaje si la contraseña es muy corta
+                        }
+                        else {
                             lblMensaje.setText("La contraseña debe de ser de 8 "
                                     + "caracteres o mas.");
                             pwdContraseniaNueva.selectAll();
                             pwdContraseniaNueva.requestFocus();
-                        } //fin del else 1.1.2.1.1
-                    } //fin del if 1.1.2.1
-                    else { //else 1.1.2.1
-                        //Se manda un mensaje si la contraseña no coincide con lo ingresado en
-                        //la caja para repetir la nueva contraseña
+                        }
+                    }
+                    else {
                         lblMensaje.setText("Las contraseñas no coinciden.");
                             pwdContraseniaNueva.selectAll();
                             pwdContraseniaNueva.requestFocus();
-                    } //fin del else 1.1.2.1
-                } //fin del if 1.1.2
-                else { //else 1.1.2
-                    //Si la caja de nueva contraseña esta vacia
-                    //Se actualizan los datos del usuario
+                    }
+                }
+                else {
                     actualizarUsuario();
                     dispose();
-                } //fin del else 1.1.2
-            } //fin del else 1.1
-        } //fin del if 1.0
-        else { //else 1.0
-            //Si no estan completos los datos se manda un mensaje
+                }
+            }
+        }
+        else {
             lblMensaje.setText("Faltan datos por ingresar.");
             txtNombre.requestFocus();
-        }//fin del else 1.0
+        }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
-    /**
-    * Este metodo cierra el dialog en caso de que el usuario presione el boton Cancelar
-    **/
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        //Si se presiona este boton se cierra este dialog
         this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
@@ -561,6 +554,7 @@ public class DlgFormularioUsuario extends javax.swing.JDialog {
     private javax.swing.JLabel lblConfirmarContrasenia;
     private javax.swing.JLabel lblMensaje;
     private javax.swing.JLabel lblNuevaContrasenia;
+    private javax.swing.JPanel pnlPrincipal;
     private javax.swing.JPasswordField pwdConfirmarContrasenia;
     private javax.swing.JPasswordField pwdContraseniaNueva;
     private javax.swing.JTextField txtApellidos;
@@ -616,9 +610,6 @@ public class DlgFormularioUsuario extends javax.swing.JDialog {
         return datosCompletos;
     }
 
-    /**
-    * Comprueba que la contraseña nueva coincida en ambas cajas donde se debe ingresar
-    **/
     public boolean comprobarContraseniaNueva() {
         if(pwdContraseniaNueva.getText().equals(pwdConfirmarContrasenia.getText())) {
             return true;
@@ -628,10 +619,6 @@ public class DlgFormularioUsuario extends javax.swing.JDialog {
         }
     }
     
-    /**
-    * Obtiene los datos de las cajas de datos para asignarlas al usuario.
-    * Nota: La contraseña se asigna en un metodo aparte
-    **/
     private void obtenerDatos() {
         if(usuario == null) {
             usuario = new Usuario();
@@ -649,9 +636,6 @@ public class DlgFormularioUsuario extends javax.swing.JDialog {
         usuario.setSalario(Double.parseDouble(txtSalario.getText()));
     }
 
-    /**
-    * Llena las cajas de texto con los datos del usuario
-    **/
     private void llenarCampos() {
         txtIdUsuario.setText(Integer.toString(usuario.getIdUsuario()));
         txtNombre.setText(usuario.getNombre());
@@ -667,9 +651,6 @@ public class DlgFormularioUsuario extends javax.swing.JDialog {
         txtSalario.setText(Double.toString(usuario.getSalario()));
     }
 
-    /**
-    * Solicita la inserccion del usuario en la base de datos
-    **/
     public void insertarUsuario() {
         try {
             manager.getUsuarioDAO().insertar(usuario);
@@ -678,9 +659,6 @@ public class DlgFormularioUsuario extends javax.swing.JDialog {
         }
     }
     
-    /**
-    * Solicita la actualizacion del usuario en la base de datos
-    **/
     public void actualizarUsuario() {
         try {
             manager.getUsuarioDAO().modificar(usuario);
