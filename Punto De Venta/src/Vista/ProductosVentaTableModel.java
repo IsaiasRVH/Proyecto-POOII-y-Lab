@@ -6,7 +6,8 @@
 package Vista;
 
 import DAO.DAOException;
-import DAO.IProductoDAO;
+import DAO.IDAOManager;
+import DAOMySQL.MySQLDAOManager;
 import Modelo.Producto;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,14 +19,14 @@ import javax.swing.table.AbstractTableModel;
  */
 public class ProductosVentaTableModel extends AbstractTableModel{
     //propiedades
-    private IProductoDAO producto;
+    private IDAOManager manager = null;
     //lista de elementos de tipo Producto
     private List<Producto> datos = null;
-    private List<Double> cantidad = null;
+    private List<Integer> cantidad = null;
     
     //constructor con un parametro
-    public ProductosVentaTableModel (IProductoDAO producto) {
-        this.producto = producto;
+    public ProductosVentaTableModel () {
+        manager = new MySQLDAOManager();
     }
     
     /**
@@ -108,9 +109,10 @@ public class ProductosVentaTableModel extends AbstractTableModel{
           }
         }
         if(!existente) {
-            Usuario temp = manager.getProductoDAO().obtener(codigo);
+            Producto temp = manager.getProductoDAO().obtener(codigo);
             if(temp.getExistencias() > 0) {
                 datos.add(temp);
+                Integer cant = 1;
                 cantidad.add(1);
             }
             else {
