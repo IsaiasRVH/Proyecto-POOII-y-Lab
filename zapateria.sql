@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 30-05-2020 a las 05:06:54
+-- Tiempo de generación: 13-06-2020 a las 04:06:25
 -- Versión del servidor: 5.7.17
 -- Versión de PHP: 5.6.30
 
@@ -64,6 +64,15 @@ CREATE TABLE `detalleventa` (
   `importe` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
+--
+-- Volcado de datos para la tabla `detalleventa`
+--
+
+INSERT INTO `detalleventa` (`idVenta`, `codigo`, `cantidad`, `precio`, `importe`) VALUES
+(1, '', 2, 3400, 6800),
+(1, '2', 3, 2400, 7200),
+(1, '3', 1, 1800, 1800);
+
 -- --------------------------------------------------------
 
 --
@@ -80,6 +89,15 @@ CREATE TABLE `producto` (
   `precio` double NOT NULL,
   `idProveedor` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Volcado de datos para la tabla `producto`
+--
+
+INSERT INTO `producto` (`codigo`, `modelo`, `marca`, `color`, `estilo`, `existencias`, `precio`, `idProveedor`) VALUES
+('', 'Hyperdunk X', 'Nike', 'Blanco', 'Tenis', 20, 3400, 1),
+('2', 'AirMax Verona', 'Nike', 'Blanco', 'Tenis', 20, 2400, 1),
+('3', 'Metcon 5', 'Nike', 'Gris', 'Tenis', 20, 1800, 1);
 
 -- --------------------------------------------------------
 
@@ -99,6 +117,13 @@ CREATE TABLE `proveedor` (
   `telefono` varchar(13) COLLATE utf8_bin NOT NULL,
   `email` varchar(30) COLLATE utf8_bin NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Volcado de datos para la tabla `proveedor`
+--
+
+INSERT INTO `proveedor` (`idProveedor`, `nombre`, `calleYNumero`, `colonia`, `ciudad`, `codigoPostal`, `estado`, `pais`, `telefono`, `email`) VALUES
+(1, 'Calzados Del Centro', 'Porfirio Diaz #1209', 'Industria', 'Leon', '98342', 'Guanajuato', 'Mexico', '4872302233', 'calzadosdelcentro@cdc.org');
 
 -- --------------------------------------------------------
 
@@ -127,7 +152,9 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`idUsuario`, `nombre`, `apellidos`, `telefono`, `email`, `calleYNumero`, `colonia`, `codigoPostal`, `ciudad`, `estado`, `pais`, `salario`, `contrasenia`) VALUES
-(1, 'Administrador', '', '*****', '*****', '*****', '*****', '*****', '*****', '*****', '*****', 0, 'admin');
+(1, 'Administrador', '', '*****', '*****', '*****', '*****', '*****', '*****', '*****', '*****', 0, 'admin'),
+(2, 'Luis', 'Escobedo Romero', '4632394385', 'luis123@gmail.com', 'Iturbide #1089', 'Centro', '99600', 'Jalpa', 'Zacatecas', 'Mexico', 2500, '12345'),
+(3, 'Isaias', 'Valdivia', '4921438738', 'isaias.valdivia147@gmail.com', 'Zaragoza #18', 'Reforma', '99607', 'Jalpa', 'Zacatecas', 'Mexico', 3000, '12345');
 
 -- --------------------------------------------------------
 
@@ -143,6 +170,13 @@ CREATE TABLE `venta` (
   `total` double NOT NULL,
   `tipoVenta` varchar(10) COLLATE utf8_bin NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Volcado de datos para la tabla `venta`
+--
+
+INSERT INTO `venta` (`idVenta`, `idUsuario`, `idCliente`, `fecha`, `total`, `tipoVenta`) VALUES
+(1, 3, 1, '2020-06-05', 15800, 'Contado');
 
 --
 -- Índices para tablas volcadas
@@ -206,7 +240,7 @@ ALTER TABLE `proveedor`
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `idUsuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idUsuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT de la tabla `venta`
 --
