@@ -75,7 +75,7 @@ public class MySQLVentaDAO implements IVentaDAO{
                 }
             }
             
-            for(DetalleVenta detalleVenta : venta.getDetalleVenta()) {
+            for(DetalleVenta detalleVenta : venta.getDetallesVenta()) {
                 //preparamos la consulta y especificamos los parametros de entrada
                 //para detalleVenta
                 psDetalleVenta = conn.prepareStatement(INSERTDETALLEVENTA);
@@ -214,7 +214,7 @@ public class MySQLVentaDAO implements IVentaDAO{
                     miDetalle.setImporte(rsDetalleVenta.getDouble("importe"));
                     detalleVenta.add(miDetalle);
                 }
-                miVenta.setDetalleVenta(detalleVenta);
+                miVenta.setDetallesVenta(detalleVenta);
                 
             } else {
                 throw new DAOException("No se encontro la venta.");

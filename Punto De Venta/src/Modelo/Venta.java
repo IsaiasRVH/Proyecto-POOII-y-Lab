@@ -87,7 +87,7 @@ public class Venta {
         return detallesVenta;
     }
 
-    public void setMisVentas(List<DetalleVenta> misVentas) {
+    public void setDetallesVenta(List<DetalleVenta> misVentas) {
         this.detallesVenta = misVentas;
     }
     

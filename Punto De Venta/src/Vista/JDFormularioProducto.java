@@ -6,7 +6,7 @@
 package Vista;
 
 import DAO.DAOException;
-import DAO.DAOManager;
+import DAO.IDAOManager;
 import DAOMySQL.MySQLDAOManager;
 import Modelo.Producto;
 import Modelo.Proveedor;
@@ -33,7 +33,7 @@ public class JDFormularioProducto extends javax.swing.JDialog {
     Producto producto = null;
     
     //creamos un objeto del tipo interface IAutorDAO
-    private DAOManager manager = null;
+    private IDAOManager manager = null;
     
     //Los ids de los usuarios en el combobox
     int idsProveedores[];
@@ -65,6 +65,9 @@ public class JDFormularioProducto extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel2 = new javax.swing.JPanel();
+        btnGuardar = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
@@ -82,11 +85,36 @@ public class JDFormularioProducto extends javax.swing.JDialog {
         txtExistencias = new javax.swing.JTextField();
         txtPrecio = new javax.swing.JTextField();
         cmbProveedores = new javax.swing.JComboBox<>();
-        btnGuardar = new javax.swing.JButton();
-        btnCancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
+        jPanel2.setBackground(new java.awt.Color(236, 214, 67));
+
+        btnGuardar.setBackground(new java.awt.Color(195, 153, 62));
+        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/save.png"))); // NOI18N
+        btnGuardar.setText("Guardar");
+        btnGuardar.setFocusable(false);
+        btnGuardar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnGuardar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
+
+        btnCancelar.setBackground(new java.awt.Color(195, 153, 62));
+        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cancel.png"))); // NOI18N
+        btnCancelar.setText("Cancelar");
+        btnCancelar.setFocusable(false);
+        btnCancelar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnCancelar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
+
+        jPanel1.setBackground(new java.awt.Color(236, 214, 67));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED), "Datos del Producto:", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 18))); // NOI18N
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -113,6 +141,21 @@ public class JDFormularioProducto extends javax.swing.JDialog {
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setText("Codigo:");
 
+        txtCodigo.setBackground(new java.awt.Color(195, 153, 62));
+
+        txtModelo.setBackground(new java.awt.Color(195, 153, 62));
+
+        txtMarca.setBackground(new java.awt.Color(195, 153, 62));
+
+        txtColor.setBackground(new java.awt.Color(195, 153, 62));
+
+        txtEstilo.setBackground(new java.awt.Color(195, 153, 62));
+
+        txtExistencias.setBackground(new java.awt.Color(195, 153, 62));
+
+        txtPrecio.setBackground(new java.awt.Color(195, 153, 62));
+
+        cmbProveedores.setBackground(new java.awt.Color(195, 153, 62));
         cmbProveedores.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         cmbProveedores.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar" }));
 
@@ -190,53 +233,41 @@ public class JDFormularioProducto extends javax.swing.JDialog {
                 .addContainerGap(31, Short.MAX_VALUE))
         );
 
-        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/save.png"))); // NOI18N
-        btnGuardar.setText("Guardar");
-        btnGuardar.setFocusable(false);
-        btnGuardar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnGuardar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGuardarActionPerformed(evt);
-            }
-        });
-
-        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cancel.png"))); // NOI18N
-        btnCancelar.setText("Cancelar");
-        btnCancelar.setFocusable(false);
-        btnCancelar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnCancelar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCancelarActionPerformed(evt);
-            }
-        });
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(btnGuardar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnCancelar))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnCancelar))
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnGuardar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnCancelar)
-                .addGap(27, 27, 27))
+            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18))
+            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -291,6 +322,7 @@ public class JDFormularioProducto extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextField txtColor;
     private javax.swing.JTextField txtEstilo;
