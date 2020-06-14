@@ -263,7 +263,7 @@ public class MySQLVentaDAO implements IVentaDAO{
     }
 
     @Override
-    public List<Venta> obtenerPorFecha(java.util.Date fecha) throws DAOException {
+    public List<Venta> obtenerPorFecha(java.sql.Date fecha) throws DAOException {
         List<Venta> misVentas = new ArrayList<>();
         
         try {
@@ -271,7 +271,7 @@ public class MySQLVentaDAO implements IVentaDAO{
             
             //preparamos la consulta y definimos los parametros
             psVenta = conn.prepareStatement(GETALLPORFECHA);
-            psVenta.setDate(1, (Date) fecha);
+            psVenta.setDate(1, fecha);
             
             rsVenta = psVenta.executeQuery();
             
