@@ -5,12 +5,18 @@
  */
 package DAO;
 
+import Modelo.DetalleVenta;
 import Modelo.Venta;
+import java.util.Date;
+import java.util.List;
 
 /**
  *
- * @author isaia
+ * @author luisf
  */
 public interface IVentaDAO extends IDAO<Venta, Integer> {
     
+    List<DetalleVenta> obtenerDetalleVenta(int id) throws DAOException;
+    
+    List<Venta> obtenerPorFecha(Date fecha) throws DAOException;
 }
