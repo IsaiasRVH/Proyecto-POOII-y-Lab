@@ -10,6 +10,7 @@ import DAO.IVentaDAO;
 import DAOMySQL.MySQLDAOManager;
 import Modelo.Venta;
 import java.util.ArrayList;
+import java.sql.Date;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
@@ -89,5 +90,9 @@ public class VentasTableModel extends AbstractTableModel{
     
     public void updateModel() throws DAOException {
         datos = venta.obtenerTodos();
+    }
+    
+    public void updateModel(Date fecha) throws DAOException {
+        datos = venta.obtenerPorFecha(fecha);
     }
 }

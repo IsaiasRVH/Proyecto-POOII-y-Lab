@@ -9,9 +9,7 @@ import DAO.DAOException;
 import DAO.IDAOManager;
 import DAOMySQL.MySQLDAOManager;
 import Modelo.Venta;
-import static Vista.JDInventario.setJTableColumnsWidth;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.sql.Date;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.TableColumn;
@@ -72,6 +70,8 @@ public class JDVentas extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         btnDetalles = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
+        DateBusqueda = new com.toedter.calendar.JDateChooser();
+        btnBuscar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -104,6 +104,13 @@ public class JDVentas extends javax.swing.JDialog {
         btnSalir.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnSalir.setText("Salir");
 
+        btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/buscar.png"))); // NOI18N
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -116,8 +123,13 @@ public class JDVentas extends javax.swing.JDialog {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(btnDetalles)
                         .addGap(37, 37, 37))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(DateBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btnSalir)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnBuscar)
+                            .addComponent(btnSalir))
                         .addGap(62, 62, 62))))
             .addGroup(layout.createSequentialGroup()
                 .addGap(341, 341, 341)
@@ -133,6 +145,10 @@ public class JDVentas extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnDetalles)
+                        .addGap(41, 41, 41)
+                        .addComponent(DateBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnBuscar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnSalir))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -154,6 +170,16 @@ public class JDVentas extends javax.swing.JDialog {
             imprimirMensajeDeErrorDAO(ex);
         }
     }//GEN-LAST:event_btnDetallesActionPerformed
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        try {
+            Date fecha = (Date) DateBusqueda.getDate();
+            actualizarListaVentas(fecha);
+        } catch(DAOException ex) {
+            imprimirMensajeDeErrorDAO(ex);
+        }
+        
+    }//GEN-LAST:event_btnBuscarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -198,6 +224,8 @@ public class JDVentas extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private com.toedter.calendar.JDateChooser DateBusqueda;
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnDetalles;
     private javax.swing.JButton btnSalir;
     private javax.swing.JLabel jLabel1;
@@ -247,6 +275,23 @@ public class JDVentas extends javax.swing.JDialog {
         *para mostrar las ventas
         */
         model.updateModel();
+        
+        //hacemos que se reflejen los cambios
+        model.fireTableDataChanged();
+        
+        //redimensionamos las celdas
+        setJTableColumnsWidth(tblVentas, 480,60, 60, 60, 60, 50, 50);
+    }//fin del metodo actualizarListaAutores
+    
+    /**
+     * actualiza el contenido de la tabla tblVentas con la busqueda por fecha
+     * @throws DAOException 
+     */
+    private void actualizarListaVentas(Date fecha) throws DAOException {
+        /*si no hay ningun error actualizamos la tabla
+        *para mostrar las ventas
+        */
+        model.updateModel(fecha);
         
         //hacemos que se reflejen los cambios
         model.fireTableDataChanged();
