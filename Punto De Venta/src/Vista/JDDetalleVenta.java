@@ -7,11 +7,7 @@ package Vista;
 
 import DAO.DAOException;
 import DAO.IDAOManager;
-import DAO.IVentaDAO;
 import Modelo.Venta;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.TableColumn;
@@ -50,7 +46,10 @@ public class JDDetalleVenta extends javax.swing.JDialog {
             
         } catch (DAOException ex) {
             imprimirMensajeDeErrorDAO(ex);
-        }    
+        }  
+        
+        //Se centra el dialog
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -68,6 +67,7 @@ public class JDDetalleVenta extends javax.swing.JDialog {
         tblDetalleVenta = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(236, 214, 67));
 

@@ -38,10 +38,14 @@ public class FrmLogin extends javax.swing.JFrame {
         manager = new MySQLDAOManager();
         cargarUsuarios();
         
-        //Se establece 
+        //Se establece el logo en el icono y en un panel del frame
         setIconImage(Toolkit.getDefaultToolkit().getImage(this.getClass().getResource(URLLogo)));
         pnlLogo.add(new Imagen(244,150, URLLogo));
         pnlLogo.repaint();
+        
+        //Se centra el frame
+        this.setLocationRelativeTo(null);
+        
     }
 
     /**
@@ -65,6 +69,7 @@ public class FrmLogin extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Zapateria La Ciudad de León");
+        setAlwaysOnTop(true);
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(236, 214, 67));

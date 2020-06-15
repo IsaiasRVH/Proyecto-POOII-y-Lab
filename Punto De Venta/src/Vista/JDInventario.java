@@ -9,8 +9,6 @@ import DAO.DAOException;
 import DAO.IDAOManager;
 import DAOMySQL.MySQLDAOManager;
 import Modelo.Producto;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.TableColumn;
@@ -49,6 +47,9 @@ public class JDInventario extends javax.swing.JDialog {
                 btnModificar.setEnabled(seleccionValida);
                 btnEliminar.setEnabled(seleccionValida);
             });
+            
+            //Se centra el dialog
+            this.setLocationRelativeTo(null);
         } catch (DAOException ex) {
             imprimirMensajeDeErrorDAO(ex);
         }
@@ -75,6 +76,7 @@ public class JDInventario extends javax.swing.JDialog {
         jSeparator2 = new javax.swing.JToolBar.Separator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
         jPanel2.setBackground(new java.awt.Color(236, 214, 67));
 

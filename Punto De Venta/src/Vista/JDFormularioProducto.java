@@ -50,6 +50,9 @@ public class JDFormularioProducto extends javax.swing.JDialog {
         cargarProducto();
         //desabilitamos el txtCodigo
         txtCodigo.setEnabled(false);
+        
+        //Se centra el dialog
+        this.setLocationRelativeTo(null);
     }
     
     public JDFormularioProducto(java.awt.Frame parent, boolean modal) {
@@ -87,6 +90,7 @@ public class JDFormularioProducto extends javax.swing.JDialog {
         cmbProveedores = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
         jPanel2.setBackground(new java.awt.Color(236, 214, 67));
 

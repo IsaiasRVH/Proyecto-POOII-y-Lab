@@ -19,4 +19,6 @@ public interface IVentaDAO extends IDAO<Venta, Integer> {
     List<DetalleVenta> obtenerDetalleVenta(int id) throws DAOException;
     
     List<Venta> obtenerPorFecha(Date fecha) throws DAOException;
+    
+    int obtenerIdUltimaVenta() throws DAOException;
 }

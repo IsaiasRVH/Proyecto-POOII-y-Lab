@@ -46,7 +46,8 @@ public class MySQLVentaDAO implements IVentaDAO{
     private final String UPDATEDETALLEVENTA = "UPDATE detalleVenta SET  cantidad = ?, "
             + "precio = ?, importe = ? WHERE idVenta = ? AND codigo = ?";
     private final String GETALLPORFECHA = GETALL + " WHERE fecha = ?";
-
+    private final String GETLASTIDVENTA = "SELECT idVenta FROM `venta` ORDER BY `idVenta` DESC LIMIT 0,1";
+    
     @Override
     public void insertar(Venta venta) throws DAOException {
         try {
@@ -295,5 +296,41 @@ public class MySQLVentaDAO implements IVentaDAO{
             Conectar.desconectarConnection(conn);
         }
         return misVentas;
+    }
+    
+    /**
+     * Obtiene el id de la ultima venta
+     * @return El id que tiene la ultima venta
+     * @throws DAOException 
+     */
+    @Override
+    public int obtenerIdUltimaVenta() throws DAOException {
+        //venta a retornar
+        Integer idVenta = null;
+        try {
+            //creamos la conexion a la base de datos
+            conn = Conectar.realizarConexion();
+            
+            //preparamos la consulta y definimos los parametros
+            psVenta = conn.prepareStatement(GETLASTIDVENTA);
+            
+            //ejecutamos la consulta y el resultado lo almacenamos en un ResultSet
+            rsVenta = psVenta.executeQuery();
+            
+            //verificamos si el ResultSet obtuvo un resultado y lo asignamos
+            //al objeto correspondiente
+            if(rsVenta.next()) {
+                idVenta = rsVenta.getInt("idVenta");
+            } else {
+                throw new DAOException("No se pudo encontrar la venta.");
+            }
+        } catch (SQLException ex) {
+            throw new DAOException("Error de SQL: ", ex);
+        } finally {
+            Conectar.desconectarRS(rsVenta);
+            Conectar.desconectarPS(psVenta);
+            Conectar.desconectarConnection(conn);
+        }
+        return idVenta;
     }
 }

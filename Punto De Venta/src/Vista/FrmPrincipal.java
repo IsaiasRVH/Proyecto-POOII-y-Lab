@@ -5,8 +5,13 @@ import DAO.IDAOManager;
 import DAOMySQL.MySQLDAOManager;
 import Modelo.Cliente;
 import Modelo.Usuario;
+import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.TableColumn;
@@ -33,13 +38,51 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }
     
     public FrmPrincipal(Usuario usuarioActivo) {
-        initComponents();
-        this.usuarioActivo = usuarioActivo;
-        txtUsuario.setText(usuarioActivo.getNombre() + " " + usuarioActivo.getApellidos());
-        manager = new MySQLDAOManager();
-        setIconImage(Toolkit.getDefaultToolkit().getImage(this.getClass().getResource(URLLogo)));
-        inicializarListaUsuarios();
-        cargarClientes();
+        try {
+            initComponents();
+            //Configuramos el frame para que este maximizado y no se pueda cambiar
+            //de tamaño
+            Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+            this.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+            this.setSize(screenSize); 
+            this.setPreferredSize(screenSize);
+            this.setMinimumSize(screenSize);
+            
+            //Asignamos el icono de la aplicacion
+            setIconImage(Toolkit.getDefaultToolkit().getImage(this.getClass().getResource(URLLogo)));
+            
+            //Guardamos el usuario activo y lo mostramos
+            this.usuarioActivo = usuarioActivo;
+            txtUsuario.setText(usuarioActivo.getNombre() + " " + usuarioActivo.getApellidos());
+            
+            //Inicializamos el manager
+            manager = new MySQLDAOManager();
+            
+            //Inicializamos la tabla donde se muestran los productos de la venta
+            inicializarListaProductos();
+            
+            //Se cargan los clientes en el combo box
+            cargarClientes();
+            
+            //Se carga la fecha
+            Date fecha = new Date();
+            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            txtFecha.setText(dateFormat.format(fecha));
+            
+            //Se carga el numero actual de venta
+            txtNoVenta.setText(Integer.toString(manager.getVentaDAO().obtenerIdUltimaVenta() + 1));
+            
+            //Si el administrador (id ==1 ) es el que inicio sesion se habilita la
+            //administracion de usuarios
+            if(usuarioActivo.getIdUsuario() == 1) {
+                btnAdminUsuarios.setEnabled(true);
+            }
+            
+            //Se le asigna el focus al cuadro donde se ingresa el codigo del producto
+            txtCodigo.requestFocus();
+        } catch (DAOException ex) {
+            imprimirMensajeDeErrorDAO(ex);
+        }
     }
 
     /**
@@ -54,19 +97,19 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jToolBar1 = new javax.swing.JToolBar();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jToolBar2 = new javax.swing.JToolBar();
-        jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
+        btnAdminProductos = new javax.swing.JButton();
+        btnAdminVentas = new javax.swing.JButton();
+        btnAdminClientes = new javax.swing.JButton();
+        btnAdminProveedores = new javax.swing.JButton();
+        jSeparator1 = new javax.swing.JToolBar.Separator();
+        btnAdminUsuarios = new javax.swing.JButton();
+        jSeparator2 = new javax.swing.JToolBar.Separator();
+        btnCerrarSesion = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         txtUsuario = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         cmbCliente = new javax.swing.JComboBox<>();
-        txtCliente = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         txtNoVenta = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
@@ -84,7 +127,9 @@ public class FrmPrincipal extends javax.swing.JFrame {
         btnConfirmar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Zapateria La Ciudad de León");
         setBackground(new java.awt.Color(195, 153, 62));
+        setMinimumSize(new java.awt.Dimension(1009, 678));
 
         jPanel4.setBackground(new java.awt.Color(236, 214, 67));
 
@@ -92,70 +137,111 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED), "Acciones"));
 
         jToolBar1.setBackground(new java.awt.Color(236, 214, 67));
+        jToolBar1.setFloatable(false);
         jToolBar1.setRollover(true);
 
-        jButton2.setBackground(new java.awt.Color(195, 153, 62));
-        jButton2.setText("Administrar Productos");
-        jButton2.setFocusable(false);
-        jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton2);
+        btnAdminProductos.setBackground(new java.awt.Color(195, 153, 62));
+        btnAdminProductos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/producto.png"))); // NOI18N
+        btnAdminProductos.setToolTipText("Administrar Productos");
+        btnAdminProductos.setFocusable(false);
+        btnAdminProductos.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnAdminProductos.setMaximumSize(new java.awt.Dimension(74, 74));
+        btnAdminProductos.setMinimumSize(new java.awt.Dimension(74, 74));
+        btnAdminProductos.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnAdminProductos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdminProductosActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnAdminProductos);
 
-        jButton3.setBackground(new java.awt.Color(195, 153, 62));
-        jButton3.setText("Administrar Ventas");
-        jButton3.setFocusable(false);
-        jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton3);
+        btnAdminVentas.setBackground(new java.awt.Color(195, 153, 62));
+        btnAdminVentas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/ventas.png"))); // NOI18N
+        btnAdminVentas.setToolTipText("Administrar Ventas");
+        btnAdminVentas.setFocusable(false);
+        btnAdminVentas.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnAdminVentas.setMaximumSize(new java.awt.Dimension(74, 74));
+        btnAdminVentas.setMinimumSize(new java.awt.Dimension(74, 74));
+        btnAdminVentas.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnAdminVentas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdminVentasActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnAdminVentas);
 
-        jButton4.setBackground(new java.awt.Color(195, 153, 62));
-        jButton4.setText("Administrar Clientes");
-        jButton4.setFocusable(false);
-        jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton4.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton4);
+        btnAdminClientes.setBackground(new java.awt.Color(195, 153, 62));
+        btnAdminClientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cliente.png"))); // NOI18N
+        btnAdminClientes.setToolTipText("Administrar Clientes");
+        btnAdminClientes.setFocusable(false);
+        btnAdminClientes.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnAdminClientes.setMaximumSize(new java.awt.Dimension(74, 74));
+        btnAdminClientes.setMinimumSize(new java.awt.Dimension(74, 74));
+        btnAdminClientes.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnAdminClientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdminClientesActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnAdminClientes);
 
-        jButton5.setBackground(new java.awt.Color(195, 153, 62));
-        jButton5.setText("Administrar Proveedores");
-        jButton5.setFocusable(false);
-        jButton5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton5.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton5);
+        btnAdminProveedores.setBackground(new java.awt.Color(195, 153, 62));
+        btnAdminProveedores.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/proveedor.png"))); // NOI18N
+        btnAdminProveedores.setToolTipText("Administrar Proveedores");
+        btnAdminProveedores.setFocusable(false);
+        btnAdminProveedores.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnAdminProveedores.setMaximumSize(new java.awt.Dimension(74, 74));
+        btnAdminProveedores.setMinimumSize(new java.awt.Dimension(74, 74));
+        btnAdminProveedores.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnAdminProveedores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdminProveedoresActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnAdminProveedores);
+        jToolBar1.add(jSeparator1);
 
-        jToolBar2.setBackground(new java.awt.Color(236, 214, 67));
-        jToolBar2.setRollover(true);
+        btnAdminUsuarios.setBackground(new java.awt.Color(195, 153, 62));
+        btnAdminUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/usuario.png"))); // NOI18N
+        btnAdminUsuarios.setToolTipText("Administrar Usuarios");
+        btnAdminUsuarios.setEnabled(false);
+        btnAdminUsuarios.setFocusable(false);
+        btnAdminUsuarios.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnAdminUsuarios.setMaximumSize(new java.awt.Dimension(74, 74));
+        btnAdminUsuarios.setMinimumSize(new java.awt.Dimension(74, 74));
+        btnAdminUsuarios.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnAdminUsuarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdminUsuariosActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnAdminUsuarios);
+        jToolBar1.add(jSeparator2);
 
-        jButton6.setBackground(new java.awt.Color(195, 153, 62));
-        jButton6.setText("Administrar Usuarios");
-        jButton6.setFocusable(false);
-        jButton6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton6.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar2.add(jButton6);
-
-        jButton7.setBackground(new java.awt.Color(195, 153, 62));
-        jButton7.setText("Cerrar Sesión");
-        jButton7.setFocusable(false);
-        jButton7.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton7.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar2.add(jButton7);
+        btnCerrarSesion.setBackground(new java.awt.Color(195, 153, 62));
+        btnCerrarSesion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/logout.png"))); // NOI18N
+        btnCerrarSesion.setToolTipText("Cerrar Sesión");
+        btnCerrarSesion.setFocusable(false);
+        btnCerrarSesion.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnCerrarSesion.setMaximumSize(new java.awt.Dimension(74, 74));
+        btnCerrarSesion.setMinimumSize(new java.awt.Dimension(74, 74));
+        btnCerrarSesion.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnCerrarSesion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCerrarSesionActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnCerrarSesion);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jToolBar2, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jToolBar2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(16, Short.MAX_VALUE))
+            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
         );
 
         jPanel1.setBackground(new java.awt.Color(236, 214, 67));
@@ -172,11 +258,8 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         cmbCliente.setBackground(new java.awt.Color(195, 153, 62));
 
-        txtCliente.setBackground(new java.awt.Color(195, 153, 62));
-        txtCliente.setEnabled(false);
-
         jLabel11.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel11.setText("Numero de Venta:");
+        jLabel11.setText("Número de Venta:");
 
         txtNoVenta.setBackground(new java.awt.Color(195, 153, 62));
         txtNoVenta.setEnabled(false);
@@ -196,15 +279,13 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel10)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cmbCliente, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(cmbCliente, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(58, 58, 58)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel11)
@@ -213,7 +294,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(txtNoVenta, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
                     .addComponent(txtFecha))
-                .addContainerGap(303, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -228,7 +309,6 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
                     .addComponent(cmbCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel12)
                     .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(46, Short.MAX_VALUE))
@@ -302,12 +382,12 @@ public class FrmPrincipal extends javax.swing.JFrame {
                     .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAgregar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(lblNoDeProductos))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         lblTotal.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
@@ -315,6 +395,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         btnCancelar.setBackground(new java.awt.Color(195, 153, 62));
         btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
 
         btnConfirmar.setBackground(new java.awt.Color(195, 153, 62));
         btnConfirmar.setText("Confirmar");
@@ -347,8 +432,8 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblTotal)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -365,7 +450,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -378,58 +463,72 @@ public class FrmPrincipal extends javax.swing.JFrame {
             for(int i = 0; i < tblProductos.getRowCount(); i++) {
                 total +=(double) tblProductos.getValueAt(i, 7);
             }
-            lblTotal.setText("$" + total);
+            lblTotal.setText(String.format("$%.2f", total));
+            lblNoDeProductos.setText(Integer.toString(Integer.parseInt(lblNoDeProductos.getText())+ 1));
+            txtCodigo.selectAll();
+            txtCodigo.requestFocus();
         } catch (DAOException ex) {
             imprimirMensajeDeErrorDAO(ex);
         }
     }//GEN-LAST:event_btnAgregarActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrmPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrmPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrmPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrmPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void btnCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarSesionActionPerformed
+        usuarioActivo = null;
+        FrmLogin login = new FrmLogin();
+        login.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnCerrarSesionActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FrmPrincipal().setVisible(true);
-            }
-        });
-    }
+    private void btnAdminProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminProductosActionPerformed
+        JDInventario inventario = new JDInventario(this, true);
+        inventario.setVisible(true);
+    }//GEN-LAST:event_btnAdminProductosActionPerformed
+
+    private void btnAdminVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminVentasActionPerformed
+        JDVentas ventas = new JDVentas(this, true);
+        ventas.setVisible(true);
+    }//GEN-LAST:event_btnAdminVentasActionPerformed
+
+    private void btnAdminClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminClientesActionPerformed
+        try {
+            throw new DAOException("No soportado aun.");
+        } catch (DAOException ex) {
+            imprimirMensajeDeErrorDAO(ex);
+        }
+    }//GEN-LAST:event_btnAdminClientesActionPerformed
+
+    private void btnAdminProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminProveedoresActionPerformed
+        try {
+            throw new DAOException("No soportado aun.");
+        } catch (DAOException ex) {
+            imprimirMensajeDeErrorDAO(ex);
+        }
+    }//GEN-LAST:event_btnAdminProveedoresActionPerformed
+
+    private void btnAdminUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminUsuariosActionPerformed
+        DlgUsuarios usuarios = new DlgUsuarios(this, true);
+        usuarios.setVisible(true);
+    }//GEN-LAST:event_btnAdminUsuariosActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        inicializarListaProductos();
+        lblTotal.setText("$0.00");
+        lblNoDeProductos.setText("0");
+        txtCodigo.setText("");
+        txtCodigo.requestFocus();
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAdminClientes;
+    private javax.swing.JButton btnAdminProductos;
+    private javax.swing.JButton btnAdminProveedores;
+    private javax.swing.JButton btnAdminUsuarios;
+    private javax.swing.JButton btnAdminVentas;
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnCerrarSesion;
     private javax.swing.JButton btnConfirmar;
     private javax.swing.JComboBox<String> cmbCliente;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -441,12 +540,12 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JToolBar.Separator jSeparator1;
+    private javax.swing.JToolBar.Separator jSeparator2;
     private javax.swing.JToolBar jToolBar1;
-    private javax.swing.JToolBar jToolBar2;
     private javax.swing.JLabel lblNoDeProductos;
     private javax.swing.JLabel lblTotal;
     private javax.swing.JTable tblProductos;
-    private javax.swing.JTextField txtCliente;
     private javax.swing.JTextField txtCodigo;
     private javax.swing.JFormattedTextField txtFecha;
     private javax.swing.JTextField txtNoVenta;
@@ -456,7 +555,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     /**
     * inicializa la tabla tblProductos
     **/
-    private void inicializarListaUsuarios() {
+    private void inicializarListaProductos() {
         model = new ProductosVentaTableModel ();
         
         //asignamos el modelo pero sin llamar al metodo actualizar
@@ -506,7 +605,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
             clientes = (ArrayList<Cliente>) manager.getClienteDAO().obtenerTodos();
             idsClientes = new int [clientes.size()];
             for (Cliente cliente : clientes) {
-                cmbCliente.addItem(cliente.getNombre() + " " + cliente.getApellidos());
+                cmbCliente.addItem(cliente.getIdCliente() + " - " + cliente.getNombre() + " " + cliente.getApellidos());
                 idsClientes[cmbCliente.getItemCount()-1] = cliente.getIdCliente();
             }
         } catch (DAOException ex) {
