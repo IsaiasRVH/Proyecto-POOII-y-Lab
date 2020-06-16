@@ -54,7 +54,7 @@ public class MySQLClienteDAO implements IClienteDAO{
     * @param cliente El cliente del cual extraeremos los datos para insertar
     **/
     @Override
-    public void insertar(Cliente cliente) throws DAOException {
+    public Integer insertar(Cliente cliente) throws DAOException {
         try {
             //creamos la conexion a la base de datos
             conn = Conectar.realizarConexion();
@@ -94,6 +94,7 @@ public class MySQLClienteDAO implements IClienteDAO{
             Conectar.desconectarPS(ps);
             Conectar.desconectarConnection(conn);
         }
+        return  cliente.getIdCliente();
     }
 
     /**

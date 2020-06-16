@@ -4,13 +4,18 @@ import DAO.DAOException;
 import DAO.IDAOManager;
 import DAOMySQL.MySQLDAOManager;
 import Modelo.Cliente;
+import Modelo.DetalleVenta;
 import Modelo.Usuario;
+import Modelo.Venta;
+import Reportes.GenerarReporte;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -125,6 +130,8 @@ public class FrmPrincipal extends javax.swing.JFrame {
         lblTotal = new javax.swing.JLabel();
         btnCancelar = new javax.swing.JButton();
         btnConfirmar = new javax.swing.JButton();
+        checkboxCredito = new javax.swing.JCheckBox();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Zapateria La Ciudad de León");
@@ -382,7 +389,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
                     .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAgregar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
@@ -391,7 +398,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         );
 
         lblTotal.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
-        lblTotal.setText("$0.00");
+        lblTotal.setText("0.00");
 
         btnCancelar.setBackground(new java.awt.Color(195, 153, 62));
         btnCancelar.setText("Cancelar");
@@ -401,8 +408,23 @@ public class FrmPrincipal extends javax.swing.JFrame {
             }
         });
 
-        btnConfirmar.setBackground(new java.awt.Color(195, 153, 62));
         btnConfirmar.setText("Confirmar");
+        btnConfirmar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConfirmarActionPerformed(evt);
+            }
+        });
+
+        checkboxCredito.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        checkboxCredito.setText("Venta a Credito");
+        checkboxCredito.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                checkboxCreditoActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
+        jLabel2.setText("$");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -417,11 +439,15 @@ public class FrmPrincipal extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblTotal, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblTotal))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                                 .addComponent(btnConfirmar)
-                                .addGap(53, 53, 53)
-                                .addComponent(btnCancelar)))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnCancelar))
+                            .addComponent(checkboxCredito, javax.swing.GroupLayout.Alignment.TRAILING))))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -433,12 +459,16 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblTotal)
-                .addGap(18, 18, 18)
+                .addGap(10, 10, 10)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnConfirmar)
-                    .addComponent(btnCancelar))
+                    .addComponent(lblTotal)
+                    .addComponent(jLabel2))
+                .addGap(12, 12, 12)
+                .addComponent(checkboxCredito)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCancelar)
+                    .addComponent(btnConfirmar))
                 .addContainerGap())
         );
 
@@ -463,7 +493,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
             for(int i = 0; i < tblProductos.getRowCount(); i++) {
                 total +=(double) tblProductos.getValueAt(i, 7);
             }
-            lblTotal.setText(String.format("$%.2f", total));
+            lblTotal.setText(String.format("%.2f", total));
             lblNoDeProductos.setText(Integer.toString(Integer.parseInt(lblNoDeProductos.getText())+ 1));
             txtCodigo.selectAll();
             txtCodigo.requestFocus();
@@ -522,6 +552,51 @@ public class FrmPrincipal extends javax.swing.JFrame {
         txtCodigo.requestFocus();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
+    private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
+        try {
+            if(tblProductos.getRowCount() == 0) {
+                throw new DAOException("Debe ingresar al menos un producto");
+            }
+            else {
+                Venta venta = new Venta();
+                List<DetalleVenta> detallesVenta = new ArrayList<>();
+                venta.setIdUsuario(usuarioActivo.getIdUsuario());
+                venta.setIdCliente(idsClientes[cmbCliente.getSelectedIndex()]);
+                venta.setFecha(new Date());
+                venta.setTotal(Double.parseDouble(lblTotal.getText()));
+                DetalleVenta detalle;
+                for( int i = 0; i < tblProductos.getRowCount(); i++ ) {
+                    detalle = new DetalleVenta();
+                    detalle.setCodigo((String) tblProductos.getValueAt(i, 0));
+                    detalle.setCantidad((int) tblProductos.getValueAt(i, 6));
+                    detalle.setPrecio((Double) tblProductos.getValueAt(i, 5));
+                    detalle.setImporte((Double) tblProductos.getValueAt(i, 7));
+                    detallesVenta.add(detalle);
+                }
+                venta.setDetallesVenta(detallesVenta);
+                Double pago = Double.parseDouble(JOptionPane.showInputDialog("Ingrese el monto de pago:"));
+                if(checkboxCredito.isSelected()) {
+                  venta.setTipoVenta("Credito");
+                  Cliente cliente = manager.getClienteDAO().obtener(idsClientes[cmbCliente.getSelectedIndex()]);
+                  cliente.setAdeudo(cliente.getAdeudo() + Double.parseDouble(lblTotal.getText()) - pago);
+                  manager.getClienteDAO().modificar(cliente);
+                }
+                else {
+                  venta.setTipoVenta("Contado");
+                }
+                venta.setIdVenta(manager.getVentaDAO().insertar(venta));
+                System.out.println(Integer.toString(venta.getIdVenta()));
+                new GenerarReporte( venta.getIdVenta(), pago);
+            }
+        } catch (DAOException ex) {
+            imprimirMensajeDeErrorDAO(ex);
+        }
+    }//GEN-LAST:event_btnConfirmarActionPerformed
+
+    private void checkboxCreditoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkboxCreditoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_checkboxCreditoActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdminClientes;
     private javax.swing.JButton btnAdminProductos;
@@ -532,11 +607,13 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnCerrarSesion;
     private javax.swing.JButton btnConfirmar;
+    private javax.swing.JCheckBox checkboxCredito;
     private javax.swing.JComboBox<String> cmbCliente;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;

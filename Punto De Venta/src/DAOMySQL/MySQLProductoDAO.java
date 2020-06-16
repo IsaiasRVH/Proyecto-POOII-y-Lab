@@ -37,7 +37,7 @@ public class MySQLProductoDAO implements IProductoDAO{
     private final String GETONE = "SELECT codigo, modelo, marca, color, estilo, existencias, precio, idProveedor FROM producto WHERE codigo = ?";
     private final String GETPRODUCTOSBUSCADOS = GETALL + " WHERE codigo = ? OR modelo LIKE ? OR marca LIKE ? OR estilo LIKE ?";
     @Override
-    public void insertar(Producto producto) throws DAOException {
+    public String insertar(Producto producto) throws DAOException {
         try {
             //creamos la conexion a la base de datos
             conn = Conectar.realizarConexion();
@@ -57,6 +57,7 @@ public class MySQLProductoDAO implements IProductoDAO{
             if(ps.executeUpdate() == 0) {
                 throw new DAOException("No se pudo guardar el nuevo producto.");
             } 
+            
         } catch(SQLException ex) {
             throw new DAOException("Error de SQL: ", ex);
         } finally {
@@ -64,6 +65,7 @@ public class MySQLProductoDAO implements IProductoDAO{
             Conectar.desconectarPS(ps);
             Conectar.desconectarConnection(conn);
         }
+        return producto.getCodigo();
     }//fin del metodo insertar
 
     @Override

@@ -49,7 +49,7 @@ public class MySQLVentaDAO implements IVentaDAO{
     private final String GETLASTIDVENTA = "SELECT idVenta FROM `venta` ORDER BY `idVenta` DESC LIMIT 0,1";
     
     @Override
-    public void insertar(Venta venta) throws DAOException {
+    public Integer insertar(Venta venta) throws DAOException {
         try {
             //creamos la conexion a la base de datos
             conn = Conectar.realizarConexion();
@@ -71,6 +71,7 @@ public class MySQLVentaDAO implements IVentaDAO{
                 rsVenta = psVenta.getGeneratedKeys();
                 if(rsVenta.next()) {
                     venta.setIdVenta(rsVenta.getInt(1));
+                    
                 } else {
                     throw new DAOException("No se pudo asignar el ID a la venta.");
                 }
@@ -79,6 +80,7 @@ public class MySQLVentaDAO implements IVentaDAO{
             for(DetalleVenta detalleVenta : venta.getDetallesVenta()) {
                 //preparamos la consulta y especificamos los parametros de entrada
                 //para detalleVenta
+                detalleVenta.setIdVenta(rsVenta.getInt(1));
                 psDetalleVenta = conn.prepareStatement(INSERTDETALLEVENTA);
                 psDetalleVenta.setInt(1, detalleVenta.getIdVenta());
                 psDetalleVenta.setString(2, detalleVenta.getCodigo());
@@ -105,6 +107,7 @@ public class MySQLVentaDAO implements IVentaDAO{
             Conectar.desconectarPS(psVenta);
             Conectar.desconectarConnection(conn);
         }
+        return venta.getIdVenta();
     }//fin del metodo insertar
 
     @Override

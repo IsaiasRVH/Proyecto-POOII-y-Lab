@@ -48,7 +48,7 @@ public class MySQLProveedorDAO implements IProveedorDAO {
     * @param proveedor El proveedor que se va a agregar a la base de datos
     **/
     @Override
-    public void insertar(Proveedor proveedor) throws DAOException {
+    public Integer insertar(Proveedor proveedor) throws DAOException {
         try {
             //creamos la conexion a la base de datos
             conn = Conectar.realizarConexion();
@@ -86,6 +86,7 @@ public class MySQLProveedorDAO implements IProveedorDAO {
             Conectar.desconectarPS(ps);
             Conectar.desconectarConnection(conn);
         }
+        return proveedor.getIdProveedor();
     }//fin del metodo insertar
 
     /**

@@ -12,7 +12,7 @@ import java.util.List;
  * @author isaia
  */
 public interface IDAO <T, K> {
-    void insertar (T a) throws DAOException;
+    K insertar (T a) throws DAOException;
     void modificar(T a) throws DAOException;
     void eliminar(K id) throws DAOException;
     List<T> obtenerTodos() throws DAOException;

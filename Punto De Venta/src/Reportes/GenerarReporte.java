@@ -32,7 +32,7 @@ public class GenerarReporte {
     
     
     
-    public GenerarReporte(int idUsuario,int idVenta,int idCliente, Double pago) throws DAOException{
+    public GenerarReporte(int idVenta, Double pago) throws DAOException{
           try {
             JasperReport reporte = null;
             String path = "src\\Reportes\\Ticket.jasper";
@@ -42,9 +42,7 @@ public class GenerarReporte {
             conectar();
             
             Map parametros = new HashMap();
-            parametros.put("idUsuario", idUsuario);
             parametros.put("idVenta", idVenta);
-            parametros.put("idCliente", idCliente);
             parametros.put("pago", pago);
             
             JasperPrint jprint = JasperFillManager.fillReport(reporte, parametros, conn);

@@ -49,7 +49,7 @@ public class MySQLUsuarioDAO implements IUsuarioDAO{
     * @param usuario El usuario que se va a insertar en la base de datos
     **/
     @Override
-    public void insertar(Usuario usuario) throws DAOException {
+    public Integer insertar(Usuario usuario) throws DAOException {
         try {
             //creamos la conexion a la base de datos
             conn = Conectar.realizarConexion();
@@ -99,6 +99,7 @@ public class MySQLUsuarioDAO implements IUsuarioDAO{
             Conectar.desconectarPS(ps);
             Conectar.desconectarConnection(conn);
         }
+        return usuario.getIdUsuario();
     }//fin del metodo insertar
 
     /**
