@@ -32,10 +32,10 @@ public class GenerarReporte {
     
     
     
-    public GenerarReporte(int idVenta, Double pago) throws DAOException{
+    public GenerarReporte(int idVenta, Double pago, String tipo) throws DAOException{
           try {
             JasperReport reporte = null;
-            String path = "src\\Reportes\\Ticket.jasper";
+            String path = "src\\Reportes\\Ticket" + tipo + ".jasper";
             
             reporte = (JasperReport) JRLoader.loadObjectFromFile(path);
            

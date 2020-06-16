@@ -554,36 +554,51 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 throw new DAOException("Debe ingresar al menos un producto");
             }
             else {
-                Venta venta = new Venta();
-                List<DetalleVenta> detallesVenta = new ArrayList<>();
-                venta.setIdUsuario(usuarioActivo.getIdUsuario());
-                venta.setIdCliente(idsClientes[cmbCliente.getSelectedIndex()]);
-                venta.setFecha(new Date());
-                venta.setTotal(Double.parseDouble(lblTotal.getText()));
-                DetalleVenta detalle;
-                for( int i = 0; i < tblProductos.getRowCount(); i++ ) {
-                    detalle = new DetalleVenta();
-                    detalle.setCodigo((String) tblProductos.getValueAt(i, 0));
-                    detalle.setCantidad((int) tblProductos.getValueAt(i, 6));
-                    detalle.setPrecio((Double) tblProductos.getValueAt(i, 5));
-                    detalle.setImporte((Double) tblProductos.getValueAt(i, 7));
-                    detallesVenta.add(detalle);
-                }
-                venta.setDetallesVenta(detallesVenta);
                 Double pago = Double.parseDouble(JOptionPane.showInputDialog("Ingrese el monto de pago:"));
-                if(checkboxCredito.isSelected()) {
-                  venta.setTipoVenta("Credito");
-                  Cliente cliente = manager.getClienteDAO().obtener(idsClientes[cmbCliente.getSelectedIndex()]);
-                  cliente.setAdeudo(cliente.getAdeudo() + Double.parseDouble(lblTotal.getText()) - pago);
-                  manager.getClienteDAO().modificar(cliente);
+                
+                if(pago > 0) {
+                    Venta venta = new Venta();
+                    List<DetalleVenta> detallesVenta = new ArrayList<>();
+                    venta.setIdUsuario(usuarioActivo.getIdUsuario());
+                    venta.setIdCliente(idsClientes[cmbCliente.getSelectedIndex()]);
+                    venta.setFecha(new Date());
+                    venta.setTotal(Double.parseDouble(lblTotal.getText()));
+                    DetalleVenta detalle;
+                    for( int i = 0; i < tblProductos.getRowCount(); i++ ) {
+                        detalle = new DetalleVenta();
+                        detalle.setCodigo((String) tblProductos.getValueAt(i, 0));
+                        detalle.setCantidad((int) tblProductos.getValueAt(i, 6));
+                        detalle.setPrecio((Double) tblProductos.getValueAt(i, 5));
+                        detalle.setImporte((Double) tblProductos.getValueAt(i, 7));
+                        detallesVenta.add(detalle);
+                    }
+                    venta.setDetallesVenta(detallesVenta);
+                    if(checkboxCredito.isSelected()) {
+                        if(cmbCliente.getSelectedIndex() != 0) {
+                            venta.setTipoVenta("Credito");
+                            Cliente cliente = manager.getClienteDAO().obtener(idsClientes[cmbCliente.getSelectedIndex()]);
+                            cliente.setAdeudo(cliente.getAdeudo() + Double.parseDouble(lblTotal.getText()) - pago);
+                            manager.getClienteDAO().modificar(cliente);
+                        }
+                        else {
+                            throw new DAOException("No se puede dar credito a este usuario.");
+                        }
+                    }
+                    else {
+                        if(pago >= Double.parseDouble(lblTotal.getText())) {
+                            venta.setTipoVenta("Contado");
+                        }
+                        else {
+                            throw new DAOException("El pago no alcanza a cubrir el total.");
+                        }
+                    }
+                    venta.setIdVenta(manager.getVentaDAO().insertar(venta));
+                    new GenerarReporte( venta.getIdVenta(), pago, venta.getTipoVenta());
+                    inicializarListaProductos();
                 }
                 else {
-                  venta.setTipoVenta("Contado");
+                    throw new DAOException("El pago no puede ser 0 o menos");
                 }
-                venta.setIdVenta(manager.getVentaDAO().insertar(venta));
-                System.out.println(Integer.toString(venta.getIdVenta()));
-                new GenerarReporte( venta.getIdVenta(), pago);
-                inicializarListaProductos();
             }
         } catch (DAOException ex) {
             imprimirMensajeDeErrorDAO(ex);
@@ -648,6 +663,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         lblNoDeProductos.setText("0");
         txtCodigo.setText("");
         txtCodigo.requestFocus();
+        checkboxCredito.setSelected(false);
     }
 
     /**
