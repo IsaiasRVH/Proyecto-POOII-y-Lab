@@ -10,6 +10,8 @@ import DAO.DAOException;
 import MySQLConection.Conectar;
 import java.awt.Frame;
 import java.sql.Connection;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import net.sf.jasperreports.engine.JRException;
@@ -39,7 +41,13 @@ public class GenerarReporte {
            
             conectar();
             
-            JasperPrint jprint = JasperFillManager.fillReport(reporte, null, conn);
+            Map parametros = new HashMap();
+            parametros.put("idUsuario", idUsuario);
+            parametros.put("idVenta", idVenta);
+            parametros.put("idCliente", idCliente);
+            parametros.put("pago", pago);
+            
+            JasperPrint jprint = JasperFillManager.fillReport(reporte, parametros, conn);
             
             JasperViewer view = new JasperViewer(jprint, false);
             
