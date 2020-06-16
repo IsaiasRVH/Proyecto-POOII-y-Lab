@@ -2,13 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="300" pageHeight="420" columnWidth="260" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0f4a7b22-3a46-4585-a7ef-8fc9801e5b15">
 	<property name="ireport.zoom" value="1.771561000000001"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="23"/>
-	<parameter name="idUsuario" class="java.lang.Integer">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
-	</parameter>
-	<parameter name="idCliente" class="java.lang.Integer">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
-	</parameter>
+	<property name="ireport.y" value="0"/>
 	<parameter name="idVenta" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -37,11 +31,7 @@ FROM
      INNER JOIN `detalleventa` detalleventa ON venta.`idVenta` = detalleventa.`idVenta`
      INNER JOIN `producto` producto ON detalleventa.`codigo` = producto.`codigo`
 WHERE
-     usuario.idUsuario = $P{idUsuario}
-     or cliente.idCliente = $P{idCliente}
-     or venta.idVenta = $P{idVenta}
-     or detalleVenta.idVenta = $P{idVenta}
-     or detalleVenta.codigo = producto.codigo]]>
+     venta.idVenta = $P{idVenta}]]>
 	</queryString>
 	<field name="usuario_nombre" class="java.lang.String"/>
 	<field name="usuario_apellidos" class="java.lang.String"/>
@@ -220,7 +210,7 @@ WHERE
 			</staticText>
 			<staticText>
 				<reportElement x="160" y="29" width="44" height="14" uuid="828a90e9-2853-44fa-9499-611b0570e44e"/>
-				<text><![CDATA[Cambio: ]]></text>
+				<text><![CDATA[Cambio:]]></text>
 			</staticText>
 			<line>
 				<reportElement x="0" y="0" width="260" height="1" uuid="fe4d7529-42a7-4404-9165-cee8573be054"/>

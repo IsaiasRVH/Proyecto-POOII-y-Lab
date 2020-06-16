@@ -546,10 +546,6 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         inicializarListaProductos();
-        lblTotal.setText("$0.00");
-        lblNoDeProductos.setText("0");
-        txtCodigo.setText("");
-        txtCodigo.requestFocus();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
@@ -587,6 +583,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 venta.setIdVenta(manager.getVentaDAO().insertar(venta));
                 System.out.println(Integer.toString(venta.getIdVenta()));
                 new GenerarReporte( venta.getIdVenta(), pago);
+                inicializarListaProductos();
             }
         } catch (DAOException ex) {
             imprimirMensajeDeErrorDAO(ex);
@@ -646,6 +643,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
         
         //redimensionamos las celdas
         setJTableColumnsWidth(tblProductos, 640, 80,80,150,80,80,60,50,60 );
+        
+        lblTotal.setText("0.00");
+        lblNoDeProductos.setText("0");
+        txtCodigo.setText("");
+        txtCodigo.requestFocus();
     }
 
     /**
