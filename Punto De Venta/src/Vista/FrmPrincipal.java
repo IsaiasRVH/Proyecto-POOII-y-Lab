@@ -473,10 +473,14 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarSesionActionPerformed
-        usuarioActivo = null;
-        FrmLogin login = new FrmLogin();
-        login.setVisible(true);
-        this.dispose();
+        int respuesta = JOptionPane.showConfirmDialog(null,
+                    "¿Seguro que quieres cerrar Sesión?", "Confirmar", 0);
+        if(respuesta == 0) {
+            usuarioActivo = null;
+            FrmLogin login = new FrmLogin();
+            login.setVisible(true);
+            this.dispose();
+        }
     }//GEN-LAST:event_btnCerrarSesionActionPerformed
 
     private void btnAdminProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminProductosActionPerformed
