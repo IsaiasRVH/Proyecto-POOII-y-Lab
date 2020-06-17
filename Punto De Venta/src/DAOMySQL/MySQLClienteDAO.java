@@ -35,8 +35,8 @@ public class MySQLClienteDAO implements IClienteDAO{
             + "(?, ?, ?, ?, ?, ?, ?, ?,  ?, ?, ?)";
 
     private final String UPDATE = "UPDATE cliente SET nombre = ?, "
-            + "apellidos = ?, calleYNumero = ?, colonia = ?, codigoPostal = ?, "
-            + "ciudad = ?, estado = ?, pais = ?, telefono = ?, email = ?, "
+            + "apellidos = ?, calleYNumero = ?, colonia = ?, ciudad = ?, "
+            + "codigoPostal = ?, estado = ?, pais = ?, telefono = ?, email = ?, "
             + "adeudo = ? WHERE idCliente = ?";
 
     private final String DELETE = "DELETE FROM cliente WHERE idCliente = ?";
