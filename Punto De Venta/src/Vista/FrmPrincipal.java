@@ -5,6 +5,7 @@ import DAO.IDAOManager;
 import DAOMySQL.MySQLDAOManager;
 import Modelo.Cliente;
 import Modelo.DetalleVenta;
+import Modelo.Producto;
 import Modelo.Usuario;
 import Modelo.Venta;
 import Reportes.GenerarReporte;
@@ -19,6 +20,7 @@ import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
 /**
@@ -127,6 +129,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         tblProductos = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         lblNoDeProductos = new javax.swing.JLabel();
+        btnEliminar = new javax.swing.JButton();
         lblTotal = new javax.swing.JLabel();
         btnCancelar = new javax.swing.JButton();
         btnConfirmar = new javax.swing.JButton();
@@ -357,6 +360,14 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         lblNoDeProductos.setText("0");
 
+        btnEliminar.setBackground(new java.awt.Color(195, 153, 62));
+        btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -366,34 +377,39 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 971, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnAgregar))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblNoDeProductos, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnAgregar)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblNoDeProductos, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnEliminar)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAgregar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(lblNoDeProductos))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnAgregar))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(lblNoDeProductos)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnEliminar)))
                 .addContainerGap())
         );
 
@@ -593,6 +609,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
                         }
                     }
                     venta.setIdVenta(manager.getVentaDAO().insertar(venta));
+                    decrementarExistencias();
                     new GenerarReporte( venta.getIdVenta(), pago, venta.getTipoVenta());
                     inicializarListaProductos();
                 }
@@ -609,6 +626,15 @@ public class FrmPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_checkboxCreditoActionPerformed
 
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        if(JOptionPane.showConfirmDialog(null, "¿Desea eliminar el producto?", 
+                "Eliminar de la lista", JOptionPane.YES_NO_OPTION, 
+                JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+            model.removeRow(tblProductos.getSelectedRow());
+            model.fireTableDataChanged();
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdminClientes;
     private javax.swing.JButton btnAdminProductos;
@@ -619,6 +645,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnCerrarSesion;
     private javax.swing.JButton btnConfirmar;
+    private javax.swing.JButton btnEliminar;
     private javax.swing.JCheckBox checkboxCredito;
     private javax.swing.JComboBox<String> cmbCliente;
     private javax.swing.JLabel jLabel1;
@@ -733,5 +760,13 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 ex.getMessage() + "\n" + 
                     mensajeError,
                 "Error", JOptionPane.ERROR_MESSAGE);
+    }
+    
+    public void decrementarExistencias() throws DAOException {
+        for(int i = 0; i < tblProductos.getRowCount(); i++) {
+            Producto producto = manager.getProductoDAO().obtener((String) tblProductos.getValueAt(i, 0));
+            producto.setExistencias(producto.getExistencias() -(int) tblProductos.getValueAt(i, 6));
+            manager.getProductoDAO().modificar(producto);
+        }
     }
 }

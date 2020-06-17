@@ -49,6 +49,10 @@ public class ProductosVentaTableModel extends AbstractTableModel{
         }
     }
     
+    public void removeRow(int index) {
+        datos.remove(index);
+    }
+    
     /**
      * retorna el numero de elementos obtenidos de la tabla productos
      * @return 
