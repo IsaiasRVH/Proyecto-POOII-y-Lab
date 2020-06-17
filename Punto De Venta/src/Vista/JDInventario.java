@@ -65,7 +65,7 @@ public class JDInventario extends javax.swing.JDialog {
         txtBuscar = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        lblTotalProductos = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblInventario = new javax.swing.JTable();
         jToolBar1 = new javax.swing.JToolBar();
@@ -117,7 +117,7 @@ public class JDInventario extends javax.swing.JDialog {
 
         jLabel1.setText("Total de Productos:");
 
-        jLabel2.setText("0");
+        lblTotalProductos.setText("0");
 
         tblInventario.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -193,7 +193,7 @@ public class JDInventario extends javax.swing.JDialog {
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(lblTotalProductos, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 25, Short.MAX_VALUE))
                     .addComponent(jScrollPane1)
                     .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -209,7 +209,7 @@ public class JDInventario extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jLabel2))
+                    .addComponent(lblTotalProductos))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -286,13 +286,13 @@ public class JDInventario extends javax.swing.JDialog {
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnNuevo;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JToolBar.Separator jSeparator1;
     private javax.swing.JToolBar.Separator jSeparator2;
     private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JLabel lblTotalProductos;
     private javax.swing.JTable tblInventario;
     private javax.swing.JTextField txtBuscar;
     // End of variables declaration//GEN-END:variables
@@ -326,6 +326,8 @@ public class JDInventario extends javax.swing.JDialog {
         
         //redimensionamos las celdas
         setJTableColumnsWidth(tblInventario, 850,50,40,40,40,40,60,40,40);
+        
+        lblTotalProductos.setText(String.valueOf(tblInventario.getRowCount()));
     }//fin del metodo actualizarListaAutores
     
     /**
@@ -343,6 +345,8 @@ public class JDInventario extends javax.swing.JDialog {
         
         //redimensionamos las celdas
         setJTableColumnsWidth(tblInventario, 850,50,40,40,40,40,60,40,40);
+        
+        lblTotalProductos.setText(String.valueOf(tblInventario.getRowCount()));
     }//fin del metodo actualizarListaAutores
     
     public static void setJTableColumnsWidth(JTable table, int tablePreferredWidth,

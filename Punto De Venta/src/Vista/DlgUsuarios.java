@@ -37,6 +37,12 @@ public class DlgUsuarios extends javax.swing.JDialog {
             
             inicializarListaUsuarios();
             actualizarListaUsuarios();
+            
+            this.tblUsuarios.getSelectionModel().addListSelectionListener(e -> {
+                boolean seleccionValida = (tblUsuarios.getSelectedRow() != -1);
+                btnEditar.setEnabled(seleccionValida);
+                btnEliminar.setEnabled(seleccionValida);
+            });
         } catch (DAOException ex) {
             imprimirMensajeDeErrorDAO(ex);
         }
@@ -131,7 +137,7 @@ public class DlgUsuarios extends javax.swing.JDialog {
             .addGroup(pnlTablaLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(pnlBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(706, Short.MAX_VALUE))
+                .addContainerGap(716, Short.MAX_VALUE))
             .addGroup(pnlTablaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(pnlTablaLayout.createSequentialGroup()
                     .addContainerGap()
@@ -163,6 +169,7 @@ public class DlgUsuarios extends javax.swing.JDialog {
 
         btnEditar.setBackground(new java.awt.Color(195, 153, 62));
         btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/edit.png"))); // NOI18N
+        btnEditar.setEnabled(false);
         btnEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEditarActionPerformed(evt);
@@ -171,6 +178,7 @@ public class DlgUsuarios extends javax.swing.JDialog {
 
         btnEliminar.setBackground(new java.awt.Color(195, 153, 62));
         btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/delete.png"))); // NOI18N
+        btnEliminar.setEnabled(false);
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEliminarActionPerformed(evt);
