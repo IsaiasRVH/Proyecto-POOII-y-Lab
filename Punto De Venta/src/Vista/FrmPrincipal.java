@@ -85,6 +85,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 btnAdminUsuarios.setEnabled(true);
             }
             
+            this.tblProductos.getSelectionModel().addListSelectionListener(e -> {
+                boolean seleccionValida = (tblProductos.getSelectedRow() != -1);
+                btnEliminar.setEnabled(seleccionValida);
+            });
+            
             //Se le asigna el focus al cuadro donde se ingresa el codigo del producto
             txtCodigo.requestFocus();
         } catch (DAOException ex) {
@@ -362,6 +367,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         btnEliminar.setBackground(new java.awt.Color(195, 153, 62));
         btnEliminar.setText("Eliminar");
+        btnEliminar.setEnabled(false);
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEliminarActionPerformed(evt);
