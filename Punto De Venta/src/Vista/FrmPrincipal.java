@@ -569,7 +569,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAdminProveedoresActionPerformed
 
     private void btnAdminUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminUsuariosActionPerformed
-        DlgUsuarios usuarios = new DlgUsuarios(this, true);
+        JDUsuarios usuarios = new JDUsuarios(this, true);
         usuarios.setVisible(true);
     }//GEN-LAST:event_btnAdminUsuariosActionPerformed
 
@@ -643,8 +643,14 @@ public class FrmPrincipal extends javax.swing.JFrame {
         if(JOptionPane.showConfirmDialog(null, "¿Desea eliminar el producto?", 
                 "Eliminar de la lista", JOptionPane.YES_NO_OPTION, 
                 JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+            lblNoDeProductos.setText(Integer.toString(Integer.parseInt(lblNoDeProductos.getText()) - (int) tblProductos.getValueAt(tblProductos.getSelectedRow(), 6)));
             model.removeRow(tblProductos.getSelectedRow());
             model.fireTableDataChanged();
+            double total = 0;
+            for(int i = 0; i < tblProductos.getRowCount(); i++) {
+                total +=(double) tblProductos.getValueAt(i, 7);
+            }
+            lblTotal.setText(String.format("%.2f", total));
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
