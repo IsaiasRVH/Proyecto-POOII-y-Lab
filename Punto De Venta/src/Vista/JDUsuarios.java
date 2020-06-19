@@ -76,9 +76,9 @@ public class JDUsuarios extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        pnlPrincipal.setBackground(new java.awt.Color(236, 214, 67));
+        pnlPrincipal.setBackground(new java.awt.Color(255, 255, 204));
 
-        pnlTabla.setBackground(new java.awt.Color(236, 214, 67));
+        pnlTabla.setBackground(new java.awt.Color(255, 255, 204));
 
         tblUsuarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -93,7 +93,7 @@ public class JDUsuarios extends javax.swing.JDialog {
         ));
         jScrollPane1.setViewportView(tblUsuarios);
 
-        pnlBusqueda.setBackground(new java.awt.Color(236, 214, 67));
+        pnlBusqueda.setBackground(new java.awt.Color(255, 255, 204));
 
         btnBuscar.setBackground(new java.awt.Color(195, 153, 62));
         btnBuscar.setText("Buscar");
@@ -157,7 +157,7 @@ public class JDUsuarios extends javax.swing.JDialog {
                     .addContainerGap(51, Short.MAX_VALUE)))
         );
 
-        pnlBotones.setBackground(new java.awt.Color(236, 214, 67));
+        pnlBotones.setBackground(new java.awt.Color(255, 255, 204));
 
         btnAgregar.setBackground(new java.awt.Color(195, 153, 62));
         btnAgregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/add.png"))); // NOI18N
@@ -209,7 +209,7 @@ public class JDUsuarios extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        pnlTitulo.setBackground(new java.awt.Color(236, 214, 67));
+        pnlTitulo.setBackground(new java.awt.Color(255, 255, 204));
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel1.setText("Administración de Usuarios");

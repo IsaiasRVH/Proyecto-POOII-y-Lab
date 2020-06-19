@@ -79,7 +79,7 @@ public class JDVentas extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
 
-        jPanel1.setBackground(new java.awt.Color(236, 214, 67));
+        jPanel1.setBackground(new java.awt.Color(255, 255, 204));
 
         tblVentas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

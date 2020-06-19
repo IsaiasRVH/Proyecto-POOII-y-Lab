@@ -72,10 +72,10 @@ public class FrmLogin extends javax.swing.JFrame {
         setAlwaysOnTop(true);
         setResizable(false);
 
-        jPanel1.setBackground(new java.awt.Color(236, 214, 67));
+        jPanel1.setBackground(new java.awt.Color(255, 255, 204));
         jPanel1.setToolTipText("");
 
-        pnlLogo.setBackground(new java.awt.Color(236, 214, 67));
+        pnlLogo.setBackground(new java.awt.Color(255, 255, 204));
 
         javax.swing.GroupLayout pnlLogoLayout = new javax.swing.GroupLayout(pnlLogo);
         pnlLogo.setLayout(pnlLogoLayout);
@@ -88,7 +88,7 @@ public class FrmLogin extends javax.swing.JFrame {
             .addGap(0, 150, Short.MAX_VALUE)
         );
 
-        jPanel2.setBackground(new java.awt.Color(236, 214, 67));
+        jPanel2.setBackground(new java.awt.Color(255, 255, 204));
 
         jLabel1.setText("Usuario:");
 

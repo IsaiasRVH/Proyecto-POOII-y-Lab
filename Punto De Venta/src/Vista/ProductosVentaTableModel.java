@@ -51,6 +51,7 @@ public class ProductosVentaTableModel extends AbstractTableModel{
     
     public void removeRow(int index) {
         datos.remove(index);
+        cantidad.remove(index);
     }
     
     /**

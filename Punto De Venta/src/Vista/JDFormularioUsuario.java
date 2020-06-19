@@ -97,9 +97,9 @@ public class JDFormularioUsuario extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
 
-        pnlPrincipal.setBackground(new java.awt.Color(236, 214, 67));
+        pnlPrincipal.setBackground(new java.awt.Color(255, 255, 204));
 
-        jPanel1.setBackground(new java.awt.Color(236, 214, 67));
+        jPanel1.setBackground(new java.awt.Color(255, 255, 204));
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
@@ -326,7 +326,7 @@ public class JDFormularioUsuario extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel2.setBackground(new java.awt.Color(236, 214, 67));
+        jPanel2.setBackground(new java.awt.Color(255, 255, 204));
 
         btnGuardar.setBackground(new java.awt.Color(195, 153, 62));
         btnGuardar.setFont(new java.awt.Font("Dialog", 1, 8)); // NOI18N

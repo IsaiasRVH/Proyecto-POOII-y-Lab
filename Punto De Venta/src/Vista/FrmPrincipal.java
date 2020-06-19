@@ -146,12 +146,12 @@ public class FrmPrincipal extends javax.swing.JFrame {
         setBackground(new java.awt.Color(195, 153, 62));
         setMinimumSize(new java.awt.Dimension(1009, 678));
 
-        jPanel4.setBackground(new java.awt.Color(236, 214, 67));
+        jPanel4.setBackground(new java.awt.Color(255, 255, 204));
 
-        jPanel3.setBackground(new java.awt.Color(236, 214, 67));
+        jPanel3.setBackground(new java.awt.Color(255, 255, 204));
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED), "Acciones"));
 
-        jToolBar1.setBackground(new java.awt.Color(236, 214, 67));
+        jToolBar1.setBackground(new java.awt.Color(255, 255, 204));
         jToolBar1.setFloatable(false);
         jToolBar1.setRollover(true);
 
@@ -259,7 +259,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
             .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
         );
 
-        jPanel1.setBackground(new java.awt.Color(236, 214, 67));
+        jPanel1.setBackground(new java.awt.Color(255, 255, 204));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED)));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -329,7 +329,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 .addContainerGap(46, Short.MAX_VALUE))
         );
 
-        jPanel2.setBackground(new java.awt.Color(236, 214, 67));
+        jPanel2.setBackground(new java.awt.Color(255, 255, 204));
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED), "Producto", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 18))); // NOI18N
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
