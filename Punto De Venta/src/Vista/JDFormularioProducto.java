@@ -389,7 +389,6 @@ public class JDFormularioProducto extends javax.swing.JDialog {
              return validacion;
         }
         
-        
         if(cmbProveedores.getSelectedIndex() != 0) {
             idProveedor = idsProveedores[cmbProveedores.getSelectedIndex() - 1];
         } else {
@@ -438,7 +437,8 @@ public class JDFormularioProducto extends javax.swing.JDialog {
         JOptionPane.showMessageDialog(null, ex.getMessage()+"\n"+mensajeError, "Error",
                 JOptionPane.ERROR_MESSAGE);
     }//fin del metodo imprimirMensajeDeErrorDAO
-
+    
+    //metodo para cargar un producto a modificar en las cajas de texto
     private void cargarProducto() {
         txtCodigo.setText(producto.getCodigo());
         txtModelo.setText(producto.getModelo());
@@ -449,7 +449,7 @@ public class JDFormularioProducto extends javax.swing.JDialog {
         txtPrecio.setText(String.valueOf(producto.getPrecio()));
         cmbProveedores.setSelectedIndex(producto.getIdProveedor());
     }
-
+    
     private void limpiarFormulario() {
         //limpiamos las cajas de texto
         txtCodigo.setText("");
