@@ -52,7 +52,7 @@ INSERT INTO `cliente` (`idCliente`, `nombre`, `apellidos`, `calleYNumero`, `colo
 (2, 'Carlos', 'Mora López', 'Delicias #1309', 'Centro', 'Jalpa', '99600', 'Zacatecas', 'México', '4631014381', 'carlosmora25@live.com', 0),
 (3, 'Laura', 'Suárez Guerrero', 'Profa. Hermelinda Estrada #220', 'Martínez', 'Calvillo', '20805', 'Aguascalientes', 'México', '4951038937', 'lau.suarez@gmail.com', 0),
 (4, 'Juan', 'García Saldaña', 'J. Mota Padilla #1024', 'San Antonio', 'Jalpa', '99600', 'Zacatecas', 'México', '4631078365', 'juangarcia13@gmail.com', 0),
-(5, 'María', 'Cabrera Vázquez', '21 de septiembre #1203', 'El Rosario', '99600', 'Jalpa', 'Zacatecas', 'México', '4639533472', 'mariacv205@gmail.com', 1299);
+(5, 'María', 'Cabrera Vázquez', '21 de septiembre #1203', 'El Rosario', 'Jalpa', '99600', 'Zacatecas', 'México', '4639533472', 'mariacv205@gmail.com', 1299);
 
 -- --------------------------------------------------------
 
