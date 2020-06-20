@@ -33,7 +33,7 @@ public class MySQLProveedorDAO implements IProveedorDAO {
 
     private final String UPDATE = "UPDATE proveedor SET nombre = ?, "
             + "calleYNumero = ?, colonia = ?, ciudad = ?, codigoPostal = ?, "
-            + "estado = ?, pais = ?, telefono = ?, email = ?";
+            + "estado = ?, pais = ?, telefono = ?, email = ? WHERE idProveedor = ?";
 
     private final String DELETE = "DELETE FROM proveedor WHERE idProveedor = ?";
 
