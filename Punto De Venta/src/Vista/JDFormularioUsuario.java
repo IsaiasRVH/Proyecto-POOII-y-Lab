@@ -9,7 +9,6 @@ import DAO.DAOException;
 import DAO.IDAOManager;
 import DAOMySQL.MySQLDAOManager;
 import Modelo.Usuario;
-import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
 
 /**
@@ -141,6 +140,7 @@ public class JDFormularioUsuario extends javax.swing.JDialog {
         txtColonia.setBackground(new java.awt.Color(195, 153, 62));
 
         txtCodigoPostal.setBackground(new java.awt.Color(195, 153, 62));
+
 
         txtCiudad.setBackground(new java.awt.Color(195, 153, 62));
 
@@ -334,6 +334,7 @@ public class JDFormularioUsuario extends javax.swing.JDialog {
         );
 
         lblMensaje.setBackground(new java.awt.Color(255, 0, 0));
+        lblMensaje.setForeground(new java.awt.Color(255, 0, 0));
 
         javax.swing.GroupLayout pnlPrincipalLayout = new javax.swing.GroupLayout(pnlPrincipal);
         pnlPrincipal.setLayout(pnlPrincipalLayout);
@@ -385,7 +386,7 @@ public class JDFormularioUsuario extends javax.swing.JDialog {
                     }
                     else {
                         lblMensaje.setText("La contraseña debe de ser de 8 "
-                                + "caracteres o mas.");
+                                + "caracteres o más.");
                         pwdContraseniaNueva.selectAll();
                         pwdContraseniaNueva.requestFocus();
                     }

@@ -536,7 +536,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private void btnCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarSesionActionPerformed
         //el boton cierra la sesion activa y manda al Dialog de inicio de sesion
         int respuesta = JOptionPane.showConfirmDialog(null,
-                    "¿Seguro que quieres cerrar Sesión?", "Confirmar", 0);
+                    "¿Seguro que quieres cerrar sesión?", "Confirmar", 0);
         if(respuesta == 0) {
             usuarioActivo = null;
             FrmLogin login = new FrmLogin();
@@ -593,7 +593,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 throw new DAOException("Debe ingresar al menos un producto");
             }
             else { //hay productos en la tabla, por lo que se procedera la venta
-                Double pago = Double.parseDouble(JOptionPane.showInputDialog("Ingrese el monto de pago:"));
+                Double pago = Double.parseDouble(JOptionPane.showInputDialog(null,"Ingrese el monto de pago:", "Monto de pago.", JOptionPane.PLAIN_MESSAGE));
                 
                 if(pago > 0) { //si el pago es mayor a cero entonces
                     //se crea un nuevo objeto de tipo Venta
