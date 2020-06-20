@@ -23,7 +23,7 @@ public class JDInventario extends javax.swing.JDialog {
     //creamos un objeto del tipo interface ITituloDAO
     private IDAOManager manager = null;
     
-    //el modelo para nuestra tabla tblAutores
+    //el modelo para nuestra tabla tblInventario
     private InventarioTableModel model;
     
     //propiedad para modificar el width de nuestra tabla tblInventario
@@ -314,8 +314,7 @@ public class JDInventario extends javax.swing.JDialog {
     private void inicializarListaInventario() {
         model = new InventarioTableModel(manager.getProductoDAO());
         
-        //asignamos el modelo pero sin llamar al metodo actualizar
-        //ya que al iniciar el isbn esta en blanco
+        //Asigna el modelo a la tabla
         tblInventario.setModel(model);
         
         //redimensionamos las celdas
@@ -338,6 +337,7 @@ public class JDInventario extends javax.swing.JDialog {
         //redimensionamos las celdas
         setJTableColumnsWidth(tblInventario, 850,50,40,40,40,40,60,40,40);
         
+        //Mostramos el numero de productos mostrados
         lblTotalProductos.setText(String.valueOf(tblInventario.getRowCount()));
     }//fin del metodo actualizarListaAutores
     
@@ -394,7 +394,7 @@ public class JDInventario extends javax.swing.JDialog {
     }//fin del metodo imprimirMensajeDeErrorDAO
     
     /**
-     * Metodo para saber el codigo del producto seleccionado en la tabla
+     * Metodo para saber el producto seleccionado en la tabla
      */
     private Producto getProductoSeleccionado() throws DAOException {
         String codigo = (String) tblInventario.getValueAt(tblInventario.getSelectedRow(), 0);
