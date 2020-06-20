@@ -32,7 +32,7 @@ public class JDFormularioProducto extends javax.swing.JDialog {
     //objeto de tipo Producto
     Producto producto = null;
     
-    //creamos un objeto del tipo interface IAutorDAO
+    //creamos nuestro manager para manejar los DAO
     private IDAOManager manager = null;
     
     //Los ids de los usuarios en el combobox
