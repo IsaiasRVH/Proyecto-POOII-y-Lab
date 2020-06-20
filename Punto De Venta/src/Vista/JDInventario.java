@@ -272,7 +272,7 @@ public class JDInventario extends javax.swing.JDialog {
             if(respuesta == 0) {
                 manager.getProductoDAO().eliminar(miProducto.getCodigo());
                 //si no ocurre una excepcion
-                JOptionPane.showMessageDialog(null, "El titulo ha sido eliminado");
+                JOptionPane.showMessageDialog(null, "El producto ha sido eliminado");
                 actualizarListaInventario();
             }
         } catch(DAOException ex) {
