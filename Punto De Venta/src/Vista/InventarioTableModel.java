@@ -90,10 +90,12 @@ public class InventarioTableModel extends AbstractTableModel {
         } 
     }
     
+    //metodo que actualiza la tabla
     public void updateModel() throws DAOException {
         datos = producto.obtenerTodos();
     }
     
+    //metodo que actualiza la tabla, tiene un parametro
     public void updateModel(String buscar) throws DAOException {
         datos = producto.obtenerBuscados(buscar);
     }
