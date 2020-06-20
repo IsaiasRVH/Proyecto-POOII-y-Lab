@@ -276,6 +276,7 @@ public class JDUsuarios extends javax.swing.JDialog {
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         try {
+            //Llama el metodo para actualizar los usuarios mostrados
             actualizarListaUsuarios();
         } catch (DAOException ex) {
             imprimirMensajeDeErrorDAO(ex);
@@ -284,8 +285,10 @@ public class JDUsuarios extends javax.swing.JDialog {
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         try {
+            //Muestra un dialog para agregar un nuevo usuario
             JDFormularioUsuario dialog = new JDFormularioUsuario(null, true, null);
             dialog.setVisible(true);
+            //Actualizamos los usuarios mostrados
             actualizarListaUsuarios();
         } catch (DAOException ex) {
             imprimirMensajeDeErrorDAO(ex);
@@ -298,8 +301,10 @@ public class JDUsuarios extends javax.swing.JDialog {
                 throw new DAOException("Debe seleccionar un usuario");
             }
             else {
+                //Abre un dialog para editar el usuario seleccionado
                 JDFormularioUsuario dialog = new JDFormularioUsuario(null, true, manager.getUsuarioDAO().obtener((int) tblUsuarios.getValueAt(tblUsuarios.getSelectedRow(), 0)));
                 dialog.setVisible(true);
+                //Actualiza los usuarios mostrados
                 actualizarListaUsuarios();
             }
         } catch (DAOException ex) {
@@ -309,12 +314,16 @@ public class JDUsuarios extends javax.swing.JDialog {
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         try {
+            //Comprueba que este seleccionado un usuario
             if(tblUsuarios.getSelectedRow() == -1) {
                 throw new DAOException("Debe seleccionar un usuario");
             }
             else {
+                //Pregunta si de verdad se desea eliminar al usuario
                 if(JOptionPane.showConfirmDialog(null, "¿Seguro que desea eliminar este usuario?", "Eliminar", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE) == JOptionPane.YES_OPTION){
+                    //En caso de que si se desee eliminar se elimina con base en el id obtenido de la tabla
                     manager.getUsuarioDAO().eliminar((int) tblUsuarios.getValueAt(tblUsuarios.getSelectedRow(), 0));
+                    //Se actualizan los usuarios mostrados
                     actualizarListaUsuarios();
                 }
             }
