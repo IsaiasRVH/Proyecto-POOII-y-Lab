@@ -58,29 +58,17 @@ public class MySQLUsuarioDAO implements IUsuarioDAO{
             ps = conn.prepareStatement(INSERT, PreparedStatement.RETURN_GENERATED_KEYS);
 
             ps.setString(1, usuario.getNombre());
-                        System.out.println();
             ps.setString(2, usuario.getApellidos());
-                        System.out.println();
             ps.setString(3, usuario.getTelefono());
-                        System.out.println();
             ps.setString(4, usuario.getEmail());
-                        System.out.println();
             ps.setString(5, usuario.getCalleYNumero());
-                        System.out.println();
             ps.setString(6, usuario.getColonia());
-                        System.out.println();
             ps.setString(7, usuario.getCodigoPostal());
-                        System.out.println();
             ps.setString(8, usuario.getCiudad());
-                        System.out.println();
             ps.setString(9, usuario.getEstado());
-                        System.out.println();
             ps.setString(10, usuario.getPais());
-                        System.out.println();
             ps.setDouble(11, usuario.getSalario());
-                        System.out.println();
             ps.setString(12, usuario.getContrasenia());
-                        System.out.println();
             
             //ejecutamos la consulta y verificamos el resultado
             if(ps.executeUpdate() == 0) { //if 1.0
