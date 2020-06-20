@@ -197,7 +197,9 @@ public class JDVentas extends javax.swing.JDialog {
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         try {
+            //Obtenemos la fecha seleccionada en el DateChooser
             Date fecha = new Date(dateBusqueda.getDate().getTime());
+            //Actualizamos la lista basandonos en la fecha obtenida
             actualizarListaVentas(fecha);
         } catch(DAOException ex) {
             imprimirMensajeDeErrorDAO(ex);
