@@ -602,14 +602,20 @@ public class FrmPrincipal extends javax.swing.JFrame {
             else { //hay productos en la tabla, por lo que se procedera la venta
                 Double pago = Double.parseDouble(JOptionPane.showInputDialog("Ingrese el monto de pago:"));
                 
-                if(pago > 0) {
+                if(pago > 0) { //si el pago es mayor a cero entonces
+                    //se crea un nuevo objeto de tipo Venta
                     Venta venta = new Venta();
+                    //se crea una lista para nuestros detalle de venta
                     List<DetalleVenta> detallesVenta = new ArrayList<>();
+                    
+                    //se llena los datos de la venta en nuestro objeto de tipo Venta
                     venta.setIdUsuario(usuarioActivo.getIdUsuario());
                     venta.setIdCliente(idsClientes[cmbCliente.getSelectedIndex()]);
                     venta.setFecha(new Date());
                     venta.setTotal(Double.parseDouble(lblTotal.getText()));
                     DetalleVenta detalle;
+                    
+                    //se agregan nuestros productos a nuestra lista de detalles de venta
                     for( int i = 0; i < tblProductos.getRowCount(); i++ ) {
                         detalle = new DetalleVenta();
                         detalle.setCodigo((String) tblProductos.getValueAt(i, 0));
@@ -618,19 +624,26 @@ public class FrmPrincipal extends javax.swing.JFrame {
                         detalle.setImporte((Double) tblProductos.getValueAt(i, 7));
                         detallesVenta.add(detalle);
                     }
+                    //se agrega nuestros detalles de venta a nuestro Objeto de tipo Venta
                     venta.setDetallesVenta(detallesVenta);
-                    if(checkboxCredito.isSelected()) {
-                        if(cmbCliente.getSelectedIndex() != 0) {
+                    if(checkboxCredito.isSelected()) { //verdadero si se selecciono una venta a credito
+                        if(cmbCliente.getSelectedIndex() != 0) { //se debe comprobar que haya escogido a un cliente
+                            
+                            /**
+                            * se hace la insercion de nuestra venta a la base de datos
+                            **/
                             venta.setTipoVenta("Credito");
+                            //se obtiene el cliente al que se dio la venta a credito y se modifica su adeudo
                             Cliente cliente = manager.getClienteDAO().obtener(idsClientes[cmbCliente.getSelectedIndex()]);
                             cliente.setAdeudo(cliente.getAdeudo() + Double.parseDouble(lblTotal.getText()) - pago);
                             manager.getClienteDAO().modificar(cliente);
                         }
-                        else {
+                        else { //se debe seleccionar a un cliente
                             throw new DAOException("No se puede dar credito a este usuario.");
                         }
                     }
-                    else {
+                    else { //es venta a contado
+                        //se comprueba que lo que se ingreso de pago sea mayor al total de la venta
                         if(pago >= Double.parseDouble(lblTotal.getText())) {
                             venta.setTipoVenta("Contado");
                         }
@@ -638,9 +651,15 @@ public class FrmPrincipal extends javax.swing.JFrame {
                             throw new DAOException("El pago no alcanza a cubrir el total.");
                         }
                     }
+                    /**
+                    * se hace la insercion de la venta a la base de datos
+                    **/
                     venta.setIdVenta(manager.getVentaDAO().insertar(venta));
                     decrementarExistencias();
+                    //se genera el reporte correspondiente
                     new GenerarReporte( venta.getIdVenta(), pago, venta.getTipoVenta());
+                    
+                    //se incializa de nuevo nuestra tabla
                     inicializarListaProductos();
                 }
                 else {
@@ -731,7 +750,6 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
     /**
      * actualiza el contenido de la tabla tblProductos
-     * @param idAutor parametro para realizar la busqueda de titulos por autor
      **/
     private void actualizarListaProductos() throws DAOException {
         /*
@@ -760,14 +778,22 @@ public class FrmPrincipal extends javax.swing.JFrame {
         }
     }//fin del metodo setJTable
     
+    //metodo que carga los clientes al combobox
     public void cargarClientes (){
         try {
+            //nuestra lista de los clientes
             ArrayList<Cliente> clientes = new ArrayList<>();
+            //se obtienen los clientes de la base de datos
             clientes = (ArrayList<Cliente>) manager.getClienteDAO().obtenerTodos();
+            //en este arreglo se guarfan los ids de los clientes, en el mismo orden en que se agregan al combobox
             idsClientes = new int [clientes.size()];
+            //se recorren todos los clientes obtenidos
             for (Cliente cliente : clientes) {
+                //al combobox se agrega un item formado por el idCliente + nombre + apellidos
                 cmbCliente.addItem(cliente.getIdCliente() + " - " + cliente.getNombre() + " " + cliente.getApellidos());
+                //se agrega el id del cliente al arreglo en la misma posicion en la que se agrego al combobox
                 idsClientes[cmbCliente.getItemCount()-1] = cliente.getIdCliente();
+                
             }
         } catch (DAOException ex) {
             imprimirMensajeDeErrorDAO(ex);
@@ -797,10 +823,15 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 "Error", JOptionPane.ERROR_MESSAGE);
     }
     
+    //metodo que decrementa las existencias al momento de hacer una venta
     public void decrementarExistencias() throws DAOException {
+        //for para pasar por todos los productos agregados a la tabla
         for(int i = 0; i < tblProductos.getRowCount(); i++) {
+            //se crea un nuevo Objeto de tipo Producto, el cual se obtiene de la tabla
             Producto producto = manager.getProductoDAO().obtener((String) tblProductos.getValueAt(i, 0));
+            //se le resta la cantidad que hay en la tabla
             producto.setExistencias(producto.getExistencias() -(int) tblProductos.getValueAt(i, 6));
+            //se actualiza nuestro producto en la base de datos, con el decremento de existencias
             manager.getProductoDAO().modificar(producto);
         }
     }
