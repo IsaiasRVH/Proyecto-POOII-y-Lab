@@ -49,6 +49,10 @@ public class ProductosVentaTableModel extends AbstractTableModel{
         }
     }
     
+    /**
+    * Se elimina el registro que esta en la posicion del index
+    * @param index El indice del elemento a eliminar
+    **/
     public void removeRow(int index) {
         datos.remove(index);
         cantidad.remove(index);
