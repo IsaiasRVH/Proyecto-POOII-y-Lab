@@ -242,9 +242,14 @@ public class FrmLogin extends javax.swing.JFrame {
             ArrayList<Usuario> usuarios = new ArrayList<>();
             //se obtienen los usuarios de la base de datos
             usuarios = (ArrayList<Usuario>) manager.getUsuarioDAO().obtenerTodos(1);
+            //En este arreglo se guardan los ids de los usuarios, en el mismo orden en que se agregaran
+            //al combo box
             idsUsuarios = new int [usuarios.size()];
+            //Se recorren todos los usuarios obtenidos
             for (Usuario usuario : usuarios) {
+                //Al combo box se agrega un item formado por el nombre + espacio + apellidos
                 cmbUsuarios.addItem(usuario.getNombre() + " " + usuario.getApellidos());
+                //Se agrega el id del usuario al arreglo en la misma posicion en la que se agrego al combo
                 idsUsuarios[cmbUsuarios.getItemCount()-1] = usuario.getIdUsuario();
             }
         } catch (DAOException ex) {
@@ -261,14 +266,19 @@ public class FrmLogin extends javax.swing.JFrame {
     //metodo para comprobar el inicio de sesion
     public void comprobarLogin() {
         try {
+            //Se obtiene el id del usuario que esta seleccionado desde el arreglo que los contiene
             int idUsuario = idsUsuarios[cmbUsuarios.getSelectedIndex()];
+            //Se obtiene el usuarioActivo buscandolo con el id
             usuarioActivo = manager.getUsuarioDAO().obtener(idUsuario);
+            //Se comprueba que la contraseña ingresada coincida con la del usuario
             if(pswContrasenia.getText().equals(usuarioActivo.getContrasenia())) {
+                //Si coincide se crea el frame principal mandandole el usuario activo
                 FrmPrincipal paginaPrincipal = new FrmPrincipal(usuarioActivo);
                 paginaPrincipal.setVisible(true);
                 this.dispose();
             }
             else {
+                //Si la contraseña no es correcta se vacia el usuario activo y se manda el mensaje de error
                 usuarioActivo = null;
                 lblErrorLogin.setText("Contraseña incorrecta, vuelve a intentarlo.");
                 pswContrasenia.selectAll();
