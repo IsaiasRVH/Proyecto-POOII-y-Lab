@@ -151,7 +151,9 @@ public class JDDetalleVenta extends javax.swing.JDialog {
                 JOptionPane.ERROR_MESSAGE);
     }//fin del metodo imprimirMensajeDeErrorDAO
     
+    //metodo para inicializar nuestra tabla de ventas
     private void inicializarListaDetalleVenta() {
+        //se asigna un modelo de tabla
         model = new DetalleVentaTableModel();
         
         tblDetalleVenta.setModel(model);
