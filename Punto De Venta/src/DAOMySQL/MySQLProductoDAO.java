@@ -15,8 +15,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 /**
  *
@@ -92,7 +91,6 @@ public class MySQLProductoDAO implements IProductoDAO{
         } catch(SQLException ex) {
             throw new DAOException("Error de SQL: ", ex);
         } finally {
-            //Conectar.desconectarRS(rs); Un error en este metodo
             Conectar.desconectarPS(ps);
             Conectar.desconectarConnection(conn);
         }
@@ -122,7 +120,7 @@ public class MySQLProductoDAO implements IProductoDAO{
     }//fin del metodo eliminar
 
     /**
-     * Este metodo obtiene todos los registros de la base de datos de la tabla productos
+     * Este metodo obtiene todos los registros de la base de datos de la tabla producto
      * @return retorna una lista de tipo productos
      * @throws DAOException 
      */
@@ -207,6 +205,12 @@ public class MySQLProductoDAO implements IProductoDAO{
         return miProducto;
     }//fin del metodo obtener
 
+    /**
+    * Busca los productos que coincidan con la busqueda del
+    * parametro mandado.
+    * @param buscar El parametro con el cual se realizara la busqueda
+    * @return Una lista con los elementos que se obtuvieron de la busqueda
+    **/
     @Override
     public List<Producto> obtenerBuscados(String buscar) throws DAOException {
         //Lista de productos a retornar
