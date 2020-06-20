@@ -399,15 +399,23 @@ public class JDFormularioProducto extends javax.swing.JDialog {
         return true;
     }
     
+    //metodo para cargar los proveedores existentes al combobox
     public void cargarProveedores(){
         try {
+            //nuestra lista de los proveedores
             ArrayList<Proveedor> proveedores = new ArrayList<>();
+            //se obtienen los proveedores de la base de datos
             proveedores = (ArrayList<Proveedor>) manager.getProveedorDAO().obtenerTodos();
+            //En este arreglo se guardan los ids de los provvedores, en el mismo orden en que se agregan al combobox
             idsProveedores = new int [proveedores.size()];
+            //se recorren todos los proveedores obtenidos
             for (Proveedor proveedor : proveedores) {
+                //ak combobox se agrega un item formado por el nombre del proveedor
                 cmbProveedores.addItem(proveedor.getNombre());
+                //se agrega el id del proveedor al arreglo en la misma posicion en la que se agrego al combobox
                 idsProveedores[cmbProveedores.getItemCount()-2] = proveedor.getIdProveedor();
             }
+            
         } catch (DAOException ex) {
             imprimirMensajeDeErrorDAO(ex);
         } catch (NullPointerException ex) {
