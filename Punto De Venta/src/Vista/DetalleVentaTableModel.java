@@ -85,6 +85,7 @@ public class DetalleVentaTableModel extends AbstractTableModel {
         }
     }
     
+    //metodo para actualizar la tabla, obteniendo todos los detalles de venta
     public void updateModel(int id) throws DAOException {
         datos = manager.getVentaDAO().obtenerDetalleVenta(id);
     }
