@@ -33,8 +33,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
     
     //El usuario que tiene la sesion iniciada
     Usuario usuarioActivo = null;
+    //El modelo de nuestra tabla
     private ProductosVentaTableModel model;
+    //inicializamos nuestro DAOManager
     private IDAOManager manager = null;
+    //nuestro arreglo de idClientes para el combobox
     private int[] idsClientes;
     
     /**
@@ -50,7 +53,8 @@ public class FrmPrincipal extends javax.swing.JFrame {
             //Configuramos el frame para que este maximizado y no se pueda cambiar
             //de tamaño
             Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-            this.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+            //extendemos la pantalla completa
+            this.setExtendedState(JFrame.MAXIMIZED_BOTH);
             this.setSize(screenSize); 
             this.setPreferredSize(screenSize);
             this.setMinimumSize(screenSize);
@@ -85,6 +89,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 btnAdminUsuarios.setEnabled(true);
             }
             
+            //se quedan desactivados el boton de eliminar hasta que no se seleccione uno en la tabla
             this.tblProductos.getSelectionModel().addListSelectionListener(e -> {
                 boolean seleccionValida = (tblProductos.getSelectedRow() != -1);
                 btnEliminar.setEnabled(seleccionValida);
@@ -92,6 +97,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
             
             //Se le asigna el focus al cuadro donde se ingresa el codigo del producto
             txtCodigo.requestFocus();
+            
         } catch (DAOException ex) {
             imprimirMensajeDeErrorDAO(ex);
         }
@@ -517,7 +523,9 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         try {
+            //actualizamos nuestra tabla
             actualizarListaProductos();
+            //sumamos el total de todos los productos de la tabla y actualizamos el label correspondiente
             double total = 0;
             for(int i = 0; i < tblProductos.getRowCount(); i++) {
                 total +=(double) tblProductos.getValueAt(i, 7);
@@ -526,12 +534,14 @@ public class FrmPrincipal extends javax.swing.JFrame {
             lblNoDeProductos.setText(Integer.toString(Integer.parseInt(lblNoDeProductos.getText())+ 1));
             txtCodigo.selectAll();
             txtCodigo.requestFocus();
+            
         } catch (DAOException ex) {
             imprimirMensajeDeErrorDAO(ex);
         }
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarSesionActionPerformed
+        //el boton cierra la sesion activa y manda al Dialog de inicio de sesion
         int respuesta = JOptionPane.showConfirmDialog(null,
                     "¿Seguro que quieres cerrar Sesión?", "Confirmar", 0);
         if(respuesta == 0) {
@@ -543,16 +553,19 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCerrarSesionActionPerformed
 
     private void btnAdminProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminProductosActionPerformed
+        //creamos nuestro JDialog de inventario
         JDInventario inventario = new JDInventario(this, true);
         inventario.setVisible(true);
     }//GEN-LAST:event_btnAdminProductosActionPerformed
 
     private void btnAdminVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminVentasActionPerformed
+        //creamos nuestro JDialog de ventas
         JDVentas ventas = new JDVentas(this, true);
         ventas.setVisible(true);
     }//GEN-LAST:event_btnAdminVentasActionPerformed
 
     private void btnAdminClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminClientesActionPerformed
+        //este boton aun no esta implementado
         try {
             throw new DAOException("No soportado aun.");
         } catch (DAOException ex) {
@@ -561,6 +574,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAdminClientesActionPerformed
 
     private void btnAdminProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminProveedoresActionPerformed
+        //este boton aun no esta implementado
         try {
             throw new DAOException("No soportado aun.");
         } catch (DAOException ex) {
@@ -569,20 +583,23 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAdminProveedoresActionPerformed
 
     private void btnAdminUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminUsuariosActionPerformed
+        //creamos nuestro JDialog de usuarios
         JDUsuarios usuarios = new JDUsuarios(this, true);
         usuarios.setVisible(true);
     }//GEN-LAST:event_btnAdminUsuariosActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        //cancela la venta en curso, se inicializa todo de nuevo
         inicializarListaProductos();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
+        //comprueba si hay productos en la tabla
         try {
             if(tblProductos.getRowCount() == 0) {
                 throw new DAOException("Debe ingresar al menos un producto");
             }
-            else {
+            else { //hay productos en la tabla, por lo que se procedera la venta
                 Double pago = Double.parseDouble(JOptionPane.showInputDialog("Ingrese el monto de pago:"));
                 
                 if(pago > 0) {
@@ -635,17 +652,16 @@ public class FrmPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnConfirmarActionPerformed
 
-    private void checkboxCreditoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkboxCreditoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_checkboxCreditoActionPerformed
-
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        //Se debe seleccionar un producto de la tabla para poder eliminar y que el boton se active
         if(JOptionPane.showConfirmDialog(null, "¿Desea eliminar el producto?", 
                 "Eliminar de la lista", JOptionPane.YES_NO_OPTION, 
-                JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+                JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) { //se actualiza el contador de productos y el total de la venta
             lblNoDeProductos.setText(Integer.toString(Integer.parseInt(lblNoDeProductos.getText()) - (int) tblProductos.getValueAt(tblProductos.getSelectedRow(), 6)));
+            //remueve el producto seleccionado de la tabla
             model.removeRow(tblProductos.getSelectedRow());
             model.fireTableDataChanged();
+            //se actualiza el label de total de la venta
             double total = 0;
             for(int i = 0; i < tblProductos.getRowCount(); i++) {
                 total +=(double) tblProductos.getValueAt(i, 7);
@@ -698,13 +714,14 @@ public class FrmPrincipal extends javax.swing.JFrame {
         model = new ProductosVentaTableModel ();
         
         //asignamos el modelo pero sin llamar al metodo actualizar
-        //ya que al iniciar el id. Autor es -1
         tblProductos.setModel(model);
+        //limpiamos nuestro modelo
         model.cleanModel();
         
         //redimensionamos las celdas
         setJTableColumnsWidth(tblProductos, 640, 80,80,150,80,80,60,50,60 );
         
+        //asignamos datos por defecto a los label y a las cajas de texto
         lblTotal.setText("0.00");
         lblNoDeProductos.setText("0");
         txtCodigo.setText("");
@@ -719,7 +736,6 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private void actualizarListaProductos() throws DAOException {
         /*
         * Si no hay ningun error actualizamos la tabla
-        * para mostrar los libros de este autor
         */
         model.updateModel(txtCodigo.getText());
         
