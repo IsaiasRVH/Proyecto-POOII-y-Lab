@@ -35,7 +35,7 @@ public class JDFormularioUsuario extends javax.swing.JDialog {
         initComponents();
         manager = new MySQLDAOManager();
         this.usuario = usuario;
-        if(this.usuario == null) {
+        if(this.usuario == null) { //si es null quiere decir que es un nuevo usuario
             txtIdUsuario.setText("-1");
             lblNuevaContrasenia.setText("Nueva Contraseña*:");
             lblConfirmarContrasenia.setText("Confirmar Contraseña*:");
@@ -467,35 +467,6 @@ public class JDFormularioUsuario extends javax.swing.JDialog {
         this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
-    private void txtTelefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTelefonoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtTelefonoActionPerformed
-
-    private void pwdContraseniaNuevaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pwdContraseniaNuevaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_pwdContraseniaNuevaActionPerformed
-
-    private void txtPaisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPaisActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtPaisActionPerformed
-
-    private void txtEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEstadoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtEstadoActionPerformed
-
-    private void txtCodigoPostalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodigoPostalActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtCodigoPostalActionPerformed
-
-    private void txtColoniaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtColoniaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtColoniaActionPerformed
-
-    private void txtIdUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdUsuarioActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtIdUsuarioActionPerformed
-
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnGuardar;
@@ -573,6 +544,7 @@ public class JDFormularioUsuario extends javax.swing.JDialog {
         return datosCompletos;
     }
 
+    //comprueba si la contraseña es correcta
     public boolean comprobarContraseniaNueva() {
         if(pwdContraseniaNueva.getText().equals(pwdConfirmarContrasenia.getText())) {
             return true;
@@ -582,6 +554,7 @@ public class JDFormularioUsuario extends javax.swing.JDialog {
         }
     }
     
+    //se obtienen los datos del usuario, si es nuevo o se va a modificar
     private void obtenerDatos() {
         if(usuario == null) {
             usuario = new Usuario();
@@ -599,6 +572,7 @@ public class JDFormularioUsuario extends javax.swing.JDialog {
         usuario.setSalario(Double.parseDouble(txtSalario.getText()));
     }
 
+    //se agregan los datos a las cajas de texto correspondientes
     private void llenarCampos() {
         txtIdUsuario.setText(Integer.toString(usuario.getIdUsuario()));
         txtNombre.setText(usuario.getNombre());
@@ -614,6 +588,7 @@ public class JDFormularioUsuario extends javax.swing.JDialog {
         txtSalario.setText(Double.toString(usuario.getSalario()));
     }
 
+    //inserta un usuario a la base de datos
     public void insertarUsuario() {
         try {
             manager.getUsuarioDAO().insertar(usuario);
@@ -622,6 +597,7 @@ public class JDFormularioUsuario extends javax.swing.JDialog {
         }
     }
     
+    //actualiza un usuario en la base de datos
     public void actualizarUsuario() {
         try {
             manager.getUsuarioDAO().modificar(usuario);
