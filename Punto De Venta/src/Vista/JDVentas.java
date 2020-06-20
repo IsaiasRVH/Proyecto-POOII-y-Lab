@@ -46,6 +46,7 @@ public class JDVentas extends javax.swing.JDialog {
             //actualizamos la tabla tblVentas con las ventas realizadas
             actualizarListaVentas();
             
+            //los botones se mantendran inactivos hasta que no se seleccionen en la tabla
             this.tblVentas.getSelectionModel().addListSelectionListener(e -> {
                  boolean seleccionValida = (tblVentas.getSelectedRow() != -1);
                 btnDetalles.setEnabled(seleccionValida);
@@ -251,13 +252,12 @@ public class JDVentas extends javax.swing.JDialog {
     }//fin del metodo imprimirMensajeDeErrorDAO
     
     /**
-     * inicializa los titulos de las columnas de nuestra tabla tblInventario
+     * inicializa los titulos de las columnas de nuestra tabla tblVentas
      */
     private void inicializarListaVentas() {
         model = new VentasTableModel(manager.getVentaDAO());
         
         //asignamos el modelo pero sin llamar al metodo actualizar
-        //ya que al iniciar el isbn esta en blanco
         tblVentas.setModel(model);
         
         //redimensionamos las celdas

@@ -25,7 +25,7 @@ public class UsuariosTableModel extends AbstractTableModel {
     private IDAOManager manager = null;
     private IUsuarioDAO usuario = null;
     
-    //lista de elementos de tipo Titulo
+    //lista de elementos de tipo Usuario
     private List<Usuario> datos = new ArrayList<>();
     
     //constructor sin parametros
@@ -58,7 +58,7 @@ public class UsuariosTableModel extends AbstractTableModel {
     }
     
     /**
-     * retorna el número de elementos obtenidos de la tabla títulos
+     * retorna el número de elementos obtenidos de la tabla usuarios
      * @return 
      */
     @Override

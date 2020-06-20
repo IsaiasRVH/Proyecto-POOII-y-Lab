@@ -375,10 +375,10 @@ public class JDFormularioUsuario extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        if(comprobarDatos()) {
+        if(comprobarDatos()) { //comprieba que todo este bien en las cajas de texto
             obtenerDatos();
-            if(txtIdUsuario.getText().equals("-1")) {
-                if(comprobarContraseniaNueva()) {
+            if(txtIdUsuario.getText().equals("-1")) { //es usuario nuevo
+                if(comprobarContraseniaNueva()) { //se comprueba la longitud de la contraseña
                     if(pwdContraseniaNueva.getText().length() >= 8) {
                         usuario.setContrasenia(pwdContraseniaNueva.getText());
                         insertarUsuario();
@@ -397,7 +397,7 @@ public class JDFormularioUsuario extends javax.swing.JDialog {
                         pwdContraseniaNueva.requestFocus();
                 }
             }
-            else {
+            else { //es una modificacion de algun usuario
                 if(!pwdContraseniaNueva.getText().equals("")) {
                     if(comprobarContraseniaNueva()) {
                         if(pwdContraseniaNueva.getText().length() >= 8) {

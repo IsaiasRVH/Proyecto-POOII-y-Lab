@@ -20,7 +20,7 @@ import javax.swing.table.TableColumnModel;
  */
 public class JDInventario extends javax.swing.JDialog {
 
-    //creamos un objeto del tipo interface ITituloDAO
+    //creamos un objeto del tipo interface IProdcutoDAO
     private IDAOManager manager = null;
     
     //el modelo para nuestra tabla tblInventario
@@ -42,6 +42,7 @@ public class JDInventario extends javax.swing.JDialog {
             
             actualizarListaInventario();
             
+            //hasta que no se seleccione un producto del inventario los botones estaran inactivos
             this.tblInventario.getSelectionModel().addListSelectionListener(e -> {
                 boolean seleccionValida = (tblInventario.getSelectedRow() != -1);
                 btnModificar.setEnabled(seleccionValida);
@@ -240,6 +241,7 @@ public class JDInventario extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
+        //se abre el formulario para agregar un nuevo producto
         JDFormularioProducto miFP = new JDFormularioProducto(null, true);
         miFP.setLocationRelativeTo(null);
         miFP.setVisible(true);
@@ -265,6 +267,7 @@ public class JDInventario extends javax.swing.JDialog {
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        //se eliminara algun producto hasta que este seleccionado de la tabla
         try {
             Producto miProducto = getProductoSeleccionado();
             int respuesta = JOptionPane.showConfirmDialog(null,
@@ -281,6 +284,7 @@ public class JDInventario extends javax.swing.JDialog {
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        //se busca algun producto que coincida con la busqueda
         if(!txtBuscar.equals("")) {
             try {
                 actualizarListaInventario(txtBuscar.getText());

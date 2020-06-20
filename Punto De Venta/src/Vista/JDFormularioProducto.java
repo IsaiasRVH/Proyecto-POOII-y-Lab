@@ -439,7 +439,7 @@ public class JDFormularioProducto extends javax.swing.JDialog {
             ArrayList<Proveedor> proveedores = new ArrayList<>();
             //se obtienen los proveedores de la base de datos
             proveedores = (ArrayList<Proveedor>) manager.getProveedorDAO().obtenerTodos();
-            //En este arreglo se guardan los ids de los provvedores, en el mismo orden en que se agregan al combobox
+            //En este arreglo se guardan los ids de los proveedores, en el mismo orden en que se agregan al combobox
             idsProveedores = new int [proveedores.size()];
             //se recorren todos los proveedores obtenidos
             for (Proveedor proveedor : proveedores) {

@@ -560,7 +560,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private void btnAdminClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminClientesActionPerformed
         //este boton aun no esta implementado
         try {
-            throw new DAOException("No soportado aun.");
+            throw new DAOException("No soportado aún.");
         } catch (DAOException ex) {
             imprimirMensajeDeErrorDAO(ex);
         }
@@ -569,7 +569,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private void btnAdminProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminProveedoresActionPerformed
         //este boton aun no esta implementado
         try {
-            throw new DAOException("No soportado aun.");
+            throw new DAOException("No soportado aún.");
         } catch (DAOException ex) {
             imprimirMensajeDeErrorDAO(ex);
         }

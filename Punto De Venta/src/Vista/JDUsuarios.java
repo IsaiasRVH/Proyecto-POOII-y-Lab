@@ -359,7 +359,6 @@ public class JDUsuarios extends javax.swing.JDialog {
         model = new UsuariosTableModel ();
         
         //asignamos el modelo pero sin llamar al metodo actualizar
-        //ya que al iniciar el id. Autor es -1
         tblUsuarios.setModel(model);
         
         //redimensionamos las celdas
@@ -367,13 +366,11 @@ public class JDUsuarios extends javax.swing.JDialog {
     }
     
     /**
-     * actualiza el contenido de la tabla tblTitulos
-     * @param idAutor parametro para realizar la busqueda de titulos por autor
+     * actualiza el contenido de la tabla Usuarios
      */
     private void actualizarListaUsuarios() throws DAOException {
         /*
-        * Si no hay ningun error actualizamos la tabla
-        * para mostrar los libros de este autor
+        * Si no hay ningun error actualizamos la tabla usuarios
         */
         model.updateModel(txtBuscado.getText());
         

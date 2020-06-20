@@ -151,7 +151,7 @@ public class JDDetalleVenta extends javax.swing.JDialog {
                 JOptionPane.ERROR_MESSAGE);
     }//fin del metodo imprimirMensajeDeErrorDAO
     
-    //metodo para inicializar nuestra tabla de ventas
+    //metodo para inicializar nuestra tabla de detalles de venta
     private void inicializarListaDetalleVenta() {
         //se asigna un modelo de tabla
         model = new DetalleVentaTableModel();
@@ -163,7 +163,7 @@ public class JDDetalleVenta extends javax.swing.JDialog {
     }//fin del metodo inicializarListaInventario
     
     /**
-     * actualiza el contenido de la tabla tblInventario
+     * actualiza el contenido de la tabla tblDetalleVenta
      * @throws DAOException 
      */
     private void actualizarListaDetalleVenta(int id) throws DAOException {
