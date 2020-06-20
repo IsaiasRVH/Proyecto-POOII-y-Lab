@@ -35,7 +35,9 @@ public class FrmLogin extends javax.swing.JFrame {
      */
     public FrmLogin() {
         initComponents();
+        //inicializamos nuestro manager
         manager = new MySQLDAOManager();
+        //carga los usuarios existentes en el combobox
         cargarUsuarios();
         
         //Se establece el logo en el icono y en un panel del frame
@@ -233,10 +235,13 @@ public class FrmLogin extends javax.swing.JFrame {
         });
     }
     
+    //metodo para cargar los usuarios existentes al combobox
     public void cargarUsuarios (){
         try {
+            //nuestra lista de los usuarios
             ArrayList<Usuario> usuarios = new ArrayList<>();
-            usuarios = (ArrayList<Usuario>) manager.getUsuarioDAO().obtenerTodos();
+            //se obtienen los usuarios de la base de datos
+            usuarios = (ArrayList<Usuario>) manager.getUsuarioDAO().obtenerTodos(1);
             idsUsuarios = new int [usuarios.size()];
             for (Usuario usuario : usuarios) {
                 cmbUsuarios.addItem(usuario.getNombre() + " " + usuario.getApellidos());
@@ -253,6 +258,7 @@ public class FrmLogin extends javax.swing.JFrame {
         }
     }
     
+    //metodo para comprobar el inicio de sesion
     public void comprobarLogin() {
         try {
             int idUsuario = idsUsuarios[cmbUsuarios.getSelectedIndex()];
