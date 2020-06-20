@@ -241,7 +241,7 @@ public class FrmLogin extends javax.swing.JFrame {
             //nuestra lista de los usuarios
             ArrayList<Usuario> usuarios = new ArrayList<>();
             //se obtienen los usuarios de la base de datos
-            usuarios = (ArrayList<Usuario>) manager.getUsuarioDAO().obtenerTodos(1);
+            usuarios = (ArrayList<Usuario>) manager.getUsuarioDAO().obtenerTodos();
             //En este arreglo se guardan los ids de los usuarios, en el mismo orden en que se agregaran
             //al combo box
             idsUsuarios = new int [usuarios.size()];
