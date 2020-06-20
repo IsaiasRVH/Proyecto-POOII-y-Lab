@@ -11,7 +11,6 @@ import Modelo.Venta;
 import Reportes.GenerarReporte;
 import java.awt.Dimension;
 import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -20,7 +19,6 @@ import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
 /**
@@ -449,11 +447,6 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         checkboxCredito.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         checkboxCredito.setText("Venta a Credito");
-        checkboxCredito.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                checkboxCreditoActionPerformed(evt);
-            }
-        });
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
         jLabel2.setText("$");

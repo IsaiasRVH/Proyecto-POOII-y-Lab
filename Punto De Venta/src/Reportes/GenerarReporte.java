@@ -13,7 +13,6 @@ import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JDialog;
-import javax.swing.JOptionPane;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;

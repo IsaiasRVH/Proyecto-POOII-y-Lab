@@ -9,6 +9,7 @@ import DAO.DAOException;
 import DAO.IDAOManager;
 import DAOMySQL.MySQLDAOManager;
 import Modelo.Usuario;
+import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
 
 /**
@@ -128,11 +129,6 @@ public class JDFormularioUsuario extends javax.swing.JDialog {
         txtIdUsuario.setBackground(new java.awt.Color(195, 153, 62));
         txtIdUsuario.setText("-1");
         txtIdUsuario.setEnabled(false);
-        txtIdUsuario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtIdUsuarioActionPerformed(evt);
-            }
-        });
 
         txtNombre.setBackground(new java.awt.Color(195, 153, 62));
 
@@ -143,52 +139,22 @@ public class JDFormularioUsuario extends javax.swing.JDialog {
         txtDireccion.setBackground(new java.awt.Color(195, 153, 62));
 
         txtColonia.setBackground(new java.awt.Color(195, 153, 62));
-        txtColonia.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtColoniaActionPerformed(evt);
-            }
-        });
 
         txtCodigoPostal.setBackground(new java.awt.Color(195, 153, 62));
-        txtCodigoPostal.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtCodigoPostalActionPerformed(evt);
-            }
-        });
 
         txtCiudad.setBackground(new java.awt.Color(195, 153, 62));
 
         txtEstado.setBackground(new java.awt.Color(195, 153, 62));
-        txtEstado.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtEstadoActionPerformed(evt);
-            }
-        });
 
         txtPais.setBackground(new java.awt.Color(195, 153, 62));
-        txtPais.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtPaisActionPerformed(evt);
-            }
-        });
 
         pwdConfirmarContrasenia.setBackground(new java.awt.Color(195, 153, 62));
 
         pwdContraseniaNueva.setBackground(new java.awt.Color(195, 153, 62));
-        pwdContraseniaNueva.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                pwdContraseniaNuevaActionPerformed(evt);
-            }
-        });
 
         jLabel14.setText("Teléfono*:");
 
         txtTelefono.setBackground(new java.awt.Color(195, 153, 62));
-        txtTelefono.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtTelefonoActionPerformed(evt);
-            }
-        });
 
         jLabel15.setText("E-Mail*:");
 
