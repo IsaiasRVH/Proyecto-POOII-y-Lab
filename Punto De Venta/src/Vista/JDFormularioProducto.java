@@ -11,6 +11,7 @@ import DAOMySQL.MySQLDAOManager;
 import Modelo.Producto;
 import Modelo.Proveedor;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -281,15 +282,17 @@ public class JDFormularioProducto extends javax.swing.JDialog {
 
         if(producto == null) {//verificamos para saber si es una insercion o una modificacion
             if(validarDatos()) {
-                //llamamos al constructor para crear un objeto de tipo Producto
-                Producto miProducto = new Producto(codigo, modelo, marca, color, estilo,existencias, precio, idProveedor);
+                    if(!validarCodigo()) { //se valida que no se repita el codigo
+                    //llamamos al constructor para crear un objeto de tipo Producto
+                    Producto miProducto = new Producto(codigo, modelo, marca, color, estilo,existencias, precio, idProveedor);
 
-                try {
-                    manager.getProductoDAO().insertar(miProducto);
-                    JOptionPane.showMessageDialog(null, "Los datos han sido guardados");
-                    limpiarFormulario();
-                } catch(DAOException ex) {
-                    imprimirMensajeDeErrorDAO(ex);
+                    try {
+                        manager.getProductoDAO().insertar(miProducto);
+                        JOptionPane.showMessageDialog(null, "Los datos han sido guardados");
+                        limpiarFormulario();
+                    } catch(DAOException ex) {
+                        imprimirMensajeDeErrorDAO(ex);
+                    }
                 }
             }
         } else { //si codigo != null entonces se quiere hacer una modificacion
@@ -398,6 +401,36 @@ public class JDFormularioProducto extends javax.swing.JDialog {
     
         return true;
     }
+    
+    //metodo para verificar si el codigo no se repite
+    public boolean validarCodigo() {
+        codigo = txtCodigo.getText();
+        boolean validacion = false;
+        int index = 0;
+        
+        //obtenemos todos los codigos de la base de datos
+        //creamos una lista
+        List<Producto> misProductos = new ArrayList<>();
+        
+        try {
+            misProductos = manager.getProductoDAO().obtenerTodos();
+            while(!validacion && index < misProductos.size()) {
+                Producto miProducto = misProductos.get(index);
+                if(miProducto.getCodigo().equals(codigo)) {
+                    //una correspondencia. Podemos dejar de buscar
+                    validacion = true;
+                } else {
+                    index ++;
+                }
+            }
+        } catch (DAOException ex) {
+            imprimirMensajeDeErrorDAO(ex);
+        }
+        if(validacion) {
+            JOptionPane.showMessageDialog(null, "El codigo se repite, agrega otro");
+        }
+        return validacion;
+    }//fin del metodo validarCodigo
     
     //metodo para cargar los proveedores existentes al combobox
     public void cargarProveedores(){
