@@ -137,7 +137,6 @@ public class ProductosVentaTableModel extends AbstractTableModel{
                 datos.add(temp);
                 //Tambien se agrega la cantidad al ArrayList de cantidad
                 //Se asigna 1 porque es el primero de este codigo en la lista
-                Integer cant = 1;
                 cantidad.add(1);
             }
             else {
