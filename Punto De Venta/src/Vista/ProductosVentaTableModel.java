@@ -104,23 +104,39 @@ public class ProductosVentaTableModel extends AbstractTableModel{
      * @param codigo
      */
     public void updateModel(String codigo) throws DAOException {
+        //Variable para saber si el producto ya se encuentra en la tabla
         boolean existente = false;
+        //Se recorren los registros de la tabla
         for(int i = 0; i < datos.size(); i++) {
-          if(datos.get(i).getCodigo().equals(codigo)) {
-            existente = true;
-            if(cantidad.get(i) + 1 > datos.get(i).getExistencias()) {
-                throw new DAOException("Producto agotado.");
-            }
+            //Se comprueba si el producto de la iteracion actual es el mismo que el que se
+            //quiere agregar
+            if(datos.get(i).getCodigo().equals(codigo)) {
+                //Si es el mismo existente se asigna a true
+                existente = true;
+                //Se comprueba si al agregar una unidad mas no se sobrepasen las existencias
+                if(cantidad.get(i) + 1 > datos.get(i).getExistencias()) {
+                    throw new DAOException("Producto agotado.");
+                }
             else {
+                //Si no se sobrepasaron las existencias se agrega una unidad
+                //a la cantidad de elementos de ese codigo
                 cantidad.set(i, cantidad.get(i)+1);
             }
+            //Se asigna a i el tamaño de los datos para terminar el for
             i = datos.size();
           }
         }
+        //Mira como termino la variable existente
+        //Si termino en false significa que el producto no esta en la lista
         if(!existente) {
+            //Se obtiene el producto que coincide con el codigo
             Producto temp = manager.getProductoDAO().obtener(codigo);
+            //Se comprueba que haya en existencias
             if(temp.getExistencias() > 0) {
+                //Si hay se agrega el producto a la lista
                 datos.add(temp);
+                //Tambien se agrega la cantidad al ArrayList de cantidad
+                //Se asigna 1 porque es el primero de este codigo en la lista
                 Integer cant = 1;
                 cantidad.add(1);
             }
@@ -135,7 +151,6 @@ public class ProductosVentaTableModel extends AbstractTableModel{
     **/
     public void cleanModel() {
       datos = new ArrayList<>();
-      
       cantidad = new ArrayList<>();
     
     }
