@@ -201,8 +201,8 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`idUsuario`, `nombre`, `apellidos`, `telefono`, `email`, `calleYNumero`, `colonia`, `codigoPostal`, `ciudad`, `estado`, `pais`, `salario`, `contrasenia`) VALUES
-(1, 'Administrador', '', '*****', '*****', '*****', '*****', '*****', '*****', '*****', '*****', 0, 'admin'),
-(2, 'Luis', 'Escobedo Romero', '4632394385', 'luis123@gmail.com', 'Iturbide #1089', 'Centro', '99600', 'Jalpa', 'Zacatecas', 'Mexico', 2500, '12345'),
+(1, 'Administrador', '', '*****', '*****', '*****', '*****', '*****', '*****', '*****', '*****', 0, 'admin123'),
+(2, 'Luis', 'Escobedo Romero', '4632394385', 'luis123@gmail.com', 'Iturbide #1089', 'Centro', '99600', 'Jalpa', 'Zacatecas', 'Mexico', 2500, '12345678'),
 (3, 'Isaías Ricardo', 'Valdivia Hernández', '4921438738', 'isaias.valdivia147@gmail.com', 'Zaragoza #18', 'Reforma', '99607', 'Jalpa', 'Zacatecas', 'Mexico', 3000, '12345678'),
 (7, 'Diego', 'Roque Velazco', '4631092386', 'diegoroque23@gmail.com', 'Pizarro #1274', 'Rosario', '99600', 'Jalpa', 'Zacatecas', 'Mexico', 1600, '12345678');
 
